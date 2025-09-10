@@ -92,12 +92,15 @@ float	fixed_distance(float x1, float y1, float x2, float y2, t_game *game)
  */
 bool	touch(float px, float py, t_game *game)
 {
-	int x;
-	int y;
+	int		x;
+	int		y;
+	char	tile;
+
 
 	x = px / BLOCK;
 	y = py / BLOCK;
-	if(game->map[y][x] == '1')
+	tile = game->map[y][x];
+	if(tile == '1' || tile == ' ')
 		return (true);
 	return (false);
 }
