@@ -1,4 +1,4 @@
-# include "../../includes/cub3d.h"
+# include "cub3d.h"
 
 /**
  * draw_line
@@ -79,8 +79,8 @@ int draw_loop(t_game *game)
 	clear_image(game);
 
 	// Step 3: Prepare raycasting
-	fraction = (PI / 3) / WIDTH;         // Field of view = 60° (PI/3), split by screen width
-	start_x = player->angle - (PI / 6); // Start angle = center player angle - half FOV
+	fraction = FOV_R / WIDTH;         // Field of view = 60° (PI/3), split by screen width
+	start_x = player->angle - (FOV_R / 2); // Start angle = center player angle - half FOV
 
 	// Step 4: Cast rays for each column and draw walls
 	i = 0;

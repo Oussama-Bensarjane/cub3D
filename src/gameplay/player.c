@@ -1,4 +1,4 @@
-# include "../../includes/cub3d.h"
+# include "cub3d.h"
 
 /**
  * init_player
@@ -11,8 +11,8 @@ void	init_player(t_player *player)
 	player->x = WIDTH / 2;
 	player->y = HEIGHT / 2;
 	player->angle = PI / 2; // Facing "upwards" for NO, etc.
-	player->speed = 10;
-	player->angle_speed = 60.0f / WIDTH;
+	player->speed = SPEED;
+	player->angle_speed = FOV_D / WIDTH;
 	player->key_up = false;
 	player->key_down = false;
 	player->key_right = false;
