@@ -1,17 +1,16 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Iincludes
-LDFLAGS := -L./lib/mlx/ -lmlx -L./lib/libft/ -lft\
-	-framework OpenGL -framework AppKit
+CFLAGS := -Wall -Wextra -Werror -Ilib/libft -Ilib/mlx -Iincludes
+LDFLAGS := -L./lib/libft/ -lft -L./lib/mlx/ -lmlx -lXext -lX11 -lm -lz
 
 # ================================ Libraries ================================
 
 # MLX
-MLX_DIR :=	lib/mlx/
+MLX_DIR :=	lib/mlx
 MLX :=		$(MLX_DIR)/libmlx.a
 
 # LIBFT
-LIBFT_DIR :=	lib/libft/
+LIBFT_DIR :=	lib/libft
 LIBFT :=	$(LIBFT_DIR)/libft.a
 LIBFT_FILES	:= \
 		ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c \
@@ -23,7 +22,7 @@ LIBFT_FILES	:= \
 		ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
 		get_next_line.c get_next_line_utils.c
-LIBFT_SRCS	:= $(addprefix $(LIBFT_DIR), $(LIBFT_FILES))
+LIBFT_SRCS	:= $(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
 
 # ================================ Cub3D ================================
 
@@ -64,14 +63,17 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCLUDES)
 	@echo "$(COLOR_BLUE)📦 Compiling $<...$(COLOR_RESET)"
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -O3 -c $< -o $@
 
 $(MLX):
+	@echo "$(COLOR_BLUE)📚 Building MLX...$(COLOR_RESET)"
 	@make -C $(MLX_DIR)
+	@echo "$(COLOR_GREEN)✅ Successfully built $(MLX)!$(COLOR_RESET)"
 
 $(LIBFT): $(LIBFT_SRCS) $(LIBFT_DIR)/libft.h
 	@echo "$(COLOR_BLUE)📚 Building libft...$(COLOR_RESET)"
 	@make -C $(LIBFT_DIR)
+	@echo "$(COLOR_GREEN)✅ Successfully built $(LIBFT)!$(COLOR_RESET)"
 
 all: $(NAME)
 
