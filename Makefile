@@ -1,12 +1,32 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Ilib/libft -Ilib/mlx -Iincludes
-LDFLAGS := -L./lib/libft/ -lft -L./lib/mlx/ -lmlx -lXext -lX11 -lm -lz
+CFLAGS := -Wall -Wextra -Werror -Ilib/libft -Iincludes
+LDFLAGS := -L./lib/libft/ -lft
+
+OSFLAG := $(shell uname -s)
+ifeq ($(OSFLAG),Linux)
+CFLAGS := $(CFLAGS) -Ilib/mlx_linux
+endif
+ifeq ($(OSFLAG),Darwin)
+CFLAGS := $(CFLAGS) -Ilib/mlx_mac
+endif
+
+ifeq ($(OSFLAG),Linux)
+LDFLAGS := $(LDFLAGS) -L./lib/mlx_linux/ -lmlx -lXext -lX11 -lm -lz
+endif
+ifeq ($(OSFLAG),Darwin)
+LDFLAGS := $(LDFLAGS) -L./lib/mlx_mac/ -lmlx -framework OpenGL -framework AppKit
+endif
 
 # ================================ Libraries ================================
 
 # MLX
-MLX_DIR :=	lib/mlx
+ifeq ($(OSFLAG),Linux)
+MLX_DIR :=	lib/mlx_linux
+endif
+ifeq ($(OSFLAG),Darwin)
+MLX_DIR :=	lib/mlx_mac
+endif
 MLX :=		$(MLX_DIR)/libmlx.a
 
 # LIBFT
@@ -63,7 +83,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJ)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCLUDES)
 	@echo "$(COLOR_BLUE)📦 Compiling $<...$(COLOR_RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -O3 -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(MLX):
 	@echo "$(COLOR_BLUE)📚 Building MLX...$(COLOR_RESET)"
