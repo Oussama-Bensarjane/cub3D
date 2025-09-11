@@ -1,4 +1,4 @@
-# include "../../includes/cub3d.h"
+# include "cub3d.h"
 
 /**
  * exit_failure
@@ -24,7 +24,7 @@ void	game_over(t_game *game, char *msg, int exit_status)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 	{
-		//mlx_destroy_display(game->mlx);
+		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
 	if (msg)
