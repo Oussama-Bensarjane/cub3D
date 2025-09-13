@@ -12,7 +12,7 @@ void	init_player(t_player *player)
 	player->y = HEIGHT / 2;
 	player->angle = PI / 2; // Facing "upwards" for NO, etc.
 	player->speed = SPEED;
-	player->angle_speed = FOV_D / WIDTH;
+	player->angle_speed = FOV / WIDTH;
 	player->key_up = false;
 	player->key_down = false;
 	player->key_right = false;
@@ -33,18 +33,22 @@ int	key_press(int keycode, t_game *game)
 	player = &game->player;
 	if(keycode == ESC)
 		game_over(game, NULL, EXIT_SUCCESS);
-	if(keycode == W)
+	else if(keycode == W)
 		player->key_up = true;
-	if(keycode == S)
+	else if(keycode == S)
 		player->key_down = true;
-	if(keycode == A)
+	else if(keycode == A)
 		player->key_left = true;
-	if(keycode == D)
+	else if(keycode == D)
 		player->key_right = true;
-	if(keycode == LEFT)
+	else if(keycode == LEFT)
 		player->left_rotate = true;
-	if(keycode == RIGHT)
+	else if(keycode == RIGHT)
 		player->right_rotate = true;
+	else if(keycode == SPEEDUP && player->speed < 10)
+		player->speed += 1;
+	else if(keycode == SPEEDDOWN && player->speed > 1)
+		player->speed -= 1;
 	return (0);
 }
 
