@@ -21,7 +21,7 @@ typedef struct s_config
 }	t_config;
 
 int		parse_file(t_config *cfg, char *filename);
-
+void	exit_free(t_config *cfg, char *msg);
 void	free_config(t_config *cfg);
 
 

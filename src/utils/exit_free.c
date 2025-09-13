@@ -1,9 +1,29 @@
 #include "cub3d.h"
 
+void	exit_free(t_config *cfg, char *msg)
+{
+
+	free_config(cfg);
+	printf("Error\n");
+	if (msg)
+		printf("%s\n", msg);
+	exit(1);
+}
+
+void	free_2d_array(char **arr)
+{
+	char	**ptr;
+
+	if (!arr)
+		return ;
+	ptr = arr;
+	while (*ptr)
+		free(*ptr++);
+	free(arr);
+}
+
 void	free_config(t_config *cfg)
 {
-	int	i;
-
 	if (cfg->tex_no)
 		free(cfg->tex_no);
 	if (cfg->tex_so)
@@ -12,15 +32,8 @@ void	free_config(t_config *cfg)
 		free(cfg->tex_we);
 	if (cfg->tex_ea)
 		free(cfg->tex_ea);
-
 	if (cfg->map)
-	{
-		i = 0;
-		while (i < cfg->map_height)
-			free(cfg->map[i++]);
-		free(cfg->map);
-	}
-
+		free_2d_array(cfg->map);
 	cfg->tex_no = NULL;
 	cfg->tex_so = NULL;
 	cfg->tex_we = NULL;
