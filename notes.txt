@@ -1,0 +1,237 @@
+1. print errors into stderr
+
+
+-------------------------------------------level 7 (According to LOTM)--------------------------
+
+------------------------ program args ----------------------------
+[OK]
+-----
+
+./cub3D a b
+Error: usage: ./cub3D <map.cub>
+
+
+[KO]
+-----
+
+./cub3D a
+Error
+Map is empty
+
+---> invalid map extension, should be .cub
+
+
+./cub3D a.cub
+Error
+Map is empty
+
+---> inexist map, (a.cub isnnot exist)
+
+
+
+
+------------------------ Map validation --------------------------
+
+----------------------------------> Emty map (None in file)
+[OK]
+-----
+
+./cub3D media/maps/maps2.cub
+Error
+Map is empty
+
+
+
+----------------------------------> map with whitespace(s) only
+[OK]
+
+./cub3D media/maps/maps2.cub
+Error
+Missing texture path(s)
+
+---> Invalid map
+
+
+----------------------------------> map with arbitary chars
+[OK]
+./cub3D media/maps/maps2.cub
+Error
+Missed config !!!
+
+
+----------------------------------> Missing a config(s) (texture(s) and/or color(s) and/or map )
+[OK]
+-----
+
+./cub3D media/maps/maps2.cub
+Error
+Missing floor/ceiling color
+
+./cub3D media/maps/maps2.cub
+Error
+Missing texture path(s)
+
+./cub3D media/maps/maps2.cub
+Error
+Map is empty
+
+---> Missing map
+
+
+---------------------------------->  Miss with the C/F colors
+[OK]
+-----
+
+[TEST]
+C 210,0,255
+F 256,0,256
+
+Error
+Missing floor/ceiling color
+
+---> floor/ceiling color misconfiguredd
+(R,G,B) values must be integers in the range 0–255
+Example: F 220,100,0
+
+
+
+-------------------------------------------level 2 (According to LOTM)--------------------------
+
+
+---------------------------------->  Miss with the C/F colors
+[KO]
+------
+
+[TEST]----------------------------------------------
+EA ./textures/east.xpm
+WE ./textures/west.xpm
+SO ./textures/south.xpm
+NO .xpm
+
+IT IS PASSES
+
+---> Error (.xpm is a hidden file not extention)
+Invalid texture path(s)
+
+(btw, <texture>.xpm doesn't mean it's valide, should check after if you can open them with R_ONLY)
+
+
+
+-------------------------------------------level 1 (According to LOTM)--------------------------
+
+---------------------------------->  Miss with the MAP
+[OK]
+-----
+
+[TEST]----------------------------------------------
+1
+
+Invalid player spawn count
+
+
+[TEST]----------------------------------------------
+1N
+
+Map not enclosed
+
+
+[TEST]----------------------------------------------
+1111
+1N01
+1110
+
+Map not enclosed
+
+[TEST]
+1111
+1NS1
+1110
+
+Invalid player spawn count
+
+
+[TEST]----------------------------------------------
+1111111111111111111111111
+11111 11 1110101 10111101
+11111 11 1111111 11111111
+11111 11 11N1111 11111111
+11111 11 1111111 11111111
+11111 11 1111111 11111111
+11111011 1111111 1111111111
+11111111 1111111 1111111111
+111111111111111111111111111
+
+Error
+Map open near space
+
+
+[TEST]----------------------------------------------
+1111111111111111111111111
+11111 11 1110101 10111101
+11111 11 1111111 11111111
+11111 11 11N1111 11111111
+11111 11 1111111 11111111
+
+
+
+11111 11 1111111 11111111
+11111111 1111111 1111111111
+11111111 1111111 10000000011
+11111111111111111111111111111    1
+1101                          11
+  1   11
+
+
+
+
+111
+
+RESULT:
+
+[1111111111111111111111111]
+[11111 11 1110101 10111101]
+[11111 11 1111111 11111111]
+[11111 11 11N1111 11111111]
+[11111 11 1111111 11111111]
+[11111 11 1111111 11111111]
+[11111111 1111111 1111111111]
+[11111111 1111111 10000000011]
+[11111111111111111111111111111    1]
+[1101                          11]
+[  1   11]
+[111]
+
+so spaces are like blind spots, and 1 is 42-unit wall an be put anywhere
+0 a free-space where the player can move so it should always rounded with 1s
+
+--> tab(s)	and other chars
+
+Error
+Invalid character in map
+
+--> new line
+
+IGNORED ????????????
+
+
+(I think new line should be treated as misconfig of the map)
+
+
+[KO]
+-----
+
+[TEST]
+1111 1111[5 spaces]
+1W1111111[3 spaces]
+111111111[2 spaces]
+
+RESULT IS GOOD
+[1111 1111]
+[1W1111111]
+[111111111]
+BUT PROBLEM HERE:
+
+cfg->map_height 3
+cfg->map_width 14 (alfawzo lilatwal hhhh)
+
+map_width should be 9 ??
