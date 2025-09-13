@@ -57,7 +57,7 @@ int main(int ac, char **av)
 	if (parse_file(&cfg, av[1]) == -1)
 	{
 		free_config(&cfg);
-		return (10);
+		return (1);
 	}
 	/*	testing... */
 	test(&cfg);

@@ -148,21 +148,21 @@ static int	parse_config_line(t_config *cfg, char *line)
 	return (0);
 }
 
-int check_texture_path(char *path)
+static int check_texture_path(t_config *cfg , char *path)
 {
     size_t len;
-    // int fd;
+    int fd;
 
     if (!path)
         return (-1);
     len = ft_strlen(path);
     if (len < 4 || ft_strncmp(path + len - 4, ".xpm", 3) != 0)
-        return (-1);
+        exit_free(cfg, "Invalid texture extension, should be .xpm");
 
-    // fd = open(path, O_RDONLY);
-    // if (fd == -1)
-    //     return (-1);
-    // close(fd);
+    fd = open(path, O_RDONLY);
+    if (fd == -1)
+        exit_free(cfg, "Could not open texture path");
+    close(fd);
 
     return (0);
 }
@@ -172,11 +172,11 @@ static void	validate_config(t_config *cfg, char *line)
 	if (!cfg->tex_ea || !cfg->tex_no || !cfg->tex_so || !cfg->tex_we)
 		free(line), exit_free(cfg, "Missing texture path(s)");
 	if (cfg->ceiling_color == -1 || cfg->floor_color == -1)
-		free(line), exit_free(cfg, "Missing floor/ceiling color");
-	if (check_texture_path(cfg->tex_no) ||
-        check_texture_path(cfg->tex_so) ||
-        check_texture_path(cfg->tex_we) ||
-        check_texture_path(cfg->tex_ea))
+		free(line), exit_free(cfg, ERR_CLR);
+	if (check_texture_path(cfg, cfg->tex_no) ||
+        check_texture_path(cfg, cfg->tex_so) ||
+        check_texture_path(cfg, cfg->tex_we) ||
+        check_texture_path(cfg, cfg->tex_ea))
         free(line), exit_free(cfg, "Invalid texture path(s)");
 }
 static int is_valid_map_char(char c)
@@ -268,16 +268,39 @@ static void	rm_lst_spc_map(t_config *cfg)
 {
 	int		i;
 	int		len;
+	int		new_map_width;
 
 	i = 0;
+	new_map_width = 0;
 	while (i < cfg->map_height)
 	{
 		len = ft_strlen(cfg->map[i]);
 		while (len > 0 && cfg->map[i][len - 1] == ' ')
 			len--;
 		cfg->map[i][len] = '\0';
+		if (len > new_map_width)
+			new_map_width = len;
 		i++;
 	}
+	cfg->map_width = new_map_width;
+}
+
+static void	check_map_path(t_config *cfg, char *map_path)
+{
+
+	size_t len;
+    int fd;
+
+    if (!map_path)
+        return ;
+    len = ft_strlen(map_path);
+    if (len < 4 || ft_strncmp(map_path + len - 4, ".cub", 3) != 0)
+        exit_free(cfg, "invalid map extension, should be .cub");
+
+    fd = open(map_path, O_RDONLY);
+    if (fd == -1)
+        exit_free(cfg, "Could not open Map file");
+    close(fd);
 }
 
 int parse_file(t_config *cfg, char *filename)
@@ -287,7 +310,10 @@ int parse_file(t_config *cfg, char *filename)
 	char    *line;
 
 	stage = 0;  // 0 = config, 1 = map
+	check_map_path(cfg, filename);
 	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+        exit_free(cfg, "Could not open map_file");
 	while ((line = get_next_line(fd)))
 	{
 		if (stage == 0)
@@ -296,15 +322,25 @@ int parse_file(t_config *cfg, char *filename)
 			{
 				validate_config(cfg, line);
 				stage = 1;
+				add_map_line(cfg, line);
+				// printf("line :[%s]\n", line);
 			}
-			else
+			else if (line[0] != '\n')
 			{
 				if (parse_config_line(cfg, line) == -1)
 					return (-1);
 			}
 		}
-		if (stage == 1 && line[0] != '\n')
+		else if (stage == 1)
+		{
+			// printf("line :[%s]\n", line);
+
+			if (line[0] == '\n') //  blank line inside map
+                (free(line), exit_free(cfg, "Error: empty line inside/after map"));
+			if (!is_map_line(line)) // config lines after map
+                (free(line), exit_free(cfg, "Error: invalid line after map"));
 			add_map_line(cfg, line);
+		}
 		free(line);
 	}
 	close(fd);

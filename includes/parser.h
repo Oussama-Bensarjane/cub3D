@@ -1,6 +1,9 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# define ERR_CLR "Floor/Ceiling color misconfigured\n(R,G,B) \
+values must be integers in the range 0–255\nExample: F 220,100,0"
+
 typedef struct s_config
 {
 	char	*tex_no;
