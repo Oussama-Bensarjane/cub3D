@@ -65,10 +65,11 @@ static void	draw_line(t_player *player, t_game *game, float start_x, int i)
  */
 int draw_loop(t_game *game)
 {
-	t_player	*player;
-	float		fraction;
-	float		start_x;
-	int			i;
+	t_player			*player;
+	static const float	fov = FOV * (PI / 180);
+	static const float	fraction = fov / WIDTH;
+	float				start_x;
+	int					i;
 
 	player = &game->player;
 
@@ -79,8 +80,8 @@ int draw_loop(t_game *game)
 	clear_image(game);
 
 	// Step 3: Prepare raycasting
-	fraction = FOV_R / WIDTH;         // Field of view = 60° (PI/3), split by screen width
-	start_x = player->angle - (FOV_R / 2); // Start angle = center player angle - half FOV
+	// fraction = fov / WIDTH; Field of view = 60° (PI/3), split by screen width
+	start_x = player->angle - (fov / 2); // Start angle = center player angle - half FOV
 
 	// Step 4: Cast rays for each column and draw walls
 	i = 0;
