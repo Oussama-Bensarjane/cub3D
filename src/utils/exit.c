@@ -16,10 +16,17 @@ void	exit_failure(char *msg)
 
 void	game_over(t_game *game, char *msg, int exit_status)
 {
+	char	**ptr;
+
 	if (!game)
 		exit(EXIT_FAILURE);
 	if (game->map)
+	{
+		ptr = game->map;
+		while (*ptr)
+			free(*ptr++);
 		free(game->map);
+	}
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	if (game->win)
