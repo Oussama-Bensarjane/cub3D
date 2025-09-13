@@ -32,7 +32,11 @@ UTL_DIR		:= $(SRC_DIR)/utils
 
 # Source files
 SRCS		:=	$(SRC_DIR)/main.c \
+				$(PAR_DIR)/parse_config.c \
 				$(PAR_DIR)/parse_file.c \
+				$(PAR_DIR)/parse_map.c \
+				$(PAR_DIR)/parse_utils.c \
+				$(PAR_DIR)/validate_map.c \
 				$(UTL_DIR)/exit_free.c \
 				$(UTL_DIR)/ft_split_set.c \
 

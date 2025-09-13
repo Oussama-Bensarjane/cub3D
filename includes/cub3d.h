@@ -10,10 +10,6 @@
 # include "../libft/libft.h"
 
 
-void	cleanup(t_config *cfg);
-void	free_2d_array(char **arr);
-char	**ft_split_set(char const *s, char *seps);
-
 
 
 
