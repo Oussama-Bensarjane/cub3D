@@ -193,7 +193,7 @@ static int	validate_map(t_config *cfg)
 	char c;
 
 	player_count = 0;
-    if (!cfg->map || cfg->map_height == 0)
+	if (!cfg->map || cfg->map_height == 0)
         return (exit_free(cfg, "Map is empty"), -1);
 	y = -1;
     while (++y < cfg->map_height)
