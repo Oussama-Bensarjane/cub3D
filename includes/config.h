@@ -7,8 +7,7 @@
 # define HEIGHT 720
 # define BLOCK 64
 
-# define FOV_D 60.0f
-# define FOV_R (PI / 3)
+# define FOV 60.0f
 # define SPEED 1
 
  #if defined(__linux__)
@@ -19,6 +18,8 @@
   # define D 100
   # define LEFT 65361
   # define RIGHT 65363
+  # define SPEEDUP 65451
+  # define SPEEDDOWN 65453
  #elif defined(__APPLE__)
   # define ESC 53
   # define W 13
