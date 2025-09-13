@@ -323,7 +323,6 @@ int parse_file(t_config *cfg, char *filename)
 				validate_config(cfg, line);
 				stage = 1;
 				add_map_line(cfg, line);
-				// printf("line :[%s]\n", line);
 			}
 			else if (line[0] != '\n')
 			{
@@ -333,11 +332,9 @@ int parse_file(t_config *cfg, char *filename)
 		}
 		else if (stage == 1)
 		{
-			// printf("line :[%s]\n", line);
-
-			if (line[0] == '\n') //  blank line inside map
+			if (line[0] == '\n')
                 (free(line), exit_free(cfg, "Error: empty line inside/after map"));
-			if (!is_map_line(line)) // config lines after map
+			if (!is_map_line(line))
                 (free(line), exit_free(cfg, "Error: invalid line after map"));
 			add_map_line(cfg, line);
 		}
