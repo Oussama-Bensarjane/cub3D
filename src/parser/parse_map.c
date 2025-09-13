@@ -36,35 +36,35 @@ void	add_map_line(t_config *cfg, char *line)
 
 void normalize_map(t_config *cfg)
 {
-    char **new_map;
-    int i;
-    int j;
-    int len;
+	char **new_map;
+	int i;
+	int j;
+	int len;
 
-    new_map = malloc(sizeof(char*) * (cfg->map_height + 1));
-    if (!new_map)
-        exit_free(cfg, "Malloc failed");
-    for (i = 0; i < cfg->map_height; i++)
-    {
-        new_map[i] = malloc(cfg->map_width + 1);
-        if (!new_map[i])
+	new_map = malloc(sizeof(char*) * (cfg->map_height + 1));
+	if (!new_map)
+		exit_free(cfg, "Malloc failed");
+	for (i = 0; i < cfg->map_height; i++)
+	{
+		new_map[i] = malloc(cfg->map_width + 1);
+		if (!new_map[i])
 		{
 			while (--i >= 0)
-            	free(new_map[i]);
-        	free(new_map);
-            exit_free(cfg, "Malloc failed");
+				free(new_map[i]);
+			free(new_map);
+			exit_free(cfg, "Malloc failed");
 		}
-        len = ft_strlen(cfg->map[i]);
+		len = ft_strlen(cfg->map[i]);
 		j = -1;
-        while (++j < len)
-            new_map[i][j] = cfg->map[i][j];
-        while (j < cfg->map_width)
-            new_map[i][j++] = ' ';
-        new_map[i][cfg->map_width] = '\0';
-    }
-    new_map[cfg->map_height] = NULL;
-    free_2d_array(cfg->map);
-    cfg->map = new_map;
+		while (++j < len)
+			new_map[i][j] = cfg->map[i][j];
+		while (j < cfg->map_width)
+			new_map[i][j++] = ' ';
+		new_map[i][cfg->map_width] = '\0';
+	}
+	new_map[cfg->map_height] = NULL;
+	free_2d_array(cfg->map);
+	cfg->map = new_map;
 }
 
 void	rm_lst_spc_map(t_config *cfg)

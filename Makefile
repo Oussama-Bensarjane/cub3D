@@ -5,7 +5,7 @@
 # ******************************* VARIABLES ********************************** #
 NAME		:= cub3D
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -Iincludes #-fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -Iincludes -fsanitize=address
 LDFLAGS		:= -Llibft -lft
 LIBFT		:= libft/libft.a
 LIBFT_FILES	:= \

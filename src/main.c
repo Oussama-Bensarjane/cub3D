@@ -19,7 +19,7 @@ static void	init_config(t_config *cfg)
 static void	test(t_config *cfg)
 {
 	for (int i = 0; cfg->map[i]; i++)
-    	printf("[%s]\n", cfg->map[i]);
+		printf("[%s]\n", cfg->map[i]);
 	printf("--------------------\n");
 	printf("cfg->map_height %d\n", cfg->map_height);
 	printf("cfg->map_width %d\n", cfg->map_width);
@@ -53,12 +53,8 @@ int main(int ac, char **av)
 		return (1);
 	}
 	init_config(&cfg);
-
-	if (parse_file(&cfg, av[1]) == -1)
-	{
-		free_config(&cfg);
-		return (1);
-	}
+	parse_file(&cfg, av[1]);
+	
 	/*	testing... */
 	test(&cfg);
 	/* ---------  */

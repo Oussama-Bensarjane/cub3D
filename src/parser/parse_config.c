@@ -23,9 +23,9 @@ int parse_config_line(t_config *cfg, char *line)
 	else if (!ft_strncmp(parts[0], "EA", len) && !cfg->tex_ea)
 		cfg->tex_ea = ft_strdup(parts[1]);
 	else if (!ft_strncmp(parts[0], "F", len) && cfg->floor_color == -1)
-        cfg->floor_color = parse_color(parts[1]);
-    else if (!ft_strncmp(parts[0], "C", len) && cfg->ceiling_color == -1)
-        cfg->ceiling_color = parse_color(parts[1]);
+		cfg->floor_color = parse_color(parts[1]);
+	else if (!ft_strncmp(parts[0], "C", len) && cfg->ceiling_color == -1)
+		cfg->ceiling_color = parse_color(parts[1]);
 	else
 	{
 		free_2d_array(parts);
@@ -47,21 +47,21 @@ int	strict_color(char *color)
 	if (!color || !ft_isdigit(color[0]) || !ft_isdigit(color[ft_strlen(color) - 1]))
 		return (-1);
 	while (color[i])
-    {
-        if (ft_isdigit(color[i]))
+	{
+		if (ft_isdigit(color[i]))
 		{
 			if (++nbr_count > 9)
 				return (-1);
 		}
-        else if (color[i] == ',')
-        {
+		else if (color[i] == ',')
+		{
 			if (++comma > 2)
 				break ;
-        }
-        else
+		}
+		else
 			return (-1);
 		i++;
-    }
+	}
 	if (comma != 2)
 		return (-1);
 	return(0);
@@ -95,26 +95,25 @@ void	validate_config(t_config *cfg, char *line)
 	if (cfg->ceiling_color == -1 || cfg->floor_color == -1)
 		free(line), exit_free(cfg, ERR_CLR);
 	if (check_texture_path(cfg, cfg->tex_no) ||
-        check_texture_path(cfg, cfg->tex_so) ||
-        check_texture_path(cfg, cfg->tex_we) ||
-        check_texture_path(cfg, cfg->tex_ea))
-        free(line), exit_free(cfg, "Invalid texture path(s)");
+		check_texture_path(cfg, cfg->tex_so) ||
+		check_texture_path(cfg, cfg->tex_we) ||
+		check_texture_path(cfg, cfg->tex_ea))
+		free(line), exit_free(cfg, "Invalid texture path(s)");
 }
 
 int check_texture_path(t_config *cfg , char *path)
 {
-    size_t len;
-    int fd;
+	size_t len;
+	int fd;
 
-    if (!path)
-        return (-1);
-    len = ft_strlen(path);
-    if (len < 4 || ft_strncmp(path + len - 4, ".xpm", 3) != 0)
-        exit_free(cfg, "Invalid texture extension, should be .xpm");
-
-    fd = open(path, O_RDONLY);
-    if (fd == -1)
-        exit_free(cfg, "Could not open texture path");
-    close(fd);
-    return (0);
+	if (!path)
+		return (-1);
+	len = ft_strlen(path);
+	if (len <= 4 || ft_strncmp(path + len - 4, ".xpm", 3) != 0)
+		exit_free(cfg, "Invalid texture extension, Should be <texture>.xpm");
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		exit_free(cfg, "Could not open texture path");
+	close(fd);
+	return (0);
 }

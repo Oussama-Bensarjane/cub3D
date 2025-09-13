@@ -4,9 +4,9 @@ void	exit_free(t_config *cfg, char *msg)
 {
 
 	free_config(cfg);
-	printf("Error\n");
+	ft_putendl_fd("Error", 2);
 	if (msg)
-		printf("%s\n", msg);
+		ft_putendl_fd(msg, 2);
 	exit(1);
 }
 
