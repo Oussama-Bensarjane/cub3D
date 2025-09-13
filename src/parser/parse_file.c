@@ -70,22 +70,28 @@ static int	strict_color(char *color)
 {
 	int	i;
 	int	comma;
+	int	nbr_count;
 
 	i = 0;
 	comma = 0;
+	nbr_count = 0;
 	if (!color || !ft_isdigit(color[0]) || !ft_isdigit(color[ft_strlen(color) - 1]))
 		return (-1);
 	while (color[i])
     {
         if (ft_isdigit(color[i]))
-            i++;
+		{
+			if (++nbr_count > 9)
+				return (-1);
+		}
         else if (color[i] == ',')
         {
-            comma++;
-			i++;
+			if (++comma > 2)
+				break ;
         }
         else
-            return (-1);
+			return (-1);
+		i++;
     }
 	if (comma != 2)
 		return (-1);
