@@ -6,54 +6,52 @@ void	add_map_line(t_config *cfg, char *line)
 	int		i;
 	int		len;
 
-	// Allocate new array (+2: one for new line, one for NULL)
 	new_map = malloc(sizeof(char *) * (cfg->map_height + 2));
-	if (!new_map)
+	if (!new_map || !line)
 		return ;
-	// copy old map lines
 	if (cfg->map)
 	{
 		i = -1;
 		while (++i < cfg->map_height)
-			new_map[i]=cfg->map[i];
+			new_map[i] = cfg->map[i];
 	}
-	// deplicat and add the new line
 	new_map[cfg->map_height] = ft_strdup_trimnl(line);
 	if (!new_map[cfg->map_height])
 		(free(new_map), exit_free(cfg, "Malloc faileed"));
 	new_map[cfg->map_height + 1] = NULL;
-	// free oold map container but not the content
 	if (cfg->map)
 		free(cfg->map);
-	// replace with the new container
 	cfg->map = new_map;
 	cfg->map_height++;
-	// update the width 
 	len = ft_strlen(cfg->map[cfg->map_height - 1]);
 	if (len > cfg->map_width)
 		cfg->map_width = len;
 }
 
-void normalize_map(t_config *cfg)
+static void	free_prev(t_config *cfg, char **new_map, int i)
 {
-	char **new_map;
-	int i;
-	int j;
-	int len;
+	while (--i >= 0)
+		free(new_map[i]);
+	free(new_map);
+	exit_free(cfg, "Malloc failed");
+}
 
-	new_map = malloc(sizeof(char*) * (cfg->map_height + 1));
+void	normalize_map(t_config *cfg)
+{
+	char	**new_map;
+	int		i;
+	int		j;
+	int		len;
+
+	new_map = malloc(sizeof(char *) * (cfg->map_height + 1));
 	if (!new_map)
 		exit_free(cfg, "Malloc failed");
-	for (i = 0; i < cfg->map_height; i++)
+	i = -1;
+	while (++i < cfg->map_height)
 	{
 		new_map[i] = malloc(cfg->map_width + 1);
 		if (!new_map[i])
-		{
-			while (--i >= 0)
-				free(new_map[i]);
-			free(new_map);
-			exit_free(cfg, "Malloc failed");
-		}
+			free_prev(cfg, new_map, i);
 		len = ft_strlen(cfg->map[i]);
 		j = -1;
 		while (++j < len)
