@@ -5,6 +5,8 @@ char	*ft_strdup_trimnl(char *s)
 	size_t	len;
 	char	*dup;
 
+	if (!s)
+		return (NULL);
 	len = ft_strlen(s);
 	if (len > 0 && s[len -1] == '\n')
 		len--;
@@ -15,33 +17,41 @@ char	*ft_strdup_trimnl(char *s)
 	return (dup);
 }
 
-int is_map_line(char *line)
+int	is_map_line(char *line)
 {
-	int i;
+	int	i;
 
 	if (!line || !line[0] || line[0] == '\n')
-		return (0); // not a map line
-
+		return (0);
 	i = 0;
 	while (line[i])
 	{
 		if (!ft_strchr("01NSEW \t\n", line[i]))
-			return (0); // invalid char found
+			return (0);
 		i++;
 	}
-	return (1); // valid map line
+	return (1);
 }
 
 void	check_map_path(t_config *cfg, char *map_path)
 {
-
-	size_t len;
-	int fd;
+	size_t	file_nm_len;
+	int		fd;
+	char	*tmp;
 
 	if (!map_path)
 		return ;
-	len = ft_strlen(map_path);
-	if (len <= 4 || ft_strncmp(map_path + len - 4, ".cub", 3) != 0)
+	tmp = ft_strrchr(map_path, '/');
+	if (tmp)
+	{
+		if (tmp[1] == '.')
+			exit_free(cfg, "Hidden files not allowed, Should be <map>.cub");
+	}
+	else if (map_path[0] == '.')
+		exit_free(cfg, "Hidden files not allowed, Should be <map>.cub");
+	file_nm_len = ft_strlen(map_path);
+	if (file_nm_len <= 4
+		|| ft_strncmp(map_path + file_nm_len - 4, ".cub", 3) != 0)
 		exit_free(cfg, "Invalid map extension, Should be <map>.cub");
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
