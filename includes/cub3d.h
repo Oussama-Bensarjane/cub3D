@@ -21,8 +21,8 @@ void	move_player(t_game *game);
 // gameplay/utils.c
 void	put_pixel(int x, int y, int color, t_game *game);
 void	clear_image(t_game *game);
-float	fixed_distance(float x1, float y1, float x2, float y2, t_game *game);
-bool	touch(float px, float py, t_game *game);
+double	fixed_distance(double x1, double y1, double x2, double y2, t_game *game);
+bool	touch(double px, double py, t_game *game);
 
 // gameplay/gameplay.c
 int		draw_loop(t_game *game);
