@@ -1,6 +1,6 @@
 NAME := cub3D
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Ilib/libft -Iincludes
+CFLAGS := -Wall -Wextra -Werror -Ilib/libft -Iincludes -fsanitize=address
 LDFLAGS := -L./lib/libft/ -lft
 
 OSFLAG := $(shell uname -s)
