@@ -26,11 +26,17 @@ int	is_map_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!ft_strchr("01NSEW \t\n", line[i]))
+		if (!ft_strchr("01NSEW \n", line[i]))
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+int	is_valid_map_char(char c)
+{
+	return (c == '0' || c == '1' || c == ' '
+		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
 void	check_map_path(t_config *cfg, char *map_path)
