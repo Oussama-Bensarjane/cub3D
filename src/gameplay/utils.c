@@ -60,12 +60,12 @@ void clear_image(t_game *game)
  *
  * @return Corrected distance between the two points
  */
-float	fixed_distance(float x1, float y1, float x2, float y2, t_game *game)
+double	fixed_distance(double x1, double y1, double x2, double y2, t_game *game)
 {
-	float	delta_x;
-	float	delta_y;
-	float	angle;
-	float	dist;
+	double	delta_x;
+	double	delta_y;
+	double	angle;
+	double	dist;
 
 	// Differences between the two points
 	delta_x = x2 - x1;
@@ -83,22 +83,25 @@ float	fixed_distance(float x1, float y1, float x2, float y2, t_game *game)
  * touch
  * Checks if the given position (px, py) is inside a wall block.
  *
- * @param px    X position in the world (float, not grid index).
- * @param py    Y position in the world (float, not grid index).
+ * @param px    X position in the world (double, not grid index).
+ * @param py    Y position in the world (double, not grid index).
  * @param game  Pointer to game data (contains the map).
  *
  * @return true  If the position is within a wall block ('1').
  * @return false Otherwise (free space).
  */
-bool	touch(float px, float py, t_game *game)
+bool	touch(double px, double py, t_game *game)
 {
 	int		x;
 	int		y;
 	char	tile;
 
-
 	x = px / BLOCK;
 	y = py / BLOCK;
+	if (y > 9)
+		return (true);
+	if ((size_t)x >= ft_strlen(game->map[y]))
+		return (true);
 	tile = game->map[y][x];
 	if(tile == '1' || tile == ' ')
 		return (true);

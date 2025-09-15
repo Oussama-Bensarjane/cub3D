@@ -11,7 +11,7 @@ void	init_player(t_player *player)
 	player->x = WIDTH / 2;
 	player->y = HEIGHT / 2;
 	player->angle = PI / 2; // Facing "upwards" for NO, etc.
-	player->speed = SPEED;
+	player->speed = 4;
 	player->angle_speed = FOV / WIDTH;
 	player->key_up = false;
 	player->key_down = false;
@@ -45,7 +45,7 @@ int	key_press(int keycode, t_game *game)
 		player->left_rotate = true;
 	else if(keycode == RIGHT)
 		player->right_rotate = true;
-	else if(keycode == SPEEDUP && player->speed < 10)
+	else if(keycode == SPEEDUP && player->speed < SPEED_MAX)
 		player->speed += 1;
 	else if(keycode == SPEEDDOWN && player->speed > 1)
 		player->speed -= 1;
@@ -78,7 +78,7 @@ int	key_release(int keycode, t_player *player)
  * Checks if the player can move to (new_x, new_y) without colliding with walls.
  * Adds a "radius" to avoid clipping through corners.
  */
-static bool	can_move(float new_x, float new_y, t_game *game)
+static bool	can_move(double new_x, double new_y, t_game *game)
 {
 	int	radius;
 
@@ -106,10 +106,10 @@ static bool	can_move(float new_x, float new_y, t_game *game)
 void	move_player(t_game *game)
 {
 	t_player	*player;
-	float		new_x;
-	float		new_y;
-	float		cos_angle;
-	float		sin_angle;
+	double		new_x;
+	double		new_y;
+	double		cos_angle;
+	double		sin_angle;
 
 	player = &game->player;
 	new_x = player->x;

@@ -9,14 +9,14 @@
  * @param start_x  Angle of the current ray relative to the player
  * @param i        X-coordinate (column) on the screen where the slice is drawn
  */
-static void	draw_line(t_player *player, t_game *game, float start_x, int i)
+static void	draw_line(t_player *player, t_game *game, double start_x, int i)
 {
-	float	cos_angle;
-	float	sin_angle;
-	float	ray_x;
-	float	ray_y;
-	float	dist;
-	float	height;
+	double	cos_angle;
+	double	sin_angle;
+	double	ray_x;
+	double	ray_y;
+	double	dist;
+	double	height;
 	int		start_y;
 	int		end;
 
@@ -35,7 +35,7 @@ static void	draw_line(t_player *player, t_game *game, float start_x, int i)
 	// Step 2: Calculate distance to the wall, correcting for fish-eye effect
 	// Taller slice for closer walls, shorter for farther walls
 	dist = fixed_distance(player->x, player->y, ray_x, ray_y, game);
-	height = (BLOCK / dist) * (WIDTH / 2);
+	height = (BLOCK * WIDTH) / dist * (2 * tan(PI / 6));
 
 	// Step 4: Compute vertical start/end positions for drawing
 	start_y = (HEIGHT - height) / 2;
@@ -66,9 +66,9 @@ static void	draw_line(t_player *player, t_game *game, float start_x, int i)
 int draw_loop(t_game *game)
 {
 	t_player			*player;
-	static const float	fov = FOV * (PI / 180);
-	static const float	fraction = fov / WIDTH;
-	float				start_x;
+	static const double	fov = FOV * (PI / 180);
+	static const double	fraction = fov / WIDTH;
+	double				start_x;
 	int					i;
 
 	player = &game->player;
