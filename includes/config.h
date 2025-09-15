@@ -8,7 +8,7 @@
 # define BLOCK 64
 
 # define FOV 60.0f
-# define SPEED 1
+# define SPEED_MAX 15
 
  #if defined(__linux__)
   # define ESC 65307
@@ -28,14 +28,16 @@
   # define D 2
   # define LEFT 123
   # define RIGHT 124
+  # define SPEEDUP 0x45
+  # define SPEEDDOWN 0x4E
  #endif
 
 typedef struct	s_player
 {
-	float	x;
-	float	y;
-	float	angle;
-	float	angle_speed;
+	double	x;
+	double	y;
+	double	angle;
+	double	angle_speed;
 	int		speed;
 	bool	key_up;
 	bool	key_down;
