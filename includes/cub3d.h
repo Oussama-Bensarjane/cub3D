@@ -9,8 +9,4 @@
 # include "textures.h"
 # include "../libft/libft.h"
 
-
-
-
-
 #endif

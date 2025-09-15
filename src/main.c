@@ -35,18 +35,18 @@ static void	test(t_config *cfg)
 	printf("player_dir :[%c]\n", cfg->player_dir);
 	printf("player_x :[%d]\n", cfg->player_x);
 	printf("player_y :[%d]\n", cfg->player_y);
-
 }
-void	f()
+
+void	f(void)
 {
 	system("leaks cub3D");
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	// atexit(f);
-	t_config cfg;
+	t_config	cfg;
 
+	atexit(f);
 	if (ac != 2)
 	{
 		printf("Error: usage: %s <map.cub>\n", av[0]);
@@ -54,11 +54,7 @@ int main(int ac, char **av)
 	}
 	init_config(&cfg);
 	parse_file(&cfg, av[1]);
-	
-	/*	testing... */
 	test(&cfg);
-	/* ---------  */
-
 	cleanup(&cfg);
 	return (0);
 }

@@ -2,12 +2,11 @@
 
 void	exit_free(t_config *cfg, char *msg)
 {
-
 	free_config(cfg);
 	ft_putendl_fd("Error", 2);
 	if (msg)
 		ft_putendl_fd(msg, 2);
-	exit(1);
+	exit (1);
 }
 
 void	free_2d_array(char **arr)
@@ -44,9 +43,4 @@ void	free_config(t_config *cfg)
 void	cleanup(t_config *cfg)
 {
 	free_config(cfg);
-
-	/*
-	 * Engine part cleaning ...
-	 */
-
 }
