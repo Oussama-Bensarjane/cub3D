@@ -30,20 +30,6 @@ void	clear_image(t_game *game)
 	}
 }
 
-double	fixed_distance(double x1, double y1, double x2, double y2, t_game *game)
-{
-	double	delta_x;
-	double	delta_y;
-	double	angle;
-	double	dist;
-
-	delta_x = x2 - x1;
-	delta_y = y2 - y1;
-	angle = atan2(delta_y, delta_x) - game->player.angle;
-	dist = sqrt((delta_x * delta_x) + (delta_y * delta_y)) * cos(angle);
-	return (dist);
-}
-
 bool	touch(double px, double py, t_game *game)
 {
 	int		x;
@@ -52,10 +38,6 @@ bool	touch(double px, double py, t_game *game)
 
 	x = px / BLOCK;
 	y = py / BLOCK;
-	if (y > 9)
-		return (true);
-	if ((size_t)x >= ft_strlen(game->map[y]))
-		return (true);
 	tile = game->map[y][x];
 	if (tile == '1')
 		return (true);
