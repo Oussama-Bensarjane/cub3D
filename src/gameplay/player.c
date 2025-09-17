@@ -1,16 +1,12 @@
-# include "cub3d.h"
+#include "cub3d.h"
 
-/**
- * init_player
- * Initializes the player at cpecific position of the screen with default values.
- */
 void	init_player(t_player *player)
 {
 	if (!player)
 		return ;
 	player->x = WIDTH / 2;
 	player->y = HEIGHT / 2;
-	player->angle = PI / 2; // Facing "upwards" for NO, etc.
+	player->angle = PI / 2;
 	player->speed = 4;
 	player->angle_speed = FOV / WIDTH;
 	player->key_up = false;
@@ -21,54 +17,45 @@ void	init_player(t_player *player)
 	player->right_rotate = false;
 }
 
-/**
- * key_press
- * Handles key press events, updating player state accordingly.
- * Special case: ESC exits the game.
- */
 int	key_press(int keycode, t_game *game)
 {
 	t_player	*player;
 
 	player = &game->player;
-	if(keycode == ESC)
+	if (keycode == ESC)
 		game_over(game, NULL, EXIT_SUCCESS);
-	else if(keycode == W)
+	else if (keycode == W)
 		player->key_up = true;
-	else if(keycode == S)
+	else if (keycode == S)
 		player->key_down = true;
-	else if(keycode == A)
+	else if (keycode == A)
 		player->key_left = true;
-	else if(keycode == D)
+	else if (keycode == D)
 		player->key_right = true;
-	else if(keycode == LEFT)
+	else if (keycode == LEFT)
 		player->left_rotate = true;
-	else if(keycode == RIGHT)
+	else if (keycode == RIGHT)
 		player->right_rotate = true;
-	else if(keycode == SPEEDUP && player->speed < SPEED_MAX)
+	else if (keycode == SPEEDUP && player->speed < SPEED_MAX)
 		player->speed += 1;
-	else if(keycode == SPEEDDOWN && player->speed > 1)
+	else if (keycode == SPEEDDOWN && player->speed > 1)
 		player->speed -= 1;
 	return (0);
 }
 
-/**
- * key_release
- * Handles key release events, resetting movement/rotation flags.
- */
 int	key_release(int keycode, t_player *player)
 {
-	if(keycode == W)
+	if (keycode == W)
 		player->key_up = false;
-	if(keycode == S)
+	if (keycode == S)
 		player->key_down = false;
-	if(keycode == A)
+	if (keycode == A)
 		player->key_left = false;
-	if(keycode == D)
+	if (keycode == D)
 		player->key_right = false;
-	if(keycode == LEFT)
+	if (keycode == LEFT)
 		player->left_rotate = false;
-	if(keycode == RIGHT)
+	if (keycode == RIGHT)
 		player->right_rotate = false;
 	return (0);
 }
@@ -94,15 +81,6 @@ static bool	can_move(double new_x, double new_y, t_game *game)
 	return (true);
 }
 
-/**
- * move_player
- * Updates player position and angle based on pressed keys.
- * Handles:
- *   - Forward/backward movement (W, S)
- *   - Strafing (A, D)
- *   - Rotation (LEFT, RIGHT)
- * Also ensures player cannot walk through walls.
- */
 void	move_player(t_game *game)
 {
 	t_player	*player;
