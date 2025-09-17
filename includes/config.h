@@ -32,6 +32,21 @@
 #  define SPEEDDOWN 0x4E
 # endif
 
+typedef struct s_ray
+{
+	double	dir_x;
+	double	dir_y;
+	int		map_x;
+	int		map_y;
+	double	delta_x;
+	double	delta_y;
+	int		step_x;
+	int		step_y;
+	double	side_x;
+	double	side_y;
+	int		side;
+}	t_ray;
+
 typedef struct s_player
 {
 	double	x;

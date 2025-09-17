@@ -74,22 +74,6 @@ void	put_pixel(int x, int y, int color, t_game *game);
 void	clear_image(t_game *game);
 
 /**
- * fixed_distance
- * Computes the distance between two points (x1, y1) and (x2, y2),
- * then adjusts it based on the player's viewing angle to remove
- * the fish-eye effect in ray-casting (cosine correction).
- *
- * @param x1    Starting x position
- * @param y1    Starting y position
- * @param x2    Target x position
- * @param y2    Target y position
- * @param game  Pointer to game data (for player angle)
- *
- * @return Corrected distance between the two points
- */
-double	fixed_distance(double x1, double y1, double x2, double y2, t_game *game);
-
-/**
  * touch
  * Checks if the given position (px, py) is inside a wall block.
  *
@@ -102,8 +86,13 @@ double	fixed_distance(double x1, double y1, double x2, double y2, t_game *game);
  */
 bool	touch(double px, double py, t_game *game);
 
-// gameplay/gameplay.c
+// gameplay/init_dda.c
+void	init_dda(t_player *player, t_ray *ray, double angle);
 
+// gameplay/raycaster.c
+void	raycaster(t_player *player, t_game *game, double angle, int x);
+
+// gameplay/gameplay.c
 /**
  * draw_loop
  * Main rendering loop called every frame.
@@ -118,5 +107,4 @@ bool	touch(double px, double py, t_game *game);
  * @return 0   Standard return for MLX loop hook
  */
 int		draw_loop(t_game *game);
-
 #endif
