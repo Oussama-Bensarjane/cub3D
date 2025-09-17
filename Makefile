@@ -61,6 +61,8 @@ SRC :=	$(SRCDIR)/main.c
 SRC :=	$(SRC) \
 		$(GPLAY_DIR)/utils.c \
 		$(GPLAY_DIR)/player.c \
+		$(GPLAY_DIR)/init_dda.c \
+		$(GPLAY_DIR)/raycaster.c \
 		$(GPLAY_DIR)/gameplay.c
 
 # utils
