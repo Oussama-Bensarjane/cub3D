@@ -52,6 +52,8 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	angle;
+	double	cos_angle;
+	double	sin_angle;
 	double	angle_speed;
 	int		speed;
 	bool	key_up;

@@ -50,6 +50,8 @@ int		key_release(int keycode, t_player *player);
  * Also ensures player cannot walk through walls.
  */
 void	move_player(t_game *game);
+void	update_position(t_player *player, t_game *game,
+		double new_x, double new_y);
 
 // gameplay/utils.c
 
