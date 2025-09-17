@@ -1,5 +1,5 @@
 #ifndef CONFIG_H
-#define CONFIG_H
+# define CONFIG_H
 
 # define PI 3.141592653589
 
@@ -10,29 +10,29 @@
 # define FOV 60.0f
 # define SPEED_MAX 15
 
- #if defined(__linux__)
-  # define ESC 65307
-  # define W 119
-  # define A 97
-  # define S 115
-  # define D 100
-  # define LEFT 65361
-  # define RIGHT 65363
-  # define SPEEDUP 65451
-  # define SPEEDDOWN 65453
- #elif defined(__APPLE__)
-  # define ESC 53
-  # define W 13
-  # define A 0
-  # define S 1
-  # define D 2
-  # define LEFT 123
-  # define RIGHT 124
-  # define SPEEDUP 0x45
-  # define SPEEDDOWN 0x4E
- #endif
+# if defined(__linux__)
+#  define ESC 65307
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define LEFT 65361
+#  define RIGHT 65363
+#  define SPEEDUP 65451
+#  define SPEEDDOWN 65453
+# elif defined(__APPLE__)
+#  define ESC 53
+#  define W 13
+#  define A 0
+#  define S 1
+#  define D 2
+#  define LEFT 123
+#  define RIGHT 124
+#  define SPEEDUP 0x45
+#  define SPEEDDOWN 0x4E
+# endif
 
-typedef struct	s_player
+typedef struct s_player
 {
 	double	x;
 	double	y;
@@ -48,7 +48,7 @@ typedef struct	s_player
 
 }	t_player;
 
-typedef struct	s_game
+typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
