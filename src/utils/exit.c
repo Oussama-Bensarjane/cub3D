@@ -1,11 +1,5 @@
 #include "cub3d.h"
 
-/**
- * exit_failure
- * Prints an error message to standard error and exits the program.
- *
- * @param msg  The error message to display
- */
 void	exit_failure(char *msg)
 {
 	ft_putendl_fd(msg, STDERR_FILENO);
