@@ -67,64 +67,35 @@ int	key_release(int keycode, t_player *player)
  */
 static bool	can_move(double new_x, double new_y, t_game *game)
 {
-	int	radius;
+	double	radius;
 
-	radius = 5;
-	if (touch(new_x - radius, new_y, game))
+	radius = 5.0;
+	if (touch(new_x, new_y, game))
 		return (false);
-	if (touch(new_x + radius, new_y, game))
+	else if (touch(new_x - radius, new_y, game))
 		return (false);
-	if (touch(new_x, new_y - radius, game))
+	else if (touch(new_x + radius, new_y, game))
 		return (false);
-	if (touch(new_x, new_y + radius, game))
+	else if (touch(new_x, new_y - radius, game))
+		return (false);
+	else if (touch(new_x, new_y + radius, game))
 		return (false);
 	return (true);
 }
 
-void	move_player(t_game *game)
+void	update_position(t_player *player, t_game *game,
+		double new_x, double new_y)
 {
-	t_player	*player;
-	double		new_x;
-	double		new_y;
-	double		cos_angle;
-	double		sin_angle;
-
-	player = &game->player;
-	new_x = player->x;
-	new_y = player->y;
-	cos_angle = cos(player->angle);
-	sin_angle = sin(player->angle);
-	if (player->left_rotate)
-		player->angle -= player->angle_speed;
-	if (player->right_rotate)
-		player->angle += player->angle_speed;
-	if (player->angle > 2 * PI)
-		player->angle = 0;
-	if (player->angle < 0)
-		player->angle = 2 * PI;
-	if (player->key_up)
-	{
-		new_x += cos_angle * player->speed;
-		new_y += sin_angle * player->speed;
-	}
-	if (player->key_down)
-	{
-		new_x -= cos_angle * player->speed;
-		new_y -= sin_angle * player->speed;
-	}
-	if (player->key_left)
-	{
-		new_x += sin_angle * player->speed;
-		new_y -= cos_angle * player->speed;
-	}
-	if (player->key_right)
-	{
-		new_x -= sin_angle * player->speed;
-		new_y += cos_angle * player->speed;
-	}
 	if (can_move(new_x, new_y, game))
 	{
 		player->x = new_x;
 		player->y = new_y;
+	}
+	else
+	{
+		if (can_move(new_x, player->y, game))
+			player->x = new_x;
+		if (can_move(player->x, new_y, game))
+			player->y = new_y;
 	}
 }
