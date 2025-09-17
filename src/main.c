@@ -51,9 +51,10 @@ static void	init_game(t_game *game)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->img)
 		game_over(game, "Error: mlx_new_image failed!", EXIT_FAILURE);
-	game->data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
+	game->data = mlx_get_data_addr(
+			game->img, &game->bpp, &game->size_line, &game->endian);
 	if (!game->data)
-			game_over(game, "Error: mlx_get_data_addr failed!", EXIT_FAILURE);
+		game_over(game, "Error: mlx_get_data_addr failed!", EXIT_FAILURE);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 
@@ -63,19 +64,14 @@ static int	close_win(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
-int main(void)
+int	main(void)
 {
 	t_game	game;
 
-	// init game
 	init_game(&game);
-
-	// hooks
-	mlx_hook(game.win, 17, 1L<<0, close_win, &game);
-	mlx_hook(game.win, 2, 1L<<0, key_press, &game);
-	mlx_hook(game.win, 3, 1L<<1, key_release, &game.player);
-
-	// draw loop
+	mlx_hook(game.win, 17, 1L << 0, close_win, &game);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
