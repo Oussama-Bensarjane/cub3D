@@ -1,4 +1,4 @@
-# include "cub3d.h"
+#include "cub3d.h"
 
 /**
  * draw_line
@@ -11,59 +11,88 @@
  */
 static void	draw_line(t_player *player, t_game *game, double start_x, int i)
 {
-	double	cos_angle;
-	double	sin_angle;
-	double	ray_x;
-	double	ray_y;
-	double	dist;
+	double	ray_dir_X;
+	double	ray_dir_Y;
+	double	perp_wall_dist;
 	double	height;
 	int		start_y;
 	int		end;
+	int		map_x;
+	int		map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		hit;
+	int		side;
+	double	dist_proj_plane;
 
-	cos_angle = cos(start_x);
-	sin_angle = sin(start_x);
-	ray_x = player->x;
-	ray_y = player->y;
-
-	// Step 1: Cast the ray until it touches a wall
-	while(!touch(ray_x, ray_y, game))
+	ray_dir_X = cos(start_x);
+	ray_dir_Y = sin(start_x);
+	map_x = player->x / BLOCK;
+	map_y = player->y / BLOCK;
+	delta_dist_x = (ray_dir_X == 0) ? 1e30 : fabs(1 / ray_dir_X);
+	delta_dist_y = (ray_dir_Y == 0) ? 1e30 : fabs(1 / ray_dir_Y);
+	if (ray_dir_X < 0)
 	{
-		ray_x += cos_angle;
-		ray_y += sin_angle;
+		step_x = -1;
+		side_dist_x = ((player->x / BLOCK) - map_x) * delta_dist_x;
 	}
-
-	// Step 2: Calculate distance to the wall, correcting for fish-eye effect
-	// Taller slice for closer walls, shorter for farther walls
-	dist = fixed_distance(player->x, player->y, ray_x, ray_y, game);
-	height = (BLOCK * WIDTH) / dist * (2 * tan(PI / 6));
-
-	// Step 4: Compute vertical start/end positions for drawing
+	else
+	{
+		step_x = 1;
+		side_dist_x = (map_x + 1.0 - (player->x / BLOCK)) * delta_dist_x;
+	}
+	if (ray_dir_Y < 0)
+	{
+		step_y = -1;
+		side_dist_y = ((player->y / BLOCK) - map_y) * delta_dist_y;
+	}
+	else
+	{
+		step_y = 1;
+		side_dist_y = (map_y + 1.0 - (player->y / BLOCK)) * delta_dist_y;
+	}
+	hit = 0;
+	while (!hit)
+	{
+		if (side_dist_x < side_dist_y)
+		{
+			side_dist_x += delta_dist_x;
+			map_x += step_x;
+			side = 0;
+		}
+		else
+		{
+			side_dist_y += delta_dist_y;
+			map_y += step_y;
+			side = 1;
+		}
+		if (game->map[map_y][map_x] == '1')
+			hit = 1;
+	}
+	if (side == 0)
+		perp_wall_dist = ((map_x - (player->x / BLOCK) + (1 - step_x) / 2) / ray_dir_X) * cos(start_x - player->angle);
+	else
+		perp_wall_dist = ((map_y - (player->y / BLOCK) + (1 - step_y) / 2) / ray_dir_Y) * cos(start_x - player->angle);
+	dist_proj_plane = WIDTH / (2 * tan(FOV * PI / 360.0));
+	height = dist_proj_plane / perp_wall_dist;
 	start_y = (HEIGHT - height) / 2;
 	end = start_y + height;
-
-	// Step 5: Draw the vertical wall slice column
-	while(start_y < end)
+	if (start_y < 0)
+		start_y = 0;
+	if (end >= HEIGHT)
+		end = HEIGHT - 1;
+	while (start_y < end)
 	{
-		// I can see you Mr. Texture
 		put_pixel(i, start_y,  0x00FF00, game);
 		start_y++;
 	}
 }
 
-/**
- * draw_loop
- * Main rendering loop called every frame.
- *
- * Steps:
- *   1. Update player position based on pressed keys.
- *   2. Clear the screen buffer.
- *   3. Cast rays for each vertical column on screen and draw wall slices.
- *   4. Push the final image to the window.
- *
- * @param game  Pointer to the game structure (player, map, image, etc.)
- * @return 0   Standard return for MLX loop hook
- */
-int draw_loop(t_game *game)
+int	draw_loop(t_game *game)
 {
 	t_player			*player;
 	static const double	fov = FOV * (PI / 180);
@@ -72,27 +101,16 @@ int draw_loop(t_game *game)
 	int					i;
 
 	player = &game->player;
-
-	// Step 1: Update player movement based on input
 	move_player(game);
-
-	// Step 2: Clear the image buffer before drawing the new frame
 	clear_image(game);
-
-	// Step 3: Prepare raycasting
-	// fraction = fov / WIDTH; Field of view = 60° (PI/3), split by screen width
-	start_x = player->angle - (fov / 2); // Start angle = center player angle - half FOV
-
-	// Step 4: Cast rays for each column and draw walls
+	start_x = player->angle - (fov / 2);
 	i = 0;
-	while(i < WIDTH)
+	while (i < WIDTH)
 	{
-		draw_line(player, game, start_x, i); // Draw wall slice for this column
-		start_x += fraction;                 // Move to next ray angle
+		draw_line(player, game, start_x, i);
+		start_x += fraction;
 		i++;
 	}
-
-	// Step 5: Display the final image on the window
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return (0);
 }
