@@ -1,28 +1,19 @@
 #include "cub3d.h"
 
-/*
-* get_map
-* Map from map.cub
-*/
-char	**get_map(void)
+static void	init_config(t_config *cfg)
 {
-	char	**map;
-
-	map = malloc(sizeof(char *) * 11);
-	if (!map)
-		return (NULL);
-	map[0] = ft_strdup("        11111111111111111111111");
-	map[1] = ft_strdup("11111111100000000000001");
-	map[2] = ft_strdup("11111111100000000000001");
-	map[3] = ft_strdup("10000011111110100000001");
-	map[4] = ft_strdup("10000000000000100111101");
-	map[5] = ft_strdup("100001110000000001  101");
-	map[6] = ft_strdup("100001110000000001  101");
-	map[7] = ft_strdup("100000000000000001  1001");
-	map[8] = ft_strdup("100000000000000001  10001");
-	map[9] = ft_strdup("111111111111111111  11111");
-	map[10] = NULL;
-	return (map);
+	cfg->tex_no = NULL;
+	cfg->tex_so = NULL;
+	cfg->tex_we = NULL;
+	cfg->tex_ea = NULL;
+	cfg->floor_color = -1;
+	cfg->ceiling_color = -1;
+	cfg->map = NULL;
+	cfg->map_width = 0;
+	cfg->map_height = 0;
+	cfg->player_x = -1;
+	cfg->player_y = -1;
+	cfg->player_dir = '\0';
 }
 
 /**
@@ -34,11 +25,11 @@ char	**get_map(void)
  *
  * @param game  Pointer to the game structure to initialize
  */
-static void	init_game(t_game *game)
+static void	init_game(t_game *game, t_config *config)
 {
 	if (!game)
 		exit_failure("Error: Cannot initialize Cub3D!");
-	game->map = get_map();
+	game->map = config->map;
 	if (!game->map)
 		exit_failure("Error: Cannot load the map!");
 	init_player(&game->player);
@@ -64,11 +55,19 @@ static int	close_win(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
-	t_game	game;
+	t_config	cfg;
+	t_game		game;
 
-	init_game(&game);
+	if (ac != 2)
+	{
+		printf("Error: usage: %s <map.cub>\n", av[0]);
+		return (1);
+	}
+	init_config(&cfg);
+	parse_file(&cfg, av[1]);
+	init_game(&game, &cfg);
 	mlx_hook(game.win, 17, 1L << 0, close_win, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
