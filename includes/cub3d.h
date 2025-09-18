@@ -1,12 +1,14 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "libft.h"
-# include "mlx.h"
 # include <stdio.h>
 # include <stdbool.h>
 # include <math.h>
+# include <fcntl.h>
+# include "libft.h"
+# include "mlx.h"
 # include "config.h"
+# include "parser.h"
 
 /**
  * exit_failure
