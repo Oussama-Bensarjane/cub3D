@@ -8,8 +8,6 @@
 # include <math.h>
 # include "config.h"
 
-// utils/exit.c
-
 /**
  * exit_failure
  * Prints an error message to standard error and exits the program.
@@ -18,8 +16,6 @@
  */
 void	exit_failure(char *msg);
 void	game_over(t_game *game, char *msg, int exit_status);
-
-// gameplay/player.c
 
 /**
  * init_player
@@ -52,8 +48,6 @@ int		key_release(int keycode, t_player *player);
 void	move_player(t_game *game);
 void	update_position(t_player *player, t_game *game,
 		double new_x, double new_y);
-
-// gameplay/utils.c
 
 /**
  * put_pixel
@@ -88,13 +82,10 @@ void	clear_image(t_game *game);
  */
 bool	touch(double px, double py, t_game *game);
 
-// gameplay/init_dda.c
 void	init_dda(t_player *player, t_ray *ray, double angle);
 
-// gameplay/raycaster.c
 void	raycaster(t_player *player, t_game *game, double angle, int x);
 
-// gameplay/gameplay.c
 /**
  * draw_loop
  * Main rendering loop called every frame.
