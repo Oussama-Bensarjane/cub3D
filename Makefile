@@ -47,15 +47,25 @@ LIBFT_SRCS	:= $(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
 # ================================ Cub3D ================================
 
 INCLUDES :=	includes/cub3d.h \
-			includes/config.h
+			includes/config.h \
+			includes/parser.h
 
 # Directories
 SRCDIR :=		src
+PAR_DIR :=		$(SRCDIR)/parser
 GPLAY_DIR :=	$(SRCDIR)/gameplay
 UTILS_DIR :=	$(SRCDIR)/utils
 
 # main.c
 SRC :=	$(SRCDIR)/main.c
+
+# parser
+SRC :=	$(SRC) \
+		$(PAR_DIR)/parse_config.c \
+		$(PAR_DIR)/parse_file.c \
+		$(PAR_DIR)/parse_map.c \
+		$(PAR_DIR)/parse_utils.c \
+		$(PAR_DIR)/validate_map.c
 
 # gameplay
 SRC :=	$(SRC) \
@@ -68,7 +78,9 @@ SRC :=	$(SRC) \
 
 # utils
 SRC :=	$(SRC) \
-		$(UTILS_DIR)/exit.c
+		$(UTILS_DIR)/exit.c \
+		$(UTILS_DIR)/exit_free.c \
+		$(UTILS_DIR)/ft_split_set.c
 
 OBJDIR := obj
 OBJ := $(SRC:src/%.c=$(OBJDIR)/%.o)
