@@ -14,8 +14,8 @@ void	game_over(t_game *game, char *msg, int exit_status)
 		ft_putendl_fd(msg, STDERR_FILENO);
 	if (!game)
 		exit(EXIT_FAILURE);
-	if (game->map.map)
-		free_2d_array(game->map.map);
+	if (game->config.map)
+		free_2d_array(game->config.map);
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	if (game->win)
@@ -36,8 +36,8 @@ void	game_over(t_game *game, char *msg, int exit_status)
 		ft_putendl_fd(msg, STDERR_FILENO);
 	if (!game)
 		exit(EXIT_FAILURE);
-	if (game->map.map)
-		free_2d_array(game->map.map);
+	if (game->config.map)
+		free_2d_array(game->config.map);
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	if (game->win)

@@ -12,19 +12,19 @@
 **     else -> 0 // default fallback
 ** - Configures movement speed, rotation speed, and resets input flags
 */
-void	init_player(t_player *player, t_assets *config)
+void	init_player(t_player *player, t_assets *assets)
 {
-	if (!player || !config)
+	if (!player || !assets)
 		return ;
-	player->x = (config->player_x + 0.5) * BLOCK;
-	player->y = (config->player_y + 0.5) * BLOCK;
-	if (config->player_dir == 'N')
+	player->x = (assets->player_x + 0.5) * BLOCK;
+	player->y = (assets->player_y + 0.5) * BLOCK;
+	if (assets->player_dir == 'N')
 		player->angle = -PI / 2;
-	else if (config->player_dir == 'S')
+	else if (assets->player_dir == 'S')
 		player->angle = PI / 2;
-	else if (config->player_dir == 'E')
+	else if (assets->player_dir == 'E')
 		player->angle = 0;
-	else if (config->player_dir == 'W')
+	else if (assets->player_dir == 'W')
 		player->angle = PI;
 	else
 		player->angle = 0;

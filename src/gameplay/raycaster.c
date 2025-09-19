@@ -19,7 +19,7 @@ static void	perform_dda(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map.map[ray->map_y][ray->map_x] == '1')
+		if (game->config.map[ray->map_y][ray->map_x] == '1')
 			hit = 1;
 	}
 }
@@ -54,7 +54,7 @@ static void	draw_line(t_game *game, int x, double wall_dist)
 		end = HEIGHT - 1;
 	while (start < end)
 	{
-		put_pixel(x, start, 0x00FF00, game);
+		put_pixel(x, start, game->config.floor, game);
 		start++;
 	}
 }
