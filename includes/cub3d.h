@@ -58,7 +58,7 @@ void	update_position(t_player *player, t_game *game,\
  *
  * @param x       The horizontal coordinate of the pixel.
  * @param y       The vertical coordinate of the pixel.
- * @param color   The color value in 0xRRGGBB format.
+ * @param color   The color value in 0xRRGGBB format (Little endian).
  * @param game    Pointer to the game structure containing image data.
  */
 void	put_pixel(int x, int y, int color, t_game *game);

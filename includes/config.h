@@ -59,7 +59,7 @@ typedef struct s_textures
 	int		endian;
 }	t_textures;
 
-typedef struct s_map
+typedef struct s_config
 {
 	char		**map;
 	t_textures	no;
@@ -68,7 +68,7 @@ typedef struct s_map
 	t_textures	ea;
 	int			floor;
 	int			ceiling;
-}	t_map;
+}	t_config;
 
 typedef struct s_ray
 {
@@ -113,6 +113,6 @@ typedef struct s_game
 	int			size_line;
 	int			endian;
 	t_player	player;
-	t_map		map;
+	t_config	config;
 }	t_game;
 #endif
