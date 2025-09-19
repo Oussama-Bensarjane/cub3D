@@ -1,5 +1,5 @@
-C 210,0,255
-F 255,0,255
+C 23,0,23
+F 255,255,0
 
 EA media/textures/east.xpm
 WE media/textures/west.xpm
