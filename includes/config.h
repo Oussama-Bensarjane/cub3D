@@ -39,8 +39,8 @@ typedef struct s_assets
 	char	*tex_so;
 	char	*tex_we;
 	char	*tex_ea;
-	int		floor_color;
-	int		ceiling_color;
+	int		floor;
+	int		ceiling;
 	int		map_width;
 	int		map_height;
 	int		player_x;
@@ -50,12 +50,12 @@ typedef struct s_assets
 
 typedef struct s_textures
 {
-	void	*ptr;      // mlx image pointer
-	char	*addr;     // memory address of the pixels
-	int		width;     // texture width
-	int		height;    // texture height
-	int		bpp;       // bits per pixel
-	int		line_len;  // number of bytes per image row
+	void	*ptr;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		line_len;
 	int		endian;
 }	t_textures;
 
@@ -66,6 +66,8 @@ typedef struct s_map
 	t_textures	so;
 	t_textures	we;
 	t_textures	ea;
+	int			floor;
+	int			ceiling;
 }	t_map;
 
 typedef struct s_ray

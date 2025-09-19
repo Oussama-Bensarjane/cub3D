@@ -53,10 +53,10 @@ static int	set_texture_color(t_assets *cfg, char **parts)
 		cfg->tex_we = ft_strdup(parts[1]);
 	else if (!ft_strncmp(parts[0], "EA", len) && !cfg->tex_ea)
 		cfg->tex_ea = ft_strdup(parts[1]);
-	else if (!ft_strncmp(parts[0], "F", len) && cfg->floor_color == -1)
-		cfg->floor_color = parse_color(parts[1]);
-	else if (!ft_strncmp(parts[0], "C", len) && cfg->ceiling_color == -1)
-		cfg->ceiling_color = parse_color(parts[1]);
+	else if (!ft_strncmp(parts[0], "F", len) && cfg->floor == -1)
+		cfg->floor = parse_color(parts[1]);
+	else if (!ft_strncmp(parts[0], "C", len) && cfg->ceiling == -1)
+		cfg->ceiling = parse_color(parts[1]);
 	else
 		return (-1);
 	return (0);

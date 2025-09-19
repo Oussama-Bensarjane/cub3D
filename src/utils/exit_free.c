@@ -39,4 +39,3 @@ void	free_config(t_assets *cfg)
 	cfg->tex_ea = NULL;
 	cfg->map = NULL;
 }
-

@@ -6,8 +6,8 @@ static void	init_config(t_assets *cfg)
 	cfg->tex_so = NULL;
 	cfg->tex_we = NULL;
 	cfg->tex_ea = NULL;
-	cfg->floor_color = -1;
-	cfg->ceiling_color = -1;
+	cfg->floor = -1;
+	cfg->ceiling = -1;
 	cfg->map = NULL;
 	cfg->map_width = 0;
 	cfg->map_height = 0;
@@ -32,6 +32,8 @@ static void	init_game(t_game *game, t_assets *config)
 	game->map.map = config->map;
 	if (!game->map.map)
 		exit_failure("Error: Cannot load the map!");
+	game->map.ceiling = config->ceiling;
+	game->map.floor = config->floor;
 	init_player(&game->player, config);
 	game->mlx = mlx_init();
 	if (!game->mlx)

@@ -1,29 +1,35 @@
 #include "cub3d.h"
 
+/*
+** Initialize player position, direction, and movement state
+**
+** - Places player at map coordinates from config, centered in map cell
+** - Sets initial viewing angle according to starting direction:
+**     'N' → facing up   (angle = -PI/2)
+**     'S' → facing down (angle =  PI/2)
+**     'E' → facing right(angle =  0)
+**     'W' → facing left (angle =  PI)
+**     else -> 0 // default fallback
+** - Configures movement speed, rotation speed, and resets input flags
+*/
 void	init_player(t_player *player, t_assets *config)
 {
 	if (!player || !config)
 		return ;
-
-	// Position: center inside the map cell
 	player->x = (config->player_x + 0.5) * BLOCK;
-	player->y = (config->player_y + 0.5)* BLOCK;
-
-	// Direction: convert N/S/E/W to radians
+	player->y = (config->player_y + 0.5) * BLOCK;
 	if (config->player_dir == 'N')
-		player->angle = -PI / 2;  // facing up
+		player->angle = -PI / 2;
 	else if (config->player_dir == 'S')
-		player->angle = PI / 2;   // facing down
+		player->angle = PI / 2;
 	else if (config->player_dir == 'E')
-		player->angle = 0;          // facing right
+		player->angle = 0;
 	else if (config->player_dir == 'W')
-		player->angle = PI;       // facing left
+		player->angle = PI;
 	else
-		player->angle = 0;          // default fallback
-
-	// Movement / rotation
-	player->speed = 4;                       // units per frame
-	player->angle_speed = FOV / WIDTH;       // rotation speed
+		player->angle = 0;
+	player->speed = 4;
+	player->angle_speed = FOV / WIDTH;
 	player->key_up = false;
 	player->key_down = false;
 	player->key_left = false;
@@ -31,7 +37,6 @@ void	init_player(t_player *player, t_assets *config)
 	player->left_rotate = false;
 	player->right_rotate = false;
 }
-
 
 int	key_press(int keycode, t_game *game)
 {

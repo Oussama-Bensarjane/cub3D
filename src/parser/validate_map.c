@@ -61,7 +61,7 @@ void	validate_config(t_assets *cfg, char *line)
 		exit_free(cfg, "Missing texture path(s), \
 			IT should be the CONFIG then the MAP !!!");
 	}
-	if (cfg->ceiling_color == -1 || cfg->floor_color == -1)
+	if (cfg->ceiling == -1 || cfg->floor == -1)
 		(free(line), exit_free(cfg, ERR_CLR));
 	if (check_texture_path(cfg, cfg->tex_no)
 		|| check_texture_path(cfg, cfg->tex_so)
