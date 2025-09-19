@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	add_map_line(t_config *cfg, char *line)
+void	add_map_line(t_assets *cfg, char *line)
 {
 	char	**new_map;
 	int		i;
@@ -28,7 +28,7 @@ void	add_map_line(t_config *cfg, char *line)
 		cfg->map_width = len;
 }
 
-static void	free_prev(t_config *cfg, char **new_map, int i)
+static void	free_prev(t_assets *cfg, char **new_map, int i)
 {
 	while (--i >= 0)
 		free(new_map[i]);
@@ -36,7 +36,7 @@ static void	free_prev(t_config *cfg, char **new_map, int i)
 	exit_free(cfg, "Malloc failed");
 }
 
-void	normalize_map(t_config *cfg)
+void	normalize_map(t_assets *cfg)
 {
 	char	**new_map;
 	int		i;
@@ -65,7 +65,7 @@ void	normalize_map(t_config *cfg)
 	cfg->map = new_map;
 }
 
-void	rm_lst_spc_map(t_config *cfg)
+void	rm_lst_spc_map(t_assets *cfg)
 {
 	int		i;
 	int		len;

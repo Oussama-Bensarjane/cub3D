@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	parse_config_section(t_config *cfg, int *stage, char *line)
+static void	parse_config_section(t_assets *cfg, int *stage, char *line)
 {
 	if (is_map_line(line))
 	{
@@ -12,7 +12,7 @@ static void	parse_config_section(t_config *cfg, int *stage, char *line)
 		parse_config_line(cfg, line);
 }
 
-static void	parse_map_section(t_config *cfg, char *line)
+static void	parse_map_section(t_assets *cfg, char *line)
 {
 	if (line[0] == '\n')
 		exit_free(cfg, "Error: Empty line INSIDE or AFTER the map");
@@ -22,7 +22,7 @@ static void	parse_map_section(t_config *cfg, char *line)
 }
 
 // stage = 0: 0 = config, 1 = map
-int	parse_file(t_config *cfg, char *filename)
+int	parse_file(t_assets *cfg, char *filename)
 {
 	int		fd;
 	int		stage;

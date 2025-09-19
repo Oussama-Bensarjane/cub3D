@@ -39,7 +39,7 @@ int	is_valid_map_char(char c)
 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-void	check_map_path(t_config *cfg, char *map_path)
+void	check_map_path(t_assets *cfg, char *map_path)
 {
 	size_t	file_nm_len;
 	int		fd;

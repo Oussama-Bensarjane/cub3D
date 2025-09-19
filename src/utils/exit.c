@@ -10,17 +10,12 @@ void	exit_failure(char *msg)
 
 void	game_over(t_game *game, char *msg, int exit_status)
 {
-	char	**ptr;
-
+	if (msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
 	if (!game)
 		exit(EXIT_FAILURE);
-	if (game->map)
-	{
-		ptr = game->map;
-		while (*ptr)
-			free(*ptr++);
-		free(game->map);
-	}
+	if (game->map.map)
+		free_2d_array(game->map.map);
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	if (game->win)
@@ -30,8 +25,6 @@ void	game_over(t_game *game, char *msg, int exit_status)
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
-	if (msg)
-		ft_putendl_fd(msg, STDERR_FILENO);
 	exit(exit_status);
 }
 
@@ -39,18 +32,18 @@ void	game_over(t_game *game, char *msg, int exit_status)
 
 void	game_over(t_game *game, char *msg, int exit_status)
 {
+	if (msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
 	if (!game)
 		exit(EXIT_FAILURE);
-	if (game->map)
-		free(game->map);
+	if (game->map.map)
+		free_2d_array(game->map.map);
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 		free(game->mlx);
-	if (msg)
-		ft_putendl_fd(msg, STDERR_FILENO);
 	exit(exit_status);
 }
 #endif

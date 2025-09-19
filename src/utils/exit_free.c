@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	exit_free(t_config *cfg, char *msg)
+void	exit_free(t_assets *cfg, char *msg)
 {
 	free_config(cfg);
 	ft_putendl_fd("Error", 2);
@@ -21,7 +21,7 @@ void	free_2d_array(char **arr)
 	free(arr);
 }
 
-void	free_config(t_config *cfg)
+void	free_config(t_assets *cfg)
 {
 	if (cfg->tex_no)
 		free(cfg->tex_no);
@@ -40,7 +40,3 @@ void	free_config(t_config *cfg)
 	cfg->map = NULL;
 }
 
-void	cleanup(t_config *cfg)
-{
-	free_config(cfg);
-}

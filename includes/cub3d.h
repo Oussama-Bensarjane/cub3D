@@ -18,12 +18,13 @@
  */
 void	exit_failure(char *msg);
 void	game_over(t_game *game, char *msg, int exit_status);
+void	free_textures(t_game *game);
 
 /**
  * init_player
  * Initializes the player at cpecific position of the screen with default values.
  */
-void	init_player(t_player *player);
+void	init_player(t_player *player, t_assets *config);
 
 /**
  * key_press

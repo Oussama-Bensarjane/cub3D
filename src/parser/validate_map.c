@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	check_map_char_and_player(t_config *cfg,\
+static void	check_map_char_and_player(t_assets *cfg,\
 	int x, int y, int *player_count)
 {
 	char	c;
@@ -17,7 +17,7 @@ static void	check_map_char_and_player(t_config *cfg,\
 	}
 }
 
-static void	check_map_enclosure(t_config *cfg, int x, int y)
+static void	check_map_enclosure(t_assets *cfg, int x, int y)
 {
 	if (y == 0 || x == 0 || y == cfg->map_height - 1 || x >= cfg->map_width - 1)
 		exit_free(cfg, "Map not enclosed");
@@ -26,7 +26,7 @@ static void	check_map_enclosure(t_config *cfg, int x, int y)
 		exit_free(cfg, "Map open near space");
 }
 
-int	validate_map(t_config *cfg)
+int	validate_map(t_assets *cfg)
 {
 	int		player_count;
 	int		x;
@@ -53,7 +53,7 @@ int	validate_map(t_config *cfg)
 	return (0);
 }
 
-void	validate_config(t_config *cfg, char *line)
+void	validate_config(t_assets *cfg, char *line)
 {
 	if (!cfg->tex_ea || !cfg->tex_no || !cfg->tex_so || !cfg->tex_we)
 	{
@@ -70,7 +70,7 @@ void	validate_config(t_config *cfg, char *line)
 		(free(line), exit_free(cfg, "Invalid texture path(s)"));
 }
 
-int	check_texture_path(t_config *cfg, char *path)
+int	check_texture_path(t_assets *cfg, char *path)
 {
 	size_t	len;
 	int		fd;

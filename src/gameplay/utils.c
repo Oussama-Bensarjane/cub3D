@@ -38,7 +38,7 @@ bool	touch(double px, double py, t_game *game)
 
 	x = px / BLOCK;
 	y = py / BLOCK;
-	tile = game->map[y][x];
+	tile = game->map.map[y][x];
 	if (tile == '1')
 		return (true);
 	return (false);

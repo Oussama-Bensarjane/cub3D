@@ -40,7 +40,7 @@ static int	parse_color(char *color)
 	return ((r << 16) | (g << 8) | b);
 }
 
-static int	set_texture_color(t_config *cfg, char **parts)
+static int	set_texture_color(t_assets *cfg, char **parts)
 {
 	size_t	len;
 
@@ -62,7 +62,7 @@ static int	set_texture_color(t_config *cfg, char **parts)
 	return (0);
 }
 
-int	parse_config_line(t_config *cfg, char *line)
+int	parse_config_line(t_assets *cfg, char *line)
 {
 	char	**parts;
 	char	*trimed;
