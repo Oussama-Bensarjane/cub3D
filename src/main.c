@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	init_config(t_config *cfg)
+static void	init_config(t_assets *cfg)
 {
 	cfg->tex_no = NULL;
 	cfg->tex_so = NULL;
@@ -25,14 +25,14 @@ static void	init_config(t_config *cfg)
  *
  * @param game  Pointer to the game structure to initialize
  */
-static void	init_game(t_game *game, t_config *config)
+static void	init_game(t_game *game, t_assets *config)
 {
 	if (!game)
 		exit_failure("Error: Cannot initialize Cub3D!");
-	game->map = config->map;
-	if (!game->map)
+	game->map.map = config->map;
+	if (!game->map.map)
 		exit_failure("Error: Cannot load the map!");
-	init_player(&game->player);
+	init_player(&game->player, config);
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		game_over(game, "Error: Failed to initialize mlx!", EXIT_FAILURE);
@@ -57,12 +57,12 @@ static int	close_win(t_game *game)
 
 int	main(int ac, char **av)
 {
-	t_config	cfg;
+	t_assets	cfg;
 	t_game		game;
 
 	if (ac != 2)
 	{
-		printf("Error: usage: %s <map.cub>\n", av[0]);
+		printf("Error: usage: %s <path-to-map.cub>\n", av[0]);
 		return (1);
 	}
 	init_config(&cfg);
