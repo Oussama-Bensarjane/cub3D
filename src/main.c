@@ -16,11 +16,11 @@ static void	init_config(t_assets *assets)
 	assets->player_dir = '\0';
 }
 
-static unsigned int	convert_color(int color, int endian)
+static int	convert_color(int color, int endian)
 {
-	unsigned int r;
-	unsigned int g;
-	unsigned int b;
+	int r;
+	int g;
+	int b;
 
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
