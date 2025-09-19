@@ -32,6 +32,42 @@
 #  define SPEEDDOWN 0x4E
 # endif
 
+typedef struct s_assets
+{
+	char	**map;
+	char	*tex_no;
+	char	*tex_so;
+	char	*tex_we;
+	char	*tex_ea;
+	int		floor_color;
+	int		ceiling_color;
+	int		map_width;
+	int		map_height;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
+}	t_assets;
+
+typedef struct s_textures
+{
+	void	*ptr;      // mlx image pointer
+	char	*addr;     // memory address of the pixels
+	int		width;     // texture width
+	int		height;    // texture height
+	int		bpp;       // bits per pixel
+	int		line_len;  // number of bytes per image row
+	int		endian;
+}	t_textures;
+
+typedef struct s_map
+{
+	char		**map;
+	t_textures	no;
+	t_textures	so;
+	t_textures	we;
+	t_textures	ea;
+}	t_map;
+
 typedef struct s_ray
 {
 	double	dir_x;
@@ -75,6 +111,6 @@ typedef struct s_game
 	int			size_line;
 	int			endian;
 	t_player	player;
-	char		**map;
+	t_map		map;
 }	t_game;
 #endif
