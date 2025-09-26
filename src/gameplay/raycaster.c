@@ -37,26 +37,30 @@ static double	get_wall_dist(t_player *player, t_ray *ray, double angle)
 	return (dist * cos(angle - player->angle));
 }
 
-static void	draw_line(t_game *game, int x, double wall_dist)
+static void draw_line(t_game *game, t_ray *ray, int x, double wall_dist)
 {
-	double	dist_proj_plane;
-	int		line_h;
-	int		start;
-	int		end;
+	t_textures			*texture;
+	t_draw_line_info	l;
+	double				step;
+	double				tex_pos;
 
-	dist_proj_plane = WIDTH / (2 * tan((FOV * PI) / 360.0));
-	line_h = dist_proj_plane / wall_dist;
-	start = (HEIGHT - line_h) / 2;
-	if (start < 0)
-		start = 0;
-	end = start + line_h;
-	if (end >= HEIGHT)
-		end = HEIGHT - 1;
-	while (start < end)
-	{
-		put_pixel(x, start, game->config.floor, game);
-		start++;
-	}
+	texture = choose_texture(game, ray);
+	// Compute start, end, height of the wall slice
+	calc_line_limits(wall_dist, &l.start, &l.end, &l.line_h);
+	draw_ceiling(game, x, 0, l.start);
+	l.tex_x = calc_tex_x(game, ray, texture->width, wall_dist);
+	step = 1.0 * texture->height / l.line_h;
+	tex_pos = calc_tex_step(texture, l.line_h, l.start);
+	// Draw wall
+    while (l.start < l.end)
+    {
+        l.tex_y = (int)tex_pos % texture->height;
+		if (l.tex_y < 0)
+			l.tex_y += texture->height;
+		put_pixel(x, l.start++, get_pixel_clr(texture, l.tex_x, l.tex_y), game);
+		tex_pos += step;
+    }
+    draw_floor(game, x, l.end, HEIGHT);
 }
 
 void	raycaster(t_player *player, t_game *game, double angle, int x)
@@ -67,5 +71,5 @@ void	raycaster(t_player *player, t_game *game, double angle, int x)
 	init_dda(player, &ray, angle);
 	perform_dda(game, &ray);
 	wall_dist = get_wall_dist(player, &ray, angle);
-	draw_line(game, x, wall_dist);
+	draw_line(game, &ray, x, wall_dist);
 }
