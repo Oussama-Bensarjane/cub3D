@@ -75,13 +75,12 @@ int	parse_config_line(t_assets *cfg, char *line)
 	if (!parts || !parts[0] || !parts[1] || parts[2])
 	{
 		(free(line), free_2d_array(parts));
-		exit_free(cfg, "Missed config !!!");
+		exit_free(cfg, "Invalid or malformed configuration line");
 	}
 	if (set_texture_color(cfg, parts) == -1)
 	{
-		free_2d_array(parts);
-		free(line);
-		exit_free(cfg, "Missed config !!!");
+		(free(line), free_2d_array(parts));
+		exit_free(cfg, "Invalid or duplicated configuration entry");
 	}
 	free_2d_array(parts);
 	return (0);
