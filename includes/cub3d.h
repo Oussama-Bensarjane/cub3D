@@ -9,6 +9,7 @@
 # include "mlx.h"
 # include "config.h"
 # include "parser.h"
+# include "textures.h"
 
 /**
  * exit_failure
