@@ -59,7 +59,7 @@ void	validate_config(t_assets *cfg, char *line)
 	{
 		free(line);
 		exit_free(cfg, "Missing texture path(s), \
-			IT should be the CONFIG then the MAP !!!");
+IT should be the CONFIG 1st, then MAP 2nd !!!");
 	}
 	if (cfg->ceiling == -1 || cfg->floor == -1)
 		(free(line), exit_free(cfg, ERR_CLR));
@@ -82,13 +82,13 @@ int	check_texture_path(t_assets *cfg, char *path)
 	if (tmp)
 	{
 		if (tmp[1] == '.')
-			exit_free(cfg, "Hidden files not allowed, Should be <texture>.xpm");
+			exit_free(cfg, "Hidden files not allowed, Should be <path/to/texture>.xpm");
 	}
 	else if (path[0] == '.')
-		exit_free(cfg, "Hidden files not allowed, Should be <texture>.xpm");
+		exit_free(cfg, "Hidden files not allowed, Should be <path/to/texture>.xpm");
 	len = ft_strlen(path);
 	if (len <= 4 || ft_strncmp(path + len - 4, ".xpm", 3) != 0)
-		exit_free(cfg, "Invalid texture extension, Should be <texture>.xpm");
+		exit_free(cfg, "Invalid texture extension, Should be <path/to/texture>.xpm");
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		exit_free(cfg, "Could not open texture path");
