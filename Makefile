@@ -48,12 +48,14 @@ LIBFT_SRCS	:= $(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
 
 INCLUDES :=	includes/cub3d.h \
 			includes/config.h \
-			includes/parser.h
+			includes/parser.h \
+			includes/textures.h \
 
 # Directories
 SRCDIR :=		src
 PAR_DIR :=		$(SRCDIR)/parser
 GPLAY_DIR :=	$(SRCDIR)/gameplay
+TEXTR_DIR :=	$(SRCDIR)/textures
 UTILS_DIR :=	$(SRCDIR)/utils
 
 # main.c
@@ -75,6 +77,11 @@ SRC :=	$(SRC) \
 		$(GPLAY_DIR)/init_dda.c \
 		$(GPLAY_DIR)/raycaster.c \
 		$(GPLAY_DIR)/gameplay.c
+
+# textures
+SRC :=	$(SRC) \
+		$(TEXTR_DIR)/texture_loader.c \
+		$(TEXTR_DIR)/texture_utils.c
 
 # utils
 SRC :=	$(SRC) \
