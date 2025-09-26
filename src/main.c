@@ -51,6 +51,7 @@ static void	init_game(t_game *game, t_assets *assets)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		game_over(game, "Error: Failed to initialize mlx!", EXIT_FAILURE);
+	init_load_textures(game, assets);
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Cub3D");
 	if (!game->win)
 		game_over(game, "Error: mlx_new_window failed!", EXIT_FAILURE);
