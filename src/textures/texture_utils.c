@@ -2,17 +2,19 @@
 
 /*
 ** Choose texture of the wall hit by the ray
+* side = 0 -> hit a vertical wall (X-axis step)
+* side = 1 -> hit a horizontal wall (Y-axis step)
 */
 t_textures	*choose_texture(t_game *game, t_ray *ray)
 {
-	if (ray->side == 0) // hit a vertical wall (X-axis step)
+	if (ray->side == 0)
 	{
 		if (ray->dir_x > 0)
 			return (&game->config.ea);
 		else
 			return (&game->config.we);
 	}
-	else // hit a horizontal wall (Y-axis step)
+	else
 	{
 		if (ray->dir_y > 0)
 			return (&game->config.so);
@@ -23,6 +25,7 @@ t_textures	*choose_texture(t_game *game, t_ray *ray)
 
 /*
 ** Return the color of the pixel at (x, y) in the texture
+* (color & 0x00FFFFFF) -->  Ignore alpha if present
 */
 int	get_pixel_clr(t_textures *tex, int x, int y)
 {
@@ -33,7 +36,7 @@ int	get_pixel_clr(t_textures *tex, int x, int y)
 		return (0);
 	pixel = tex->addr + (y * tex->line_len + x * (tex->bpp / 8));
 	color = *(unsigned int *)pixel;
-	return (color & 0x00FFFFFF); // ignore alpha if present
+	return (color & 0x00FFFFFF);
 }
 
 // Calculate line height and start/end positions

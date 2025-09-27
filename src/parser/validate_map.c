@@ -82,13 +82,13 @@ int	check_texture_path(t_assets *cfg, char *path)
 	if (tmp)
 	{
 		if (tmp[1] == '.')
-			exit_free(cfg, "Hidden files not allowed, Should be <path/to/texture>.xpm");
+			exit_free(cfg, "Hidden files not allowed, " XPM);
 	}
 	else if (path[0] == '.')
-		exit_free(cfg, "Hidden files not allowed, Should be <path/to/texture>.xpm");
+		exit_free(cfg, "Hidden files not allowed, " XPM);
 	len = ft_strlen(path);
 	if (len <= 4 || ft_strncmp(path + len - 4, ".xpm", 3) != 0)
-		exit_free(cfg, "Invalid texture extension, Should be <path/to/texture>.xpm");
+		exit_free(cfg, "Invalid texture extension, " XPM);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		exit_free(cfg, "Could not open texture path");

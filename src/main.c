@@ -18,17 +18,17 @@ static void	init_config(t_assets *assets)
 
 static int	convert_color(int color, int endian)
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
 	b = color & 0xFF;
 	if (endian == 0)
-		return (r << 16) | (g << 8) | b;
+		return ((r << 16) | (g << 8) | b);
 	else
-		return (b << 16) | (g << 8) | r;
+		return ((b << 16) | (g << 8) | r);
 }
 
 /**

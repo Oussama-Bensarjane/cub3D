@@ -6,11 +6,10 @@ void	exit_failure(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void    free_textures(t_game *game)
+void	free_textures(t_game *game)
 {
 	if (!game || !game->mlx)
 		return ;
-
 	if (game->config.no.ptr)
 		mlx_destroy_image(game->mlx, game->config.no.ptr);
 	if (game->config.so.ptr)

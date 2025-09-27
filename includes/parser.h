@@ -3,6 +3,7 @@
 
 # define ERR_CLR "Floor/Ceiling color misconfigured\n(R,G,B) \
 values must be integers in the range 0–255\nExample: F 220,100,0"
+# define XPM "Should be <path/to/texture>.xpm"
 
 /* ===========================================================
 **                     MAP PARSING
