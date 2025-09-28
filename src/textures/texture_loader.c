@@ -1,54 +1,42 @@
 #include "cub3d.h"
 
-static void	init_texture(t_textures *tex)
+static void	init_textures(t_texture *textures)
 {
-	tex->ptr = NULL;
-	tex->addr = NULL;
-	tex->width = 0;
-	tex->height = 0;
-	tex->bpp = 0;
-	tex->line_len = 0;
-	tex->endian = 0;
+	int	i;
+
+	i = 0;
+	while (i < TEX_MAX)
+	{
+		textures[i].img = (t_img){NULL, NULL, 0, 0, 0};
+		textures[i].width = 0;
+		textures[i].height = 0;
+		i++;
+	}
 }
 
-static void	load_texture(t_game *game, t_textures *tex, char *path)
+static void	load_textures(t_game *game, char *paths[TEX_MAX])
 {
-	tex->ptr = mlx_xpm_file_to_image(game->mlx, path, &tex->width, \
-&tex->height);
-	if (!tex->ptr)
-		game_over(game, "Error: Failed to load texture file", EXIT_FAILURE);
-	tex->addr = mlx_get_data_addr(tex->ptr, &tex->bpp, &tex->line_len, \
-&tex->endian);
-	if (!tex->addr)
-		game_over(game, "Error: Failed to get texture data", EXIT_FAILURE);
+	int			i;
+	t_texture	*textures;
+
+	textures = game->config.textures;
+	i = 0;
+	while (i < TEX_MAX)
+	{
+		textures[i].img.img = mlx_xpm_file_to_image(game->mlx, paths[i], \
+&textures[i].width, &textures[i].height);
+		if (!textures[i].img.img)
+			game_over(game, "Error: Failed to load texture file", EXIT_FAILURE);
+		textures[i].img.data = mlx_get_data_addr(textures[i].img.img, \
+&textures[i].img.bpp, &textures[i].img.size_line, &textures[i].img.endian);
+		if (!textures[i].img.data)
+			game_over(game, "Error: Failed to get texture data", EXIT_FAILURE);
+		i++;
+	}
 }
 
-void	init_load_textures(t_game *game, t_assets *config)
+void	init_load_textures(t_game *game, char *textures_paths[TEX_MAX])
 {
-	init_texture(&game->config.no);
-	init_texture(&game->config.so);
-	init_texture(&game->config.we);
-	init_texture(&game->config.ea);
-	load_texture(game, &game->config.no, config->tex_no);
-	load_texture(game, &game->config.so, config->tex_so);
-	load_texture(game, &game->config.we, config->tex_we);
-	load_texture(game, &game->config.ea, config->tex_ea);
-}
-
-void	draw_ceiling(t_game *game, int x, int start_y, int end_y)
-{
-	int	y;
-
-	y = start_y;
-	while (y < end_y)
-		put_pixel(x, y++, game->config.ceiling, game);
-}
-
-void	draw_floor(t_game *game, int x, int start_y, int end_y)
-{
-	int	y;
-
-	y = start_y;
-	while (y < end_y)
-		put_pixel(x, y++, game->config.floor, game);
+	init_textures(game->config.textures);
+	load_textures(game, textures_paths);
 }

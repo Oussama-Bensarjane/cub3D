@@ -1,84 +1,45 @@
 #include "cub3d.h"
 
-/*
-** Choose texture of the wall hit by the ray
-* side = 0 -> hit a vertical wall (X-axis step)
-* side = 1 -> hit a horizontal wall (Y-axis step)
-*/
-t_textures	*choose_texture(t_game *game, t_ray *ray)
+int	convert_color(int color, int endian)
 {
-	if (ray->side == 0)
-	{
-		if (ray->dir_x > 0)
-			return (&game->config.ea);
-		else
-			return (&game->config.we);
-	}
+	int	r;
+	int	g;
+	int	b;
+
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = color & 0xFF;
+	if (endian == 0)
+		return ((r << 16) | (g << 8) | b);
 	else
-	{
-		if (ray->dir_y > 0)
-			return (&game->config.so);
-		else
-			return (&game->config.no);
-	}
+		return ((b << 16) | (g << 8) | r);
 }
 
-/*
-** Return the color of the pixel at (x, y) in the texture
-* (color & 0x00FFFFFF) -->  Ignore alpha if present
-*/
-int	get_pixel_clr(t_textures *tex, int x, int y)
-{
-	char	*pixel;
-	int		color;
-
-	if (x < 0 || x >= tex->width || y < 0 || y >= tex->height)
-		return (0);
-	pixel = tex->addr + (y * tex->line_len + x * (tex->bpp / 8));
-	color = *(unsigned int *)pixel;
-	return (color & 0x00FFFFFF);
-}
-
-// Calculate line height and start/end positions
-void	calc_line_limits(double wall_dist, int *start, int *end, int *line_h)
-{
-	double	dist_proj_plane;
-
-	dist_proj_plane = WIDTH / (2 * tan((FOV * PI) / 360.0));
-	*line_h = dist_proj_plane / wall_dist;
-	*start = (HEIGHT - *line_h) / 2;
-	if (*start < 0)
-		*start = 0;
-	*end = *start + *line_h;
-	if (*end >= HEIGHT)
-		*end = HEIGHT - 1;
-}
-
-// Compute exact wall hit position and texture X
-int	calc_tex_x(t_game *game, t_ray *ray, int tex_width, double wall_dist)
+// Compute exact wall hit position (0 to 1) and return texture X
+int	calc_tex_x(int tex_width, double wall_dist, t_game *game)
 {
 	double	wall_x;
 	int		tex_x;
 
-	if (ray->side == 0)
-		wall_x = (game->player.y / BLOCK) + wall_dist * ray->dir_y;
+	if (game->ray.side_hit == 0)
+		wall_x = (game->player.p.y / BLOCK) + wall_dist * game->ray.dir.y;
 	else
-		wall_x = (game->player.x / BLOCK) + wall_dist * ray->dir_x;
+		wall_x = (game->player.p.x / BLOCK) + wall_dist * game->ray.dir.x;
 	wall_x -= floor(wall_x);
 	tex_x = (int)(wall_x * tex_width);
-	if ((ray->side == 0 && ray->dir_x > 0)
-		|| (ray->side == 1 && ray->dir_y < 0))
+	if ((!game->ray.side_hit && game->ray.dir.x > 0)
+		|| (game->ray.side_hit && game->ray.dir.y < 0))
 		tex_x = tex_width - tex_x - 1;
 	return (tex_x);
 }
 
 // Calculate texture stepping
-double	calc_tex_step(t_textures *texture, int line_h, int start)
+double	calc_tex_step(int text_height, int line_h, int start)
 {
 	double	step;
 	double	tex_pos;
 
-	step = 1.0 * texture->height / line_h;
+	step = (1.0 * text_height) / line_h;
 	tex_pos = (start - HEIGHT / 2 + line_h / 2) * step;
 	if (start < 0)
 		tex_pos -= start * step;
