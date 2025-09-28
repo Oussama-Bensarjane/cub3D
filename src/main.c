@@ -1,11 +1,11 @@
 #include "cub3d.h"
 
-static void	init_config(t_assets *assets)
+static void	init_assets(t_assets *assets)
 {
-	assets->tex_no = NULL;
-	assets->tex_so = NULL;
-	assets->tex_we = NULL;
-	assets->tex_ea = NULL;
+	assets->textures[TEX_NO] = NULL;
+	assets->textures[TEX_SO] = NULL;
+	assets->textures[TEX_WE] = NULL;
+	assets->textures[TEX_EA] = NULL;
 	assets->floor = -1;
 	assets->ceiling = -1;
 	assets->map = NULL;
@@ -14,21 +14,6 @@ static void	init_config(t_assets *assets)
 	assets->player_x = -1;
 	assets->player_y = -1;
 	assets->player_dir = '\0';
-}
-
-static int	convert_color(int color, int endian)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	r = (color >> 16) & 0xFF;
-	g = (color >> 8) & 0xFF;
-	b = color & 0xFF;
-	if (endian == 0)
-		return ((r << 16) | (g << 8) | b);
-	else
-		return ((b << 16) | (g << 8) | r);
 }
 
 /**
@@ -43,28 +28,28 @@ static int	convert_color(int color, int endian)
 static void	init_game(t_game *game, t_assets *assets)
 {
 	if (!game)
-		exit_failure("Error: Cannot initialize Cub3D!");
+		game_over(game, "Error: Cannot initialize Cub3D!", EXIT_FAILURE);
 	game->config.map = assets->map;
 	if (!game->config.map)
-		exit_failure("Error: Cannot load the map!");
+		game_over(game, "Error: Cannot load the map!", EXIT_FAILURE);
 	init_player(&game->player, assets);
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		game_over(game, "Error: Failed to initialize mlx!", EXIT_FAILURE);
-	init_load_textures(game, assets);
+	init_load_textures(game, assets->textures);
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Cub3D");
 	if (!game->win)
 		game_over(game, "Error: mlx_new_window failed!", EXIT_FAILURE);
-	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	if (!game->img)
+	game->img.img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if (!game->img.img)
 		game_over(game, "Error: mlx_new_image failed!", EXIT_FAILURE);
-	game->data = mlx_get_data_addr(
-			game->img, &game->bpp, &game->size_line, &game->endian);
-	if (!game->data)
+	game->img.data = mlx_get_data_addr(game->img.img, &game->img.bpp, \
+					&game->img.size_line, &game->img.endian);
+	if (!game->img.data)
 		game_over(game, "Error: mlx_get_data_addr failed!", EXIT_FAILURE);
-	game->config.ceiling = convert_color(assets->ceiling, game->endian);
-	game->config.floor = convert_color(assets->floor, game->endian);
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	game->config.ceiling = convert_color(assets->ceiling, game->img.endian);
+	game->config.floor = convert_color(assets->floor, game->img.endian);
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 }
 
 static int	close_win(t_game *game)
@@ -83,7 +68,7 @@ int	main(int ac, char **av)
 		printf("Error: usage: %s <path-to-map.cub>\n", av[0]);
 		return (1);
 	}
-	init_config(&assets);
+	init_assets(&assets);
 	parse_file(&assets, av[1]);
 	init_game(&game, &assets);
 	mlx_hook(game.win, 17, 1L << 0, close_win, &game);
