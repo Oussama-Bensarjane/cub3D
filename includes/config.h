@@ -66,7 +66,7 @@ typedef struct s_assets
 	int		map_height;
 	int		player_x;
 	int		player_y;
-	char	*textures[TEX_MAX];
+	char	*textures[4];
 	char	**map;
 }	t_assets;
 
@@ -82,7 +82,7 @@ typedef struct s_config
 	int			floor;
 	int			ceiling;
 	char		**map;
-	t_texture	textures[TEX_MAX];
+	t_texture	textures[4];
 }	t_config;
 
 typedef struct s_wall
@@ -126,7 +126,7 @@ typedef struct s_player
 	double	sin_angle;
 	double	angle_speed;
 	int		speed;
-	bool	key[kEY_MAX];
+	bool	key[6];
 }	t_player;
 
 typedef struct s_game
