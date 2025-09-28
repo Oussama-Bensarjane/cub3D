@@ -62,16 +62,14 @@ UTILS_DIR :=	$(SRCDIR)/utils
 SRC :=	$(SRCDIR)/main.c
 
 # parser
-SRC :=	$(SRC) \
-		$(PAR_DIR)/parse_config.c \
+SRC +=	$(PAR_DIR)/parse_config.c \
 		$(PAR_DIR)/parse_file.c \
 		$(PAR_DIR)/parse_map.c \
 		$(PAR_DIR)/parse_utils.c \
 		$(PAR_DIR)/validate_map.c
 
 # gameplay
-SRC :=	$(SRC) \
-		$(GPLAY_DIR)/utils.c \
+SRC +=	$(GPLAY_DIR)/utils.c \
 		$(GPLAY_DIR)/player.c \
 		$(GPLAY_DIR)/player_move.c \
 		$(GPLAY_DIR)/init_dda.c \
@@ -79,13 +77,12 @@ SRC :=	$(SRC) \
 		$(GPLAY_DIR)/gameplay.c
 
 # textures
-SRC :=	$(SRC) \
-		$(TEXTR_DIR)/texture_loader.c \
-		$(TEXTR_DIR)/texture_utils.c
+SRC +=	$(TEXTR_DIR)/texture_loader.c \
+		$(TEXTR_DIR)/texture_utils.c \
+		$(TEXTR_DIR)/texture.c
 
 # utils
-SRC :=	$(SRC) \
-		$(UTILS_DIR)/exit.c \
+SRC +=	$(UTILS_DIR)/exit.c \
 		$(UTILS_DIR)/exit_free.c \
 		$(UTILS_DIR)/ft_split_set.c
 
