@@ -9,6 +9,7 @@
 
 # define FOV 60.0f
 # define SPEED_MAX 15
+# define PLAYER_RADIUS 5.0f
 
 # if defined(__linux__)
 #  define ESC 65307
@@ -32,87 +33,109 @@
 #  define SPEEDDOWN 0x4E
 # endif
 
+typedef struct s_point
+{
+	double	x;
+	double	y;
+}	t_point;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}	t_img;
+
+typedef enum e_dir
+{
+	TEX_NO = 0,
+	TEX_SO,
+	TEX_WE,
+	TEX_EA,
+	TEX_MAX
+}	t_dir;
+
 typedef struct s_assets
 {
-	char	**map;
-	char	*tex_no;
-	char	*tex_so;
-	char	*tex_we;
-	char	*tex_ea;
+	char	player_dir;
 	int		floor;
 	int		ceiling;
 	int		map_width;
 	int		map_height;
 	int		player_x;
 	int		player_y;
-	char	player_dir;
+	char	*textures[TEX_MAX];
+	char	**map;
 }	t_assets;
 
-typedef struct s_textures
+typedef struct s_texture
 {
-	void	*ptr;
-	char	*addr;
 	int		width;
 	int		height;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_textures;
+	t_img	img;
+}	t_texture;
 
 typedef struct s_config
 {
-	char		**map;
-	t_textures	no;
-	t_textures	so;
-	t_textures	we;
-	t_textures	ea;
 	int			floor;
 	int			ceiling;
+	char		**map;
+	t_texture	textures[TEX_MAX];
 }	t_config;
+
+typedef struct s_wall
+{
+	int		height;
+	int		start;
+	int		end;
+	double	dist;
+}	t_wall;
 
 typedef struct s_ray
 {
-	double	dir_x;
-	double	dir_y;
 	int		map_x;
 	int		map_y;
-	double	delta_x;
-	double	delta_y;
 	int		step_x;
 	int		step_y;
-	double	side_x;
-	double	side_y;
-	int		side;
+	int		side_hit;
+	t_wall	wall;
+	double	angle;
+	t_point	dir;
+	t_point	delta;
+	t_point	side;
 }	t_ray;
+
+typedef enum e_key
+{
+	KEY_UP = 0,
+	KEY_DOWN,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_ROT_LEFT,
+	KEY_ROT_RIGHT,
+	kEY_MAX
+}	t_key;
 
 typedef struct s_player
 {
-	double	x;
-	double	y;
+	t_point	p;
 	double	angle;
 	double	cos_angle;
 	double	sin_angle;
 	double	angle_speed;
 	int		speed;
-	bool	key_up;
-	bool	key_down;
-	bool	key_left;
-	bool	key_right;
-	bool	left_rotate;
-	bool	right_rotate;
-
+	bool	key[kEY_MAX];
 }	t_player;
 
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	void		*img;
-	char		*data;
-	int			bpp;
-	int			size_line;
-	int			endian;
-	t_player	player;
+	t_img		img;
 	t_config	config;
+	t_ray		ray;
+	t_player	player;
 }	t_game;
 #endif
