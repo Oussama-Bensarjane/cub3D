@@ -45,14 +45,14 @@ static int	set_texture_color(t_assets *cfg, char **parts)
 	size_t	len;
 
 	len = ft_strlen(parts[0]);
-	if (!ft_strncmp(parts[0], "NO", len) && !cfg->tex_no)
-		cfg->tex_no = ft_strdup(parts[1]);
-	else if (!ft_strncmp(parts[0], "SO", len) && !cfg->tex_so)
-		cfg->tex_so = ft_strdup(parts[1]);
-	else if (!ft_strncmp(parts[0], "WE", len) && !cfg->tex_we)
-		cfg->tex_we = ft_strdup(parts[1]);
-	else if (!ft_strncmp(parts[0], "EA", len) && !cfg->tex_ea)
-		cfg->tex_ea = ft_strdup(parts[1]);
+	if (!ft_strncmp(parts[0], "NO", len) && !cfg->textures[TEX_NO])
+		cfg->textures[TEX_NO] = ft_strdup(parts[1]);
+	else if (!ft_strncmp(parts[0], "SO", len) && !cfg->textures[TEX_SO])
+		cfg->textures[TEX_SO] = ft_strdup(parts[1]);
+	else if (!ft_strncmp(parts[0], "WE", len) && !cfg->textures[TEX_WE])
+		cfg->textures[TEX_WE] = ft_strdup(parts[1]);
+	else if (!ft_strncmp(parts[0], "EA", len) && !cfg->textures[TEX_EA])
+		cfg->textures[TEX_EA] = ft_strdup(parts[1]);
 	else if (!ft_strncmp(parts[0], "F", len) && cfg->floor == -1)
 		cfg->floor = parse_color(parts[1]);
 	else if (!ft_strncmp(parts[0], "C", len) && cfg->ceiling == -1)

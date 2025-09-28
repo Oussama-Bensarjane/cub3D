@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	check_map_char_and_player(t_assets *cfg,\
+static void	check_map_char_and_player(t_assets *cfg, \
 	int x, int y, int *player_count)
 {
 	char	c;
@@ -55,7 +55,8 @@ int	validate_map(t_assets *cfg)
 
 void	validate_config(t_assets *cfg, char *line)
 {
-	if (!cfg->tex_ea || !cfg->tex_no || !cfg->tex_so || !cfg->tex_we)
+	if (!cfg->textures[TEX_EA] || !cfg->textures[TEX_NO] || \
+		!cfg->textures[TEX_SO] || !cfg->textures[TEX_WE])
 	{
 		free(line);
 		exit_free(cfg, "Missing texture path(s), \
@@ -63,10 +64,10 @@ IT should be the CONFIG 1st, then MAP 2nd !!!");
 	}
 	if (cfg->ceiling == -1 || cfg->floor == -1)
 		(free(line), exit_free(cfg, ERR_CLR));
-	if (check_texture_path(cfg, cfg->tex_no)
-		|| check_texture_path(cfg, cfg->tex_so)
-		|| check_texture_path(cfg, cfg->tex_we)
-		|| check_texture_path(cfg, cfg->tex_ea))
+	if (check_texture_path(cfg, cfg->textures[TEX_NO])
+		|| check_texture_path(cfg, cfg->textures[TEX_SO])
+		|| check_texture_path(cfg, cfg->textures[TEX_WE])
+		|| check_texture_path(cfg, cfg->textures[TEX_EA]))
 		(free(line), exit_free(cfg, "Invalid texture path(s)"));
 }
 
