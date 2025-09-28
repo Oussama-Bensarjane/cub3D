@@ -12,14 +12,16 @@
 # include "textures.h"
 
 /**
- * exit_failure
- * Prints an error message to standard error and exits the program.
+ * game_over
+ * clean up all the resources
+ * In case of error prints an error message to stderr
+ * exits the program.
  *
- * @param msg  The error message to display
+ * @param game pointer to the game resources
+ * @param msg  The error message to display OR (NULL)
+ * @param exit_status exit with 1 in case of error or 0 for success
  */
-void	exit_failure(char *msg);
 void	game_over(t_game *game, char *msg, int exit_status);
-void	free_textures(t_game *game);
 
 /**
  * init_player
@@ -50,8 +52,7 @@ int		key_release(int keycode, t_player *player);
  * Also ensures player cannot walk through walls.
  */
 void	move_player(t_game *game);
-void	update_position(t_player *player, t_game *game,\
-	double new_x, double new_y);
+void	update_position(t_point new_p, t_game *game);
 
 /**
  * put_pixel
@@ -63,32 +64,23 @@ void	update_position(t_player *player, t_game *game,\
  * @param game    Pointer to the game structure containing image data.
  */
 void	put_pixel(int x, int y, int color, t_game *game);
-
-/**
- * clear_image
- * Fills the entire image with black pixels.
- *
- * @note This works by looping through every (x, y) coordinate
- *       and writing a black pixel (color = 0).
- */
 void	clear_image(t_game *game);
 
 /**
  * touch
- * Checks if the given position (px, py) is inside a wall block.
+ * Checks if the given position (p.x, p.y) is inside a wall block.
  *
- * @param px    X position in the world (double, not grid index).
- * @param py    Y position in the world (double, not grid index).
+ * @param p    (X, Y) position in the world (double, not grid index).
  * @param game  Pointer to game data (contains the map).
  *
  * @return true  If the position is within a wall block ('1').
  * @return false Otherwise (free space).
  */
-bool	touch(double px, double py, t_game *game);
+bool	touch(t_point p, t_game *game);
 
-void	init_dda(t_player *player, t_ray *ray, double angle);
+void	init_dda(t_player *player, t_ray *ray);
 
-void	raycaster(t_player *player, t_game *game, double angle, int x);
+void	raycaster(int x, t_game *game);
 
 /**
  * draw_loop
