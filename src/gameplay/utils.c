@@ -6,8 +6,8 @@ void	put_pixel(int x, int y, int color, t_game *game)
 
 	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
 		return ;
-	index = y * game->size_line + (x * game->bpp) / 8;
-	*(int *)(game->data + index) = color;
+	index = y * game->img.size_line + (x * game->img.bpp) / 8;
+	*(int *)(game->img.data + index) = color;
 }
 
 void	clear_image(t_game *game)
@@ -28,14 +28,14 @@ void	clear_image(t_game *game)
 	}
 }
 
-bool	touch(double px, double py, t_game *game)
+bool	touch(t_point p, t_game *game)
 {
 	int		x;
 	int		y;
 	char	tile;
 
-	x = px / BLOCK;
-	y = py / BLOCK;
+	x = p.x / BLOCK;
+	y = p.y / BLOCK;
 	tile = game->config.map[y][x];
 	if (tile == '1')
 		return (true);

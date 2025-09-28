@@ -1,46 +1,43 @@
 #include "cub3d.h"
 
-static void	perform_dda(t_game *game, t_ray *ray)
+static void	perform_dda(char **map, t_ray *ray)
 {
-	int	hit;
+	bool	hit;
 
-	hit = 0;
+	hit = false;
 	while (!hit)
 	{
-		if (ray->side_x < ray->side_y)
+		if (ray->side.x < ray->side.y)
 		{
-			ray->side_x += ray->delta_x;
+			ray->side.x += ray->delta.x;
 			ray->map_x += ray->step_x;
-			ray->side = 0;
+			ray->side_hit = 0;
 		}
 		else
 		{
-			ray->side_y += ray->delta_y;
+			ray->side.y += ray->delta.y;
 			ray->map_y += ray->step_y;
-			ray->side = 1;
+			ray->side_hit = 1;
 		}
-		if (game->config.map[ray->map_y][ray->map_x] == '1')
-			hit = 1;
+		if (map[ray->map_y][ray->map_x] == '1')
+			hit = true;
 	}
 }
 
-static double	get_wall_dist(t_player *player, t_ray *ray, double angle)
+static void	set_wall_dist(t_player *player, t_ray *ray)
 {
-	double	dist;
-
-	if (ray->side == 0)
-		dist = (ray->map_x - player->x / BLOCK
-				+ (1 - ray->step_x) / 2) / ray->dir_x;
+	if (ray->side_hit == 0)
+		ray->wall.dist = (ray->map_x - player->p.x / BLOCK \
+						+ (1 - ray->step_x) / 2) / ray->dir.x;
 	else
-		dist = (ray->map_y - player->y / BLOCK
-				+ (1 - ray->step_y) / 2) / ray->dir_y;
-	return (dist * cos(angle - player->angle));
+		ray->wall.dist = (ray->map_y - player->p.y / BLOCK \
+						+ (1 - ray->step_y) / 2) / ray->dir.y;
 }
 
 /*
  * 			Draw_line:
  *
- * Draws a vertical column on screen at x: 
+ * Draws a vertical column on screen at x:
  * 	 ceiling, textured wall slice, and floor, using the ray
  * 		 hit info and wall distance for correct perspective.
  * calc_line_limits --> Computes the top and bottom y-coordinates
@@ -50,37 +47,30 @@ static double	get_wall_dist(t_player *player, t_ray *ray, double angle)
  * calc_tex_step    --> Computes the vertical step in the texture
  * 					per screen pixel for wall rendering.
  */
-static void	draw_line(t_game *game, t_ray *ray, int x, double wall_dist)
+static void	draw_line(int x, t_game *game)
 {
-	t_textures			*texture;
-	t_draw_line_info	l;
-	double				step;
-	double				tex_pos;
+	t_wall	*wall;
+	double	dist_proj_plane;
 
-	texture = choose_texture(game, ray);
-	calc_line_limits(wall_dist, &l.start, &l.end, &l.line_h);
-	draw_ceiling(game, x, 0, l.start);
-	l.tex_x = calc_tex_x(game, ray, texture->width, wall_dist);
-	step = 1.0 * texture->height / l.line_h;
-	tex_pos = calc_tex_step(texture, l.line_h, l.start);
-	while (l.start < l.end)
-	{
-		l.tex_y = (int)tex_pos % texture->height;
-		if (l.tex_y < 0)
-			l.tex_y += texture->height;
-		put_pixel(x, l.start++, get_pixel_clr(texture, l.tex_x, l.tex_y), game);
-		tex_pos += step;
-	}
-	draw_floor(game, x, l.end, HEIGHT);
+	wall = &game->ray.wall;
+	dist_proj_plane = WIDTH / (2 * tan((FOV * PI) / 360.0));
+	wall->height = dist_proj_plane / \
+		(wall->dist * cos(game->ray.angle - game->player.angle));
+	wall->start = (HEIGHT - wall->height) / 2;
+	if (wall->start < 0)
+		wall->start = 0;
+	wall->end = wall->start + wall->height;
+	if (wall->end >= HEIGHT)
+		wall->end = HEIGHT - 1;
+	draw_ceiling(x, 0, wall->start, game);
+	draw_wall(x, game);
+	draw_floor(x, wall->end, HEIGHT, game);
 }
 
-void	raycaster(t_player *player, t_game *game, double angle, int x)
+void	raycaster(int x, t_game *game)
 {
-	t_ray	ray;
-	double	wall_dist;
-
-	init_dda(player, &ray, angle);
-	perform_dda(game, &ray);
-	wall_dist = get_wall_dist(player, &ray, angle);
-	draw_line(game, &ray, x, wall_dist);
+	init_dda(&game->player, &game->ray);
+	perform_dda(game->config.map, &game->ray);
+	set_wall_dist(&game->player, &game->ray);
+	draw_line(x, game);
 }

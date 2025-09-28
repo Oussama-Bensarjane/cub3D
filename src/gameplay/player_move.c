@@ -2,9 +2,9 @@
 
 static void	update_angle(t_player *player)
 {
-	if (player->left_rotate)
+	if (player->key[KEY_ROT_LEFT])
 		player->angle -= player->angle_speed;
-	if (player->right_rotate)
+	else if (player->key[KEY_ROT_RIGHT])
 		player->angle += player->angle_speed;
 	if (player->angle > 2 * PI)
 		player->angle = 0;
@@ -12,48 +12,45 @@ static void	update_angle(t_player *player)
 		player->angle = 2 * PI;
 }
 
-static void	move_forward_backward(t_player *player,
-		double *new_x, double *new_y)
+static void	move_forward_backward(t_point *new_p, t_player *player)
 {
-	if (player->key_up)
+	if (player->key[KEY_UP])
 	{
-		*new_x += player->cos_angle * player->speed;
-		*new_y += player->sin_angle * player->speed;
+		new_p->x += player->cos_angle * player->speed;
+		new_p->y += player->sin_angle * player->speed;
 	}
-	if (player->key_down)
+	else if (player->key[KEY_DOWN])
 	{
-		*new_x -= player->cos_angle * player->speed;
-		*new_y -= player->sin_angle * player->speed;
+		new_p->x -= player->cos_angle * player->speed;
+		new_p->y -= player->sin_angle * player->speed;
 	}
 }
 
-static void	move_strafe(t_player *player, double *new_x, double *new_y)
+static void	move_strafe(t_point *new_p, t_player *player)
 {
-	if (player->key_left)
+	if (player->key[KEY_LEFT])
 	{
-		*new_x += player->sin_angle * player->speed;
-		*new_y -= player->cos_angle * player->speed;
+		new_p->x += player->sin_angle * player->speed;
+		new_p->y -= player->cos_angle * player->speed;
 	}
-	if (player->key_right)
+	else if (player->key[KEY_RIGHT])
 	{
-		*new_x -= player->sin_angle * player->speed;
-		*new_y += player->cos_angle * player->speed;
+		new_p->x -= player->sin_angle * player->speed;
+		new_p->y += player->cos_angle * player->speed;
 	}
 }
 
 void	move_player(t_game *game)
 {
 	t_player	*player;
-	double		new_x;
-	double		new_y;
+	t_point		new_p;
 
 	player = &game->player;
-	new_x = player->x;
-	new_y = player->y;
+	new_p = player->p;
 	player->cos_angle = cos(player->angle);
 	player->sin_angle = sin(player->angle);
 	update_angle(player);
-	move_forward_backward(player, &new_x, &new_y);
-	move_strafe(player, &new_x, &new_y);
-	update_position(player, game, new_x, new_y);
+	move_forward_backward(&new_p, player);
+	move_strafe(&new_p, player);
+	update_position(new_p, game);
 }
