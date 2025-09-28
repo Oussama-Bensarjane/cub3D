@@ -37,9 +37,8 @@ int		check_texture_path(t_assets *cfg, char *path);
 char	**ft_split_set(char const *s, char *seps);
 
 /* ---------- Cleanup ---------- */
-void	cleanup(t_assets *cfg);
 void	exit_free(t_assets *cfg, char *msg);
-void	free_config(t_assets *cfg);
+void	free_assets(t_assets *cfg);
 void	free_2d_array(char **arr);
 
 #endif
