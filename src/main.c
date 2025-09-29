@@ -58,21 +58,15 @@ static int	close_win(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
-void f()
-{
-	system("leaks cub3D");
-}
-
 int	main(int ac, char **av)
 {
-	atexit(f);
 	t_assets	assets;
 	t_game		game;
 
 	if (ac != 2)
 	{
 		printf("Error: usage: %s <path-to-map.cub>\n", av[0]);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	init_assets(&assets);
 	parse_file(&assets, av[1]);
