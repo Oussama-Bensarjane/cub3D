@@ -94,10 +94,10 @@ OBJ :=		$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 # ================================ Cub3D_BONUS ================================
 
 INCLUDES_DIR_BONUS :=	bonus/includes
-INCLUDES_BONUS :=		$(INCLUDES_DIR)/cub3d_bonus.h \
-						$(INCLUDES_DIR)/config_bonus.h \
-						$(INCLUDES_DIR)/parser_bonus.h \
-						$(INCLUDES_DIR)/textures_bonus.h \
+INCLUDES_BONUS :=		$(INCLUDES_DIR_BONUS)/cub3d_bonus.h \
+						$(INCLUDES_DIR_BONUS)/config_bonus.h \
+						$(INCLUDES_DIR_BONUS)/parser_bonus.h \
+						$(INCLUDES_DIR_BONUS)/textures_bonus.h \
 
 # Directories
 SRCDIR_BONUS :=		bonus/src
@@ -142,25 +142,27 @@ COLOR_GREEN := \033[1;32m
 COLOR_BLUE  := \033[1;34m
 COLOR_RED   := \033[1;31m
 
+$(NAME): CFLAGS += -I$(INCLUDES_DIR)
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@echo "$(COLOR_BLUE)🔨 Linking $(NAME)...$(COLOR_RESET)"
-	$(CC) $(CFLAGS) -I$(INCLUDES_DIR) $(OBJ) $(LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
 	@echo "$(COLOR_GREEN)✅ Successfully built $(NAME)!$(COLOR_RESET)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCLUDES)
 	@echo "$(COLOR_BLUE)📦 Compiling $<...$(COLOR_RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
+$(NAME_BONUS): CFLAGS += -I$(INCLUDES_DIR_BONUS)
 $(NAME_BONUS): $(LIBFT) $(MLX) $(OBJ_BONUS)
 	@echo "$(COLOR_BLUE)🔨 Linking $(NAME_BONUS)...$(COLOR_RESET)"
-	$(CC) $(CFLAGS) -I$(INCLUDES_DIR_BONUS) $(OBJ_BONUS) $(LDFLAGS) -o $(NAME_BONUS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) $(LDFLAGS) -o $(NAME_BONUS)
 	@echo "$(COLOR_GREEN)✅ Successfully built $(NAME_BONUS)!$(COLOR_RESET)"
 
 $(OBJDIR_BONUS)/%.o: $(SRCDIR_BONUS)/%.c $(INCLUDES_BONUS)
 	@echo "$(COLOR_BLUE)📦 Compiling $<...$(COLOR_RESET)"
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I$(INCLUDES_DIR_BONUS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(MLX):
 	@echo "$(COLOR_BLUE)📚 Building MLX...$(COLOR_RESET)"
