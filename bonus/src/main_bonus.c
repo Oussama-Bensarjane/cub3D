@@ -2,10 +2,11 @@
 
 static void	init_assets(t_assets *assets)
 {
-	assets->textures[TEX_NO] = NULL;
-	assets->textures[TEX_SO] = NULL;
-	assets->textures[TEX_WE] = NULL;
-	assets->textures[TEX_EA] = NULL;
+	int	i;
+
+	i = 0;
+	while (i < TEX_MAX)
+		assets->textures[i++] = NULL;
 	assets->floor = -1;
 	assets->ceiling = -1;
 	assets->map = NULL;
@@ -14,6 +15,31 @@ static void	init_assets(t_assets *assets)
 	assets->player_x = -1;
 	assets->player_y = -1;
 	assets->player_dir = '\0';
+}
+
+static void	init_config(int endian, t_game *game, t_assets *assets)
+{
+	t_config	*config;
+	int			i;
+
+	config = &game->config;
+	config->map = assets->map;
+	config->map_height = assets->map_height;
+	config->ceiling = convert_color(assets->ceiling, endian);
+	config->floor = convert_color(assets->floor, endian);
+	if (config->floor == CLR_WALL)
+		config->minimap_floor = CLR_FREE_SPACE;
+	else
+		config->minimap_floor = config->floor;
+	config->map_width = malloc(config->map_height * sizeof(int));
+	if (!config->map_width)
+		game_over(game, \
+"Error: Failed to init_config [cannot mallocated config->map_width]!", EXIT_FAILURE);
+	i = -1;
+	while (++i < config->map_height)
+		config->map_width[i] = (int)ft_strlen(config->map[i]);
+	game->img.img = NULL;
+	game->win = NULL;
 }
 
 /**
@@ -31,7 +57,7 @@ static void	init_game(t_game *game, t_assets *assets)
 		exit_free(assets, "Error: Cannot initialize Cub3D!");
 	if (!assets->map)
 		exit_free(assets, "Error: Cannot load the map!");
-	game->config.map = assets->map;
+	init_config(game->img.endian, game, assets);
 	init_player(&game->player, assets);
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -47,8 +73,6 @@ static void	init_game(t_game *game, t_assets *assets)
 					&game->img.size_line, &game->img.endian);
 	if (!game->img.data)
 		game_over(game, "Error: mlx_get_data_addr failed!", EXIT_FAILURE);
-	game->config.ceiling = convert_color(assets->ceiling, game->img.endian);
-	game->config.floor = convert_color(assets->floor, game->img.endian);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 }
 
