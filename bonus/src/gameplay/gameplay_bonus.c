@@ -16,6 +16,11 @@ int	draw_loop(t_game *game)
 		game->ray.angle += fraction;
 		i++;
 	}
+	draw_minimap(game);
+	draw_minimap_player(game);
+	draw_circle_outline(game, CLR_WHITE);
+	draw_circle_outline(game, CLR_GREY);
+	draw_circle_outline(game, CLR_BLACK);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	return (0);
 }
