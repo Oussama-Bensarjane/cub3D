@@ -11,6 +11,19 @@
 # define SPEED_MAX 15
 # define PLAYER_RADIUS 5.0f
 
+# define MINIMAP_RADIUS 8
+# define MINIMAP_SCALE 20
+# define MINIMAP_OFFSET_X 20
+# define MINIMAP_OFFSET_Y 20
+
+# define CLR_FREE_SPACE 0xDCD7C9
+# define CLR_WALL 0xF3F2EC
+# define CLR_OUTBOUND 0x948979
+# define CLR_PLAYER 0xA27B5C
+# define CLR_WHITE 0xFFFFFF
+# define CLR_GREY 0x808080
+# define CLR_BLACK 0x000000
+
 # if defined(__linux__)
 #  define ESC 65307
 #  define W 119
@@ -80,7 +93,10 @@ typedef struct s_texture
 typedef struct s_config
 {
 	int			floor;
+	int			minimap_floor;
 	int			ceiling;
+	int			map_height;
+	int			*map_width;
 	char		**map;
 	t_texture	textures[4];
 }	t_config;
