@@ -96,4 +96,9 @@ void	raycaster(int x, t_game *game);
  * @return 0   Standard return for MLX loop hook
  */
 int		draw_loop(t_game *game);
+
+void	draw_minimap(t_game *game);
+void	draw_circle_outline(t_game *game, int color);
+void	draw_minimap_player(t_game *game);
+
 #endif
