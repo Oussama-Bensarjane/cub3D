@@ -28,10 +28,10 @@ static void	init_assets(t_assets *assets)
 static void	init_game(t_game *game, t_assets *assets)
 {
 	if (!game)
-		game_over(game, "Error: Cannot initialize Cub3D!", EXIT_FAILURE);
+		exit_free(assets, "Error: Cannot initialize Cub3D!");
+	if (!assets->map)
+		exit_free(assets, "Error: Cannot load the map!");
 	game->config.map = assets->map;
-	if (!game->config.map)
-		game_over(game, "Error: Cannot load the map!", EXIT_FAILURE);
 	init_player(&game->player, assets);
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -58,8 +58,14 @@ static int	close_win(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
+void f()
+{
+	system("leaks cub3D");
+}
+
 int	main(int ac, char **av)
 {
+	atexit(f);
 	t_assets	assets;
 	t_game		game;
 
