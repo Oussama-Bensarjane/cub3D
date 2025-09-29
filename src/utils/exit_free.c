@@ -31,6 +31,7 @@ void	free_assets(t_assets *cfg)
 		if (cfg->textures[i])
 			free(cfg->textures[i]);
 		cfg->textures[i] = NULL;
+		i++;
 	}
 	if (cfg->map)
 		free_2d_array(cfg->map);
