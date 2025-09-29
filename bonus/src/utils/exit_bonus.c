@@ -26,6 +26,8 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	destroy_textures(game);
 	if (game->config.map)
 		free_2d_array(game->config.map);
+	if (game->config.map_width)
+		free(game->config.map_width);
 	if (game->img.img)
 		mlx_destroy_image(game->mlx, game->img.img);
 	if (game->win)
@@ -49,6 +51,8 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	destroy_textures(game);
 	if (game->config.map)
 		free_2d_array(game->config.map);
+	if (game->config.map_width)
+		free(game->config.map_width);
 	if (game->img.img)
 		mlx_destroy_image(game->mlx, game->img.img);
 	if (game->win)
