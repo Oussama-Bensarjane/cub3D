@@ -13,6 +13,7 @@ static void	check_map_char_and_player(t_assets *cfg, \
 		cfg->player_dir = c;
 		cfg->player_x = x;
 		cfg->player_y = y;
+		cfg->map[y][x] = '0';
 		(*player_count)++;
 	}
 }
