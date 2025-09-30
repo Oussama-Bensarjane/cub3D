@@ -6,13 +6,15 @@ int	convert_color(int color, int endian)
 	int	g;
 	int	b;
 
-	r = (color >> 16) & 0xFF;
-	g = (color >> 8) & 0xFF;
-	b = color & 0xFF;
-	if (endian == 0)
-		return ((r << 16) | (g << 8) | b);
+	if (!endian)
+		return (color);
 	else
+	{
+		r = (color >> 16) & 0xFF;
+		g = (color >> 8) & 0xFF;
+		b = color & 0xFF;
 		return ((b << 16) | (g << 8) | r);
+	}
 }
 
 // Compute exact wall hit position (0 to 1) and return texture X
