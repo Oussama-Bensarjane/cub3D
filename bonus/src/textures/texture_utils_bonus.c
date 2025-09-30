@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	convert_color(int color, int endian)
 {
@@ -16,6 +16,7 @@ int	convert_color(int color, int endian)
 		return ((b << 16) | (g << 8) | r);
 	}
 }
+
 
 // Compute exact wall hit position (0 to 1) and return texture X
 int	calc_tex_x(int tex_width, double wall_dist, t_game *game)

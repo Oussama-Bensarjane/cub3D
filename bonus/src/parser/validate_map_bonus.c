@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	check_map_char_and_player(t_assets *cfg, \
 	int x, int y, int *player_count)

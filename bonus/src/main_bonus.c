@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	init_assets(t_assets *assets)
 {
@@ -20,9 +20,18 @@ static void	init_assets(t_assets *assets)
 static void	init_config(t_game *game, t_assets *assets)
 {
 	t_config	*config;
+	int			i;
 
 	config = &game->config;
 	config->map = assets->map;
+	config->map_height = assets->map_height;
+	config->map_width = malloc(config->map_height * sizeof(int));
+	if (!config->map_width)
+		game_over(game, \
+"Error: Failed to init_config [cannot mallocated config->map_width]!", EXIT_FAILURE);
+	i = -1;
+	while (++i < config->map_height)
+		config->map_width[i] = (int)ft_strlen(config->map[i]);
 	game->img.img = NULL;
 	game->win = NULL;
 }
@@ -60,6 +69,10 @@ static void	init_game(t_game *game, t_assets *assets)
 		game_over(game, "Error: mlx_get_data_addr failed!", EXIT_FAILURE);
 	game->config.ceiling = convert_color(assets->ceiling, game->img.endian);
 	game->config.floor = convert_color(assets->floor, game->img.endian);
+	if (game->config.floor == CLR_WALL)
+		game->config.minimap_floor = CLR_FREE_SPACE;
+	else
+		game->config.minimap_floor = game->config.floor;
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 }
 
