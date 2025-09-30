@@ -17,7 +17,7 @@ static void	init_assets(t_assets *assets)
 	assets->player_dir = '\0';
 }
 
-static void	init_config(int endian, t_game *game, t_assets *assets)
+static void	init_config(t_game *game, t_assets *assets)
 {
 	t_config	*config;
 	int			i;
@@ -25,12 +25,6 @@ static void	init_config(int endian, t_game *game, t_assets *assets)
 	config = &game->config;
 	config->map = assets->map;
 	config->map_height = assets->map_height;
-	config->ceiling = convert_color(assets->ceiling, endian);
-	config->floor = convert_color(assets->floor, endian);
-	if (config->floor == CLR_WALL)
-		config->minimap_floor = CLR_FREE_SPACE;
-	else
-		config->minimap_floor = config->floor;
 	config->map_width = malloc(config->map_height * sizeof(int));
 	if (!config->map_width)
 		game_over(game, \
@@ -57,7 +51,7 @@ static void	init_game(t_game *game, t_assets *assets)
 		exit_free(assets, "Error: Cannot initialize Cub3D!");
 	if (!assets->map)
 		exit_free(assets, "Error: Cannot load the map!");
-	init_config(game->img.endian, game, assets);
+	init_config(game, assets);
 	init_player(&game->player, assets);
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -73,6 +67,12 @@ static void	init_game(t_game *game, t_assets *assets)
 					&game->img.size_line, &game->img.endian);
 	if (!game->img.data)
 		game_over(game, "Error: mlx_get_data_addr failed!", EXIT_FAILURE);
+	game->config.ceiling = convert_color(assets->ceiling, game->img.endian);
+	game->config.floor = convert_color(assets->floor, game->img.endian);
+	if (game->config.floor == CLR_WALL)
+		game->config.minimap_floor = CLR_FREE_SPACE;
+	else
+		game->config.minimap_floor = game->config.floor;
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 }
 
