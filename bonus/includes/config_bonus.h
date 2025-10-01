@@ -145,6 +145,33 @@ typedef struct s_player
 	bool	key[6];
 }	t_player;
 
+typedef struct s_circle
+{
+	int	radius;
+	int	radius2;
+	int	radius2_inner;
+	int	cx;
+	int	cy;
+	int x;
+	int	y;
+	int	dx;
+	int	dy;
+}	t_circle;
+
+typedef struct s_minimap
+{
+	int			px;
+	int			py;
+	int			mx;
+	int			my;
+	int			color;
+	int			base_x;
+	int			base_y;
+	int			target_x;
+	int			target_y;
+	t_circle	circle;
+}	t_minimap;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -153,5 +180,6 @@ typedef struct s_game
 	t_config	config;
 	t_ray		ray;
 	t_player	player;
+	t_minimap	minimap;
 }	t_game;
 #endif

@@ -1,7 +1,7 @@
 #include "cub3d_bonus.h"
 
 /* small filled circle (player dot) */
-static void     draw_filled_circle_minimap(t_game *game, int cx, int cy, int radius, int color)
+static void     draw_filled_circle_minimap(int cx, int cy, int radius, int color, t_game *game)
 {
 	int	dx;
 	int	dy;
@@ -21,7 +21,7 @@ static void     draw_filled_circle_minimap(t_game *game, int cx, int cy, int rad
 }
 
 /* Bresenham integer line */
-static void	draw_minimap_line(t_game *game, int x0, int y0, int x1, int y1, int color)
+static void	draw_minimap_line(int x0, int y0, int x1, int y1, int color, t_game *game)
 {
 	int	dx;
 	int	sx;
@@ -31,9 +31,15 @@ static void	draw_minimap_line(t_game *game, int x0, int y0, int x1, int y1, int 
 	int	e2;
 
 	dx = abs(x1 - x0);
-	sx = x0 < x1 ? 1 : -1;
+	if (x0 < x1)
+		sx = 1;
+	else
+		sx = -1;
 	dy = -abs(y1 - y0);
-	sy = y0 < y1 ? 1 : -1;
+	if (y0 < y1)
+		sy = 1;
+	else
+		sy = -1;
 	err = dx + dy;
 	while (1)
 	{
@@ -56,37 +62,30 @@ static void	draw_minimap_line(t_game *game, int x0, int y0, int x1, int y1, int 
 
 void draw_minimap_player(t_game *game)
 {
-		t_player			*p;
+		t_player			*player;
 		static const double	fov = FOV * (PI / 180);
 		static const double	fraction = fov / WIDTH;
-		static int			center_px;
-		static int			center_py;
+		static const int	center_px = MINIMAP_OFFSET_X + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
+		static const int	center_py = MINIMAP_OFFSET_Y + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
 		int					dot_r;
-		double				dir_x;
-		double				dir_y;
-		int					end_x;
-		int					end_y;
-		int					dir_len;
+		double				end;
 		double				i;
 
-		p = &game->player;
-
-		center_px = MINIMAP_OFFSET_X + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
-		center_py = MINIMAP_OFFSET_Y + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
-
-		dot_r = (MINIMAP_SCALE <= 3) ? 1 : (MINIMAP_SCALE / 2);
-		draw_filled_circle_minimap(game, center_px, center_py, dot_r, CLR_PLAYER);
-
-		/* draw direction line from that fixed center */
-		dir_len = dot_r;
-		i = game->player.angle - (PI/6);
-		while (i < game->player.angle + (PI/6))
+		player = &game->player;
+		if (MINIMAP_SCALE <= 3)
+			dot_r = 1;
+		else
+			dot_r = MINIMAP_SCALE / 2;
+		draw_filled_circle_minimap(center_px, center_py, dot_r, CLR_PLAYER, game);
+		end = player->angle + (PI/6);
+		i = player->angle - (PI/6);
+		while (i < end)
 		{
-			dir_x = cos(i);
-			dir_y = sin(i);
-			end_x = (int)round(center_px + dir_x * dir_len);
-			end_y = (int)round(center_py + dir_y * dir_len);
-			draw_minimap_line(game, center_px, center_py, end_x, end_y, CLR_FREE_SPACE);
+			draw_minimap_line(center_px, center_py,
+				round(center_px + (cos(i) * dot_r)),
+				round(center_py + (sin(i) * dot_r)),
+				game->config.minimap_floor, \
+				game);
 			i+=fraction;
 		}
 }
