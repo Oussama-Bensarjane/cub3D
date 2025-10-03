@@ -25,7 +25,6 @@ static void	load_idle(t_game *game, t_frames *f, char *path)
 	f->current = 0;
 	f->imgs[0].img = mlx_xpm_file_to_image(game->mlx, path, \
 &f->width, &f->height);
-	printf("path:%s\n", path);
 	if (!f->imgs[0].img)
 		game_over(game, "Error: load idle frame", EXIT_FAILURE);
 	f->imgs[0].data = mlx_get_data_addr(f->imgs[0].img, \
