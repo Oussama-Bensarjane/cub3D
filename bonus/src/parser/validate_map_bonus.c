@@ -20,11 +20,25 @@ static void	check_map_char_and_player(t_assets *cfg, \
 
 static void	check_map_enclosure(t_assets *cfg, int x, int y)
 {
-	if (y == 0 || x == 0 || y == cfg->map_height - 1 || x >= cfg->map_width - 1)
-		exit_free(cfg, "Map not enclosed");
-	if (cfg->map[y - 1][x] == ' ' || cfg->map[y + 1][x] == ' '
-		|| cfg->map[y][x - 1] == ' ' || cfg->map[y][x + 1] == ' ')
-		exit_free(cfg, "Map open near space");
+	char	c;
+	bool	vertical_wall;
+	bool	horizontal_wall;
+
+	horizontal_wall = (cfg->map[y][x - 1] == '1' && cfg->map[y][x + 1] == '1');
+	vertical_wall = (cfg->map[y - 1][x] == '1' && cfg->map[y + 1][x] == '1');
+	c = cfg->map[y][x];
+	if (y == 0 || x == 0 || y == cfg->map_height - 1 || x == cfg->map_width - 1)
+		exit_free(cfg, "Map not enclosed.");
+	if (has_adjacent_space(cfg->map, y, x))
+		exit_free(cfg, "Map open near space.");
+	if (c == 'D')
+	{
+		if (!(horizontal_wall || vertical_wall))
+			exit_free(cfg, "The Door 'D' should be between Walls.");
+		else if (cfg->map[y - 1][x] == 'D' || cfg->map[y + 1][x] == 'D'
+		|| cfg->map[y][x - 1] == 'D' || cfg->map[y][x + 1] == 'D')
+			exit_free(cfg, ERR_D);
+	}
 }
 
 int	validate_map(t_assets *cfg)
@@ -45,7 +59,8 @@ int	validate_map(t_assets *cfg)
 		{
 			c = cfg->map[y][x];
 			check_map_char_and_player(cfg, x, y, &player_count);
-			if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+			if (c == '0' || c == 'N' || c == 'S' || c == 'E'
+				|| c == 'W' || c == 'D')
 				check_map_enclosure(cfg, x, y);
 		}
 	}

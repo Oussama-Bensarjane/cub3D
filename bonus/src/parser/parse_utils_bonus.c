@@ -26,7 +26,7 @@ int	is_map_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!ft_strchr("01NSEW \n", line[i]))
+		if (!ft_strchr("01DNSEW \n", line[i]))
 			return (0);
 		i++;
 	}
@@ -35,7 +35,7 @@ int	is_map_line(char *line)
 
 int	is_valid_map_char(char c)
 {
-	return (c == '0' || c == '1' || c == ' '
+	return (c == '0' || c == '1' || c == ' ' || c == 'D'
 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
@@ -63,4 +63,10 @@ void	check_map_path(t_assets *cfg, char *map_path)
 	if (fd == -1)
 		exit_free(cfg, "Could not open Map file");
 	close(fd);
+}
+
+int	has_adjacent_space(char **map, int y, int x)
+{
+	return (map[y - 1][x] == ' ' || map[y + 1][x] == ' '
+		|| map[y][x - 1] == ' ' || map[y][x + 1] == ' ');
 }
