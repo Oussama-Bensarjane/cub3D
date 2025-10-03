@@ -61,6 +61,14 @@ int	key_press(int keycode, t_game *game)
 		player->speed += 1;
 	else if (keycode == SPEEDDOWN && player->speed > 1)
 		player->speed -= 1;
+	if (keycode == SPACE)
+        trigger_attack(&game->sprite);
+    else if (keycode == NUM_1)
+        game->sprite.current = W_HAND;
+    else if (keycode == NUM_2)
+        game->sprite.current = W_PISTOL;
+	else if (keycode == NUM_3)
+        game->sprite.current = W_SHUTGUN;
 	return (0);
 }
 
