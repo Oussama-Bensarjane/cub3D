@@ -10,6 +10,7 @@
 # include "config_bonus.h"
 # include "parser_bonus.h"
 # include "textures_bonus.h"
+# include "sprites_bonus.h"
 
 /**
  * game_over
