@@ -98,12 +98,14 @@ INCLUDES_BONUS :=		$(INCLUDES_DIR_BONUS)/cub3d_bonus.h \
 						$(INCLUDES_DIR_BONUS)/config_bonus.h \
 						$(INCLUDES_DIR_BONUS)/parser_bonus.h \
 						$(INCLUDES_DIR_BONUS)/textures_bonus.h \
+						$(INCLUDES_DIR_BONUS)/sprites_bonus.h \
 
 # Directories
 SRCDIR_BONUS :=		bonus/src
 PAR_DIR_BONUS :=	$(SRCDIR_BONUS)/parser
 GPLAY_DIR_BONUS :=	$(SRCDIR_BONUS)/gameplay
 TEXTR_DIR_BONUS :=	$(SRCDIR_BONUS)/textures
+SPRIT_DIR_BONUS :=	$(SRCDIR_BONUS)/sprites
 UTILS_DIR_BONUS :=	$(SRCDIR_BONUS)/utils
 
 # main_bonus.c
@@ -130,6 +132,11 @@ SRC_BONUS +=	$(GPLAY_DIR_BONUS)/utils_bonus.c \
 SRC_BONUS +=	$(TEXTR_DIR_BONUS)/texture_loader_bonus.c \
 				$(TEXTR_DIR_BONUS)/texture_utils_bonus.c \
 				$(TEXTR_DIR_BONUS)/texture_bonus.c
+
+# sprite
+SRC_BONUS +=	$(SPRIT_DIR_BONUS)/sprites_bonus.c \
+				$(SPRIT_DIR_BONUS)/sprites_loader_bonus.c \
+				$(SPRIT_DIR_BONUS)/sprites_utils_bonus.c
 
 # utils
 SRC_BONUS +=	$(UTILS_DIR_BONUS)/exit_bonus.c \
