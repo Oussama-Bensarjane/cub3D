@@ -23,6 +23,7 @@
 # define CLR_WHITE 0xFFFFFF
 # define CLR_GREY 0x808080
 # define CLR_BLACK 0x000000
+# define MAX_FRAMES 20
 
 # if defined(__linux__)
 #  define ESC 65307
@@ -173,7 +174,7 @@ typedef enum e_weapon_state
  */
 typedef struct s_frames
 {
-	t_img	*imgs;
+	t_img	imgs[MAX_FRAMES];
 	int		count;
 	int		current;
 	int		width;
