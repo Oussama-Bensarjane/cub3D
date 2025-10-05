@@ -10,8 +10,8 @@ static void	init_config(t_game *game, t_assets *assets)
 	config->map_height = assets->map_height;
 	config->map_width = malloc(config->map_height * sizeof(int));
 	if (!config->map_width)
-		game_over(game, \
-"Error: Failed to init_config [cannot mallocated config->map_width]!", EXIT_FAILURE);
+		game_over(game, "Error: Failed to init_config \
+[cannot mallocated config->map_width]!", EXIT_FAILURE);
 	i = -1;
 	while (++i < config->map_height)
 		config->map_width[i] = (int)ft_strlen(config->map[i]);
@@ -37,8 +37,8 @@ static void	init_minimap_circle(t_game *game)
 	circle->radius = MINIMAP_RADIUS * MINIMAP_SCALE;
 	circle->radius2 = circle->radius * circle->radius;
 	circle->radius2_inner = (circle->radius - 1) * (circle->radius - 1);
-	circle->cx = MINIMAP_OFFSET_X + circle->radius;
-	circle->cy = MINIMAP_OFFSET_Y + circle->radius;
+	circle->center.x = MINIMAP_OFFSET_X + circle->radius;
+	circle->center.y = MINIMAP_OFFSET_Y + circle->radius;
 }
 
 void	init_game(t_game *game, t_assets *assets)
