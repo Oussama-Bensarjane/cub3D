@@ -9,11 +9,7 @@ static void	update_weapon_animation(t_weapon *w)
 		return ;
 	w->frame_timer = 0;
 	if (w->state == WS_IDLE)
-	{
-		w->idle.current++;
-		if (w->idle.current >= w->idle.count)
-			w->idle.current = 0; // loop idle frames
-	}
+		return ;
 	else if (w->state == WS_ATTACK)
 	{
 		w->attack.current++;

@@ -23,6 +23,7 @@
 # define CLR_WHITE 0xFFFFFF
 # define CLR_GREY 0x808080
 # define CLR_BLACK 0x000000
+# define MAX_FRAMES 20
 
 # if defined(__linux__)
 #  define ESC 65307
@@ -34,6 +35,10 @@
 #  define RIGHT 65363
 #  define SPEEDUP 65451
 #  define SPEEDDOWN 65453
+#  define SPACE 32
+#  define NUM_1 49
+#  define NUM_2 50
+#  define NUM_3 51
 # elif defined(__APPLE__)
 #  define ESC 53
 #  define W 13
@@ -44,6 +49,10 @@
 #  define RIGHT 124
 #  define SPEEDUP 0x45
 #  define SPEEDDOWN 0x4E
+#  define SPACE 49
+#  define NUM_1 18
+#  define NUM_2 19
+#  define NUM_3 20
 # endif
 
 typedef struct s_point
@@ -51,6 +60,12 @@ typedef struct s_point
 	double	x;
 	double	y;
 }	t_point;
+
+typedef struct s_pointi
+{
+	int	x;
+	int	y;
+}	t_pointi;
 
 typedef struct s_img
 {
@@ -144,6 +159,75 @@ typedef struct s_player
 	int		speed;
 	bool	key[6];
 }	t_player;
+/* Sprites structures*/
+typedef enum e_weapon_type
+{
+	W_HAND,
+	W_PISTOL,
+	W_SHUTGUN,
+	W_MAX
+}	t_weapon_type;
+
+typedef enum e_weapon_state
+{
+	WS_IDLE,
+	WS_ATTACK
+}	t_weapon_state;
+/**
+ * imgs : array of frames
+ * count : number of frames
+ * current : which frame is active
+ */
+typedef struct s_frames
+{
+	t_img	imgs[MAX_FRAMES];
+	int		count;
+	int		current;
+	int		width;
+	int		height;
+}	t_frames;
+/**
+ * frame_timer : controls frame duration
+ * frame_delay : delay between frames
+ * state :  WS_IDLE or WS_ATTACK
+ */
+typedef struct s_weapon
+{
+	t_frames		idle;
+	t_frames		attack;
+	int				frame_timer;
+	int				frame_delay;
+	t_weapon_state	state;
+}	t_weapon;
+/**
+ * weapons[W_MAX] : array of weapon pointers
+ * current : which weapon is active
+ */
+typedef struct s_sprite
+{
+	t_weapon	weapons[W_MAX];
+	int			current;
+}	t_sprite;
+/* ------------  */
+typedef struct s_circle
+{
+	int			radius;
+	int			radius2;
+	int			radius2_inner;
+	t_pointi	center;
+	t_pointi	p;
+	t_pointi	d;
+}	t_circle;
+
+typedef struct s_minimap
+{
+	t_pointi	p;
+	t_pointi	map;
+	int			color;
+	t_pointi	base;
+	t_pointi	target;
+	t_circle	circle;
+}	t_minimap;
 
 typedef struct s_game
 {
@@ -153,5 +237,7 @@ typedef struct s_game
 	t_config	config;
 	t_ray		ray;
 	t_player	player;
+	t_sprite	sprite;
+	t_minimap	minimap;
 }	t_game;
 #endif

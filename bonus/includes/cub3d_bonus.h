@@ -10,6 +10,7 @@
 # include "config_bonus.h"
 # include "parser_bonus.h"
 # include "textures_bonus.h"
+# include "sprites_bonus.h"
 
 /**
  * game_over
@@ -22,6 +23,17 @@
  * @param exit_status exit with 1 in case of error or 0 for success
  */
 void	game_over(t_game *game, char *msg, int exit_status);
+
+/**
+ * init_game
+ * Initializes the game structure:
+ *   - Loads the map
+ *   - Initializes the player
+ *   - Sets up the MLX window and image buffer
+ *
+ * @param game  Pointer to the game structure to initialize
+ */
+void	init_game(t_game *game, t_assets *assets);
 
 /**
  * init_player

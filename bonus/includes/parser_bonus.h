@@ -4,6 +4,8 @@
 # define ERR_CLR "Floor/Ceiling color misconfigured\n(R,G,B) \
 values must be integers in the range 0–255\nExample: F 220,100,0"
 # define XPM "Should be <path/to/texture>.xpm"
+# define ERR_D "Door 'D' must be placed between walls; \
+And NO consecutive doors are allowed in the same row or column."
 
 /* ===========================================================
 **                     MAP PARSING
@@ -24,6 +26,7 @@ void	rm_lst_spc_map(t_assets *cfg);
 int		validate_map(t_assets *cfg);
 char	*ft_strdup_trimnl(char *s);
 int		is_map_line(char *line);
+int		has_adjacent_space(char **map, int y, int x);
 int		is_valid_map_char(char c);
 void	check_map_path(t_assets *cfg, char *map_path);
 
