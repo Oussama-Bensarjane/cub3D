@@ -2,6 +2,7 @@
 
 static void	perform_dda(char **map, t_ray *ray)
 {
+	char	tile;
 	bool	hit;
 
 	hit = false;
@@ -19,7 +20,8 @@ static void	perform_dda(char **map, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side_hit = 1;
 		}
-		if (map[ray->map_y][ray->map_x] == '1')
+		tile = map[ray->map_y][ray->map_x];
+		if (tile == '1' || tile == 'D')
 			hit = true;
 	}
 }

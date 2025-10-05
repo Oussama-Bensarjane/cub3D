@@ -29,7 +29,7 @@ void	init_player(t_player *player, t_assets *assets)
 	else
 		player->angle = 0;
 	player->speed = 4;
-	player->angle_speed = FOV / WIDTH;
+	player->angle_speed = (FOV / WIDTH) + 0.01;
 	player->key[KEY_UP] = false;
 	player->key[KEY_DOWN] = false;
 	player->key[KEY_LEFT] = false;
@@ -57,18 +57,20 @@ int	key_press(int keycode, t_game *game)
 		player->key[KEY_ROT_LEFT] = true;
 	else if (keycode == RIGHT)
 		player->key[KEY_ROT_RIGHT] = true;
+	else if (keycode == SPACE)
+		trigger_attack(&game->sprite);
+	else if (keycode == NUM_1)
+		game->sprite.current = W_HAND;
+	else if (keycode == NUM_2)
+		game->sprite.current = W_PISTOL;
+	else if (keycode == NUM_3)
+		game->sprite.current = W_SHUTGUN;
+	else if (keycode == E)
+		try_toggle_door(game);
 	else if (keycode == SPEEDUP && player->speed < SPEED_MAX)
 		player->speed += 1;
 	else if (keycode == SPEEDDOWN && player->speed > 1)
 		player->speed -= 1;
-	if (keycode == SPACE)
-        trigger_attack(&game->sprite);
-    else if (keycode == NUM_1)
-        game->sprite.current = W_HAND;
-    else if (keycode == NUM_2)
-        game->sprite.current = W_PISTOL;
-	else if (keycode == NUM_3)
-        game->sprite.current = W_SHUTGUN;
 	return (0);
 }
 

@@ -37,7 +37,7 @@ bool	touch(t_point p, t_game *game)
 	x = p.x / BLOCK;
 	y = p.y / BLOCK;
 	tile = game->config.map[y][x];
-	if (tile == '1')
+	if (tile == '1' || tile == 'D')
 		return (true);
 	return (false);
 }

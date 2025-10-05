@@ -4,6 +4,7 @@ static void	init_config(t_game *game, t_assets *assets)
 {
 	t_config	*config;
 	int			i;
+	int			j;
 
 	config = &game->config;
 	config->map = assets->map;
@@ -12,9 +13,28 @@ static void	init_config(t_game *game, t_assets *assets)
 	if (!config->map_width)
 		game_over(game, "Error: Failed to init_config \
 [cannot mallocated config->map_width]!", EXIT_FAILURE);
-	i = -1;
-	while (++i < config->map_height)
+	game->doors = NULL;
+	i = 0;
+	while (i < config->map_height)
+	{
 		config->map_width[i] = (int)ft_strlen(config->map[i]);
+		j = 0;
+		while (j < config->map_width[i])
+		{
+			if (config->map[i][j] == 'D')
+			{
+				t_door *door = malloc(sizeof(t_door));
+				door->x = j;
+				door->y = i;
+				door->is_open = 0;
+				door->anim = 0;
+				door->speed = DOOR_OPEN_CLOSE_SPEED;
+				ft_lstadd_back(&game->doors, ft_lstnew(door));
+			}
+			j++;
+		}
+		i++;
+	}
 	game->img.img = NULL;
 	game->win = NULL;
 }
