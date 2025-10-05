@@ -59,7 +59,7 @@ void	init_load_weapons(t_game *game)
 	w = &game->sprite.weapons[W_PISTOL];
 	init_weapon(w);
 	load_idle(game, &w->idle, "bonus/src/sprites/pistol/1.xpm");
-	load_attack(game, &w->attack, "bonus/src/sprites/pistol/", 5);
+	load_attack(game, &w->attack, "bonus/src/sprites/pistol/", 7);
 	w = &game->sprite.weapons[W_SHUTGUN];
 	init_weapon(w);
 	load_idle(game, &w->idle, "bonus/src/sprites/shutgun/1.xpm");
