@@ -1,98 +1,91 @@
 #include "cub3d_bonus.h"
 
-static void	draw_square_circle_mask(t_game *game, int sx, int sy,
-				int color)
+static void	draw_square_circle_mask(int sx, int sy, int color, t_game *game)
 {
-	int x, y, dx, dy;
-	int radius = MINIMAP_RADIUS * MINIMAP_SCALE;
-	int cx = MINIMAP_OFFSET_X + radius;
-	int cy = MINIMAP_OFFSET_Y + radius;
+	t_circle	*circle;
 
-	y = 0;
-	while (y < MINIMAP_SCALE)
+	circle = &game->minimap.circle;
+	circle->p.y = 0;
+	while (circle->p.y < MINIMAP_SCALE)
 	{
-		x = 0;
-		while (x < MINIMAP_SCALE)
+		circle->p.x = 0;
+		while (circle->p.x < MINIMAP_SCALE)
 		{
-			dx = (sx + x) - cx;
-			dy = (sy + y) - cy;
-			if (dx * dx + dy * dy <= radius * radius)
-				put_pixel(sx + x, sy + y, color, game);
-			x++;
+			circle->d.x = (sx + circle->p.x) - circle->center.x;
+			circle->d.y = (sy + circle->p.y) - circle->center.y;
+			if (circle->d.x * circle->d.x + circle->d.y * circle->d.y \
+				<= circle->radius2)
+				put_pixel(sx + circle->p.x, sy + circle->p.y, color, game);
+			circle->p.x++;
 		}
-		y++;
+		circle->p.y++;
 	}
 }
 
-static int      get_cell_color(t_game *game, int mx, int my)
+static int	get_cell_color(int mx, int my, t_game *game)
 {
 	t_config	*config;
 
 	config = &game->config;
 	if (my < 0 || my >= config->map_height)
-			return (CLR_OUTBOUND);
+		return (CLR_OUTBOUND);
 	else if (mx < 0 || mx >= config->map_width[my])
-			return (CLR_OUTBOUND);
+		return (CLR_OUTBOUND);
 	if (config->map[my][mx] == '1')
-			return (CLR_WALL);
+		return (CLR_WALL);
 	else if (config->map[my][mx] == '0')
-			return (config->minimap_floor);
+		return (config->minimap_floor);
 	return (CLR_OUTBOUND);
 }
 
 void	draw_circle_outline(t_game *game, int color)
 {
-	int x, y, dx, dy, dist2, r2, r2_inner;
-	int radius = MINIMAP_RADIUS * MINIMAP_SCALE;
-	int cx = MINIMAP_OFFSET_X + radius;
-	int cy = MINIMAP_OFFSET_Y + radius;
+	t_circle	*circle;
+	int			dist2;
 
-	r2 = radius * radius;
-	r2_inner = (radius - 1) * (radius - 1);
-	y = -radius;
-	while (y <= radius)
+	circle = &game->minimap.circle;
+	circle->p.y = -circle->radius;
+	while (circle->p.y <= circle->radius)
 	{
-		x = -radius;
-		while (x <= radius)
+		circle->p.x = -circle->radius;
+		while (circle->p.x <= circle->radius)
 		{
-			dx = x;
-			dy = y;
-			dist2 = dx * dx + dy * dy;
-			if (dist2 <= r2 && dist2 >= r2_inner)
-				put_pixel(cx + x, cy + y, color, game);
-			x++;
+			circle->d.x = circle->p.x;
+			circle->d.y = circle->p.y;
+			dist2 = circle->d.x * circle->d.x + circle->d.y * circle->d.y;
+			if (dist2 <= circle->radius2 && dist2 >= circle->radius2_inner)
+				put_pixel(circle->center.x + circle->p.x,
+					circle->center.y + circle->p.y, color, game);
+			circle->p.x++;
 		}
-		y++;
+		circle->p.y++;
 	}
 }
 
 void	draw_minimap(t_game *game)
 {
-	int	px;
-	int	py;
-	int	mx;
-	int	my;
-	int	color;
-	int	base_x;
-	int	base_y;
+	t_minimap	*minimap;
 
-	px = game->player.p.x / BLOCK;
-	py = game->player.p.y / BLOCK;
-	base_x = px - MINIMAP_RADIUS;
-	base_y = py - MINIMAP_RADIUS;
-	my = base_y;
-	while (my <= py + MINIMAP_RADIUS)
+	minimap = &game->minimap;
+	minimap->p.x = game->player.p.x / BLOCK;
+	minimap->p.y = game->player.p.y / BLOCK;
+	minimap->base.x = minimap->p.x - MINIMAP_RADIUS;
+	minimap->base.y = minimap->p.y - MINIMAP_RADIUS;
+	minimap->target.x = minimap->p.x + MINIMAP_RADIUS;
+	minimap->target.y = minimap->p.y + MINIMAP_RADIUS;
+	minimap->map.y = minimap->base.y;
+	while (minimap->map.y <= minimap->target.y)
 	{
-		mx = base_x;
-		while (mx <= px + MINIMAP_RADIUS)
+		minimap->map.x = minimap->base.x;
+		while (minimap->map.x <= minimap->target.x)
 		{
-			color = get_cell_color(game, mx, my);
-			draw_square_circle_mask(game,
-					(mx - base_x) * MINIMAP_SCALE + MINIMAP_OFFSET_X,
-					(my - base_y) * MINIMAP_SCALE + MINIMAP_OFFSET_Y,
-					color);
-			mx++;
+			draw_square_circle_mask((minimap->map.x - minimap->base.x) \
+				* MINIMAP_SCALE + MINIMAP_OFFSET_X,
+				(minimap->map.y - minimap->base.y) \
+				* MINIMAP_SCALE + MINIMAP_OFFSET_Y,
+				get_cell_color(minimap->map.x, minimap->map.y, game), game);
+			minimap->map.x++;
 		}
-		my++;
+		minimap->map.y++;
 	}
 }
