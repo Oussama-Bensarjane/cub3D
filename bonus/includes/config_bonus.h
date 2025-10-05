@@ -52,6 +52,12 @@ typedef struct s_point
 	double	y;
 }	t_point;
 
+typedef struct s_pointi
+{
+	int	x;
+	int	y;
+}	t_pointi;
+
 typedef struct s_img
 {
 	void	*img;
@@ -147,28 +153,21 @@ typedef struct s_player
 
 typedef struct s_circle
 {
-	int	radius;
-	int	radius2;
-	int	radius2_inner;
-	int	cx;
-	int	cy;
-	int x;
-	int	y;
-	int	dx;
-	int	dy;
+	int			radius;
+	int			radius2;
+	int			radius2_inner;
+	t_pointi	center;
+	t_pointi	p;
+	t_pointi	d;
 }	t_circle;
 
 typedef struct s_minimap
 {
-	int			px;
-	int			py;
-	int			mx;
-	int			my;
+	t_pointi	p;
+	t_pointi	map;
 	int			color;
-	int			base_x;
-	int			base_y;
-	int			target_x;
-	int			target_y;
+	t_pointi	base;
+	t_pointi	target;
 	t_circle	circle;
 }	t_minimap;
 

@@ -23,7 +23,6 @@
  */
 void	game_over(t_game *game, char *msg, int exit_status);
 
-
 /**
  * init_game
  * Initializes the game structure:
