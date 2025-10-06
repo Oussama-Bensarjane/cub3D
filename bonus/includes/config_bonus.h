@@ -20,12 +20,10 @@
 # define CLR_WALL 0xF3F2EC
 # define CLR_OUTBOUND 0x948979
 # define CLR_PLAYER 0xA27B5C
-# define CLR_WHITE 0xFFFFFF
-# define CLR_GREY 0x808080
+# define CLR_DOOR 0x86B0BD
 # define CLR_BLACK 0x000000
 
 # define TEX_DOOR_PATH "media/textures/door.xpm"
-# define DOOR_OPEN_CLOSE_SPEED 0.05
 # define MAX_FRAMES 20
 
 # if defined(__linux__)
@@ -137,6 +135,7 @@ typedef struct s_ray
 	int		step_x;
 	int		step_y;
 	int		side_hit;
+	int		door_hit;
 	t_wall	wall;
 	double	angle;
 	t_point	dir;
