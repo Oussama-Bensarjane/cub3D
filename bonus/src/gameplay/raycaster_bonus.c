@@ -1,10 +1,25 @@
 #include "cub3d_bonus.h"
 
-static void	perform_dda(char **map, t_ray *ray)
+static void	check_hit(char **map, t_ray *ray, bool *hit, bool *first)
 {
 	char	tile;
+
+	tile = map[ray->map_y][ray->map_x];
+	if (tile == '1' || tile == 'D')
+		*hit = true;
+	if (*first && (tile == 'D' || tile == 'O'))
+	{
+		*first = false;
+		ray->door_hit = ray->map_x + ray->map_y;
+	}
+}
+
+static void	perform_dda(char **map, t_ray *ray)
+{
+	bool	first;
 	bool	hit;
 
+	first = true;
 	hit = false;
 	while (!hit)
 	{
@@ -20,9 +35,7 @@ static void	perform_dda(char **map, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side_hit = 1;
 		}
-		tile = map[ray->map_y][ray->map_x];
-		if (tile == '1' || tile == 'D')
-			hit = true;
+		check_hit(map, ray, &hit, &first);
 	}
 }
 
