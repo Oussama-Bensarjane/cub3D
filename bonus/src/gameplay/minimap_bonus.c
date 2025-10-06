@@ -25,16 +25,20 @@ static void	draw_square_circle_mask(int sx, int sy, int color, t_game *game)
 static int	get_cell_color(int mx, int my, t_game *game)
 {
 	t_config	*config;
+	char		tile;
 
 	config = &game->config;
 	if (my < 0 || my >= config->map_height)
 		return (CLR_OUTBOUND);
 	else if (mx < 0 || mx >= config->map_width[my])
 		return (CLR_OUTBOUND);
-	if (config->map[my][mx] == '1')
+	tile = config->map[my][mx];
+	if (tile == '1')
 		return (CLR_WALL);
-	else if (config->map[my][mx] == '0')
+	else if (tile == '0' || tile == 'O')
 		return (config->minimap_floor);
+	else if (tile == 'D')
+		return (CLR_DOOR);
 	return (CLR_OUTBOUND);
 }
 

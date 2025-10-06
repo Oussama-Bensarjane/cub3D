@@ -40,6 +40,19 @@ static void	move_strafe(t_point *new_p, t_player *player)
 	}
 }
 
+static void	update_position(t_point new_p, t_game *game)
+{
+	if (can_move(new_p, game))
+		game->player.p = new_p;
+	else
+	{
+		if (can_move((t_point){new_p.x, game->player.p.y}, game))
+			game->player.p.x = new_p.x;
+		if (can_move((t_point){game->player.p.x, new_p.y}, game))
+			game->player.p.y = new_p.y;
+	}
+}
+
 void	move_player(t_game *game)
 {
 	t_player	*player;

@@ -37,7 +37,22 @@ bool	touch(t_point p, t_game *game)
 	x = p.x / BLOCK;
 	y = p.y / BLOCK;
 	tile = game->config.map[y][x];
-	if (tile == '1')
+	if (tile == '1' || tile == 'D')
 		return (true);
 	return (false);
+}
+
+bool	can_move(t_point p, t_game *game)
+{
+	if (touch(p, game))
+		return (false);
+	else if (touch((t_point){p.x - PLAYER_RADIUS, p.y}, game))
+		return (false);
+	else if (touch((t_point){p.x + PLAYER_RADIUS, p.y}, game))
+		return (false);
+	else if (touch((t_point){p.x, p.y - PLAYER_RADIUS}, game))
+		return (false);
+	else if (touch((t_point){p.x, p.y + PLAYER_RADIUS}, game))
+		return (false);
+	return (true);
 }

@@ -126,6 +126,7 @@ SRC_BONUS +=	$(GPLAY_DIR_BONUS)/utils_bonus.c \
 				$(GPLAY_DIR_BONUS)/raycaster_bonus.c \
 				$(GPLAY_DIR_BONUS)/minimap_player_bonus.c \
 				$(GPLAY_DIR_BONUS)/minimap_bonus.c \
+				$(GPLAY_DIR_BONUS)/door_bonus.c \
 				$(GPLAY_DIR_BONUS)/gameplay_bonus.c
 
 # textures

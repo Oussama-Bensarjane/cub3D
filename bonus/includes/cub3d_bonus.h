@@ -64,7 +64,13 @@ int		key_release(int keycode, t_player *player);
  * Also ensures player cannot walk through walls.
  */
 void	move_player(t_game *game);
-void	update_position(t_point new_p, t_game *game);
+
+/**
+ * can_move
+ * Checks if the player can move to P(new_x, new_y) without colliding with walls.
+ * Adds a "radius" to avoid clipping through corners.
+ */
+bool	can_move(t_point p, t_game *game);
 
 /**
  * put_pixel
@@ -112,5 +118,6 @@ int		draw_loop(t_game *game);
 void	draw_minimap(t_game *game);
 void	draw_circle_outline(t_game *game, int color);
 void	draw_minimap_player(t_game *game);
+void	try_toggle_door(t_game *game);
 
 #endif

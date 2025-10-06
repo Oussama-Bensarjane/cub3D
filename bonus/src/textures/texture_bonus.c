@@ -7,7 +7,9 @@
 */
 static int	choose_texture(t_game *game)
 {
-	if (game->ray.side_hit == 0)
+	if (game->config.map[game->ray.map_y][game->ray.map_x] == 'D')
+		return (TEX_DOOR);
+	else if (game->ray.side_hit == 0)
 	{
 		if (game->ray.dir.x > 0)
 			return (TEX_EA);

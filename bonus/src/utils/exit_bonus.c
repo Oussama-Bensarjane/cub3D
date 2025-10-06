@@ -24,6 +24,7 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	if (!game)
 		exit(EXIT_FAILURE);
 	destroy_textures(game);
+	ft_lstclear(&game->doors, free);
 	if (game->config.map)
 		free_2d_array(game->config.map);
 	if (game->config.map_width)
@@ -49,6 +50,7 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	if (!game)
 		exit(EXIT_FAILURE);
 	destroy_textures(game);
+	ft_lstclear(&game->doors, free);
 	if (game->config.map)
 		free_2d_array(game->config.map);
 	if (game->config.map_width)

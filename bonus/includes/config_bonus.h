@@ -20,9 +20,10 @@
 # define CLR_WALL 0xF3F2EC
 # define CLR_OUTBOUND 0x948979
 # define CLR_PLAYER 0xA27B5C
-# define CLR_WHITE 0xFFFFFF
-# define CLR_GREY 0x808080
+# define CLR_DOOR 0x86B0BD
 # define CLR_BLACK 0x000000
+
+# define TEX_DOOR_PATH "media/textures/door.xpm"
 # define MAX_FRAMES 20
 
 # if defined(__linux__)
@@ -39,6 +40,7 @@
 #  define NUM_1 49
 #  define NUM_2 50
 #  define NUM_3 51
+#  define E 101
 # elif defined(__APPLE__)
 #  define ESC 53
 #  define W 13
@@ -53,6 +55,7 @@
 #  define NUM_1 18
 #  define NUM_2 19
 #  define NUM_3 20
+#  define E 101
 # endif
 
 typedef struct s_point
@@ -82,6 +85,7 @@ typedef enum e_dir
 	TEX_SO,
 	TEX_WE,
 	TEX_EA,
+	TEX_DOOR,
 	TEX_MAX
 }	t_dir;
 
@@ -94,7 +98,7 @@ typedef struct s_assets
 	int		map_height;
 	int		player_x;
 	int		player_y;
-	char	*textures[4];
+	char	*textures[5];
 	char	**map;
 }	t_assets;
 
@@ -113,7 +117,7 @@ typedef struct s_config
 	int			map_height;
 	int			*map_width;
 	char		**map;
-	t_texture	textures[4];
+	t_texture	textures[5];
 }	t_config;
 
 typedef struct s_wall
@@ -131,6 +135,7 @@ typedef struct s_ray
 	int		step_x;
 	int		step_y;
 	int		side_hit;
+	int		door_hit;
 	t_wall	wall;
 	double	angle;
 	t_point	dir;
@@ -159,6 +164,7 @@ typedef struct s_player
 	int		speed;
 	bool	key[6];
 }	t_player;
+
 /* Sprites structures*/
 typedef enum e_weapon_type
 {
@@ -173,6 +179,7 @@ typedef enum e_weapon_state
 	WS_IDLE,
 	WS_ATTACK
 }	t_weapon_state;
+
 /**
  * imgs : array of frames
  * count : number of frames
@@ -186,6 +193,7 @@ typedef struct s_frames
 	int		width;
 	int		height;
 }	t_frames;
+
 /**
  * frame_timer : controls frame duration
  * frame_delay : delay between frames
@@ -199,6 +207,7 @@ typedef struct s_weapon
 	int				frame_delay;
 	t_weapon_state	state;
 }	t_weapon;
+
 /**
  * weapons[W_MAX] : array of weapon pointers
  * current : which weapon is active
@@ -208,7 +217,7 @@ typedef struct s_sprite
 	t_weapon	weapons[W_MAX];
 	int			current;
 }	t_sprite;
-/* ------------  */
+
 typedef struct s_circle
 {
 	int			radius;
@@ -223,11 +232,19 @@ typedef struct s_minimap
 {
 	t_pointi	p;
 	t_pointi	map;
-	int			color;
 	t_pointi	base;
 	t_pointi	target;
 	t_circle	circle;
 }	t_minimap;
+
+typedef struct s_door
+{
+	int		x;
+	int		y;
+	int		is_open;
+	double	anim;
+	double	speed;
+}	t_door;
 
 typedef struct s_game
 {
@@ -238,6 +255,7 @@ typedef struct s_game
 	t_ray		ray;
 	t_player	player;
 	t_sprite	sprite;
+	t_list		*doors;
 	t_minimap	minimap;
 }	t_game;
 #endif
