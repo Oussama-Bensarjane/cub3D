@@ -55,7 +55,7 @@
 #  define NUM_1 18
 #  define NUM_2 19
 #  define NUM_3 20
-#  define E 101
+#  define E 14
 # endif
 
 typedef struct s_point
