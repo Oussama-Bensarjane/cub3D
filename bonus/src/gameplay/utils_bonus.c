@@ -41,3 +41,18 @@ bool	touch(t_point p, t_game *game)
 		return (true);
 	return (false);
 }
+
+bool	can_move(t_point p, t_game *game)
+{
+	if (touch(p, game))
+		return (false);
+	else if (touch((t_point){p.x - PLAYER_RADIUS, p.y}, game))
+		return (false);
+	else if (touch((t_point){p.x + PLAYER_RADIUS, p.y}, game))
+		return (false);
+	else if (touch((t_point){p.x, p.y - PLAYER_RADIUS}, game))
+		return (false);
+	else if (touch((t_point){p.x, p.y + PLAYER_RADIUS}, game))
+		return (false);
+	return (true);
+}
