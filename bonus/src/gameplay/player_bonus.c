@@ -38,26 +38,28 @@ void	init_player(t_player *player, t_assets *assets)
 	player->key[KEY_ROT_RIGHT] = false;
 }
 
-int	key_press(int keycode, t_game *game)
+static void	handle_movement_keys(int keycode, t_player *p)
 {
-	t_player	*player;
-
-	player = &game->player;
-	if (keycode == ESC)
-		game_over(game, NULL, EXIT_SUCCESS);
-	else if (keycode == W)
-		player->key[KEY_UP] = true;
+	if (keycode == W)
+		p->key[KEY_UP] = true;
 	else if (keycode == S)
-		player->key[KEY_DOWN] = true;
+		p->key[KEY_DOWN] = true;
 	else if (keycode == A)
-		player->key[KEY_LEFT] = true;
+		p->key[KEY_LEFT] = true;
 	else if (keycode == D)
-		player->key[KEY_RIGHT] = true;
+		p->key[KEY_RIGHT] = true;
 	else if (keycode == LEFT)
-		player->key[KEY_ROT_LEFT] = true;
+		p->key[KEY_ROT_LEFT] = true;
 	else if (keycode == RIGHT)
-		player->key[KEY_ROT_RIGHT] = true;
-	else if (keycode == SPACE)
+		p->key[KEY_ROT_RIGHT] = true;
+}
+
+static void	handle_action_keys(int keycode, t_game *game)
+{
+	t_player	*p;
+
+	p = &game->player;
+	if (keycode == SPACE)
 		trigger_attack(&game->sprite);
 	else if (keycode == NUM_1)
 		game->sprite.current = W_HAND;
@@ -67,10 +69,21 @@ int	key_press(int keycode, t_game *game)
 		game->sprite.current = W_SHUTGUN;
 	else if (keycode == E)
 		try_toggle_door(game);
-	else if (keycode == SPEEDUP && player->speed < SPEED_MAX)
-		player->speed += 1;
-	else if (keycode == SPEEDDOWN && player->speed > 1)
-		player->speed -= 1;
+	else if (keycode == SPEEDUP && p->speed < SPEED_MAX)
+		p->speed += 1;
+	else if (keycode == SPEEDDOWN && p->speed > 1)
+		p->speed -= 1;
+}
+
+int	key_press(int keycode, t_game *game)
+{
+	if (keycode == ESC)
+		game_over(game, NULL, EXIT_SUCCESS);
+	else
+	{
+		handle_movement_keys(keycode, &game->player);
+		handle_action_keys(keycode, game);
+	}
 	return (0);
 }
 
@@ -89,37 +102,4 @@ int	key_release(int keycode, t_player *player)
 	if (keycode == RIGHT)
 		player->key[KEY_ROT_RIGHT] = false;
 	return (0);
-}
-
-/**
- * can_move
- * Checks if the player can move to P(new_x, new_y) without colliding with walls.
- * Adds a "radius" to avoid clipping through corners.
- */
-static bool	can_move(t_point p, t_game *game)
-{
-	if (touch(p, game))
-		return (false);
-	else if (touch((t_point){p.x - PLAYER_RADIUS, p.y}, game))
-		return (false);
-	else if (touch((t_point){p.x + PLAYER_RADIUS, p.y}, game))
-		return (false);
-	else if (touch((t_point){p.x, p.y - PLAYER_RADIUS}, game))
-		return (false);
-	else if (touch((t_point){p.x, p.y + PLAYER_RADIUS}, game))
-		return (false);
-	return (true);
-}
-
-void	update_position(t_point new_p, t_game *game)
-{
-	if (can_move(new_p, game))
-		game->player.p = new_p;
-	else
-	{
-		if (can_move((t_point){new_p.x, game->player.p.y}, game))
-			game->player.p.x = new_p.x;
-		if (can_move((t_point){game->player.p.x, new_p.y}, game))
-			game->player.p.y = new_p.y;
-	}
 }
