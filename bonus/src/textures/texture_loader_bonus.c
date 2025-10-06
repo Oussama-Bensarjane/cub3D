@@ -20,6 +20,7 @@ static void	load_textures(t_game *game, char *paths[TEX_MAX])
 	t_texture	*textures;
 
 	textures = game->config.textures;
+	paths[TEX_DOOR] = ft_strdup(TEX_DOOR_PATH);
 	i = 0;
 	while (i < TEX_MAX)
 	{
