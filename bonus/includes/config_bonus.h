@@ -25,6 +25,7 @@
 # define CLR_BLACK 0x000000
 
 # define TEX_DOOR_PATH "media/textures/door.xpm"
+# define SPRITES_PATH "media/sprites" 
 # define MAX_FRAMES 20
 
 # if defined(__linux__)
