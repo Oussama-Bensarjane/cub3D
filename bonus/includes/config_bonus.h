@@ -8,8 +8,9 @@
 # define BLOCK 64
 
 # define FOV 60.0f
-# define SPEED_MAX 15
 # define PLAYER_RADIUS 5.0f
+# define SPEED_MAX 15
+# define MOUSE_SENSITIVITY 0.005
 
 # define MINIMAP_RADIUS 8
 # define MINIMAP_SCALE 20

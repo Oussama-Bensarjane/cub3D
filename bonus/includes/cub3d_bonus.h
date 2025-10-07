@@ -54,6 +54,8 @@ int		key_press(int keycode, t_game *game);
  */
 int		key_release(int keycode, t_player *player);
 
+int     mouse_move(int x, int y, t_game *game);
+
 /**
  * move_player
  * Updates player position and angle based on pressed keys.
@@ -84,20 +86,8 @@ bool	can_move(t_point p, t_game *game);
 void	put_pixel(int x, int y, int color, t_game *game);
 void	clear_image(t_game *game);
 
-/**
- * touch
- * Checks if the given position (p.x, p.y) is inside a wall block.
- *
- * @param p    (X, Y) position in the world (double, not grid index).
- * @param game  Pointer to game data (contains the map).
- *
- * @return true  If the position is within a wall block ('1').
- * @return false Otherwise (free space).
- */
-bool	touch(t_point p, t_game *game);
 
 void	init_dda(t_player *player, t_ray *ray);
-
 void	raycaster(int x, t_game *game);
 
 /**
