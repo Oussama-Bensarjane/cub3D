@@ -241,11 +241,10 @@ typedef struct s_minimap
 
 typedef struct s_door
 {
+	int		id;
 	int		x;
 	int		y;
 	int		is_open;
-	double	anim;
-	double	speed;
 }	t_door;
 
 typedef struct s_game
