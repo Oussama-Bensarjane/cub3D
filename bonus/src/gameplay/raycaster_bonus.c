@@ -11,6 +11,7 @@ static void	check_hit(char **map, t_ray *ray, bool *hit, bool *first)
 	{
 		*first = false;
 		ray->door_hit = ray->map_x + ray->map_y;
+		ray->door_hit = (ray->door_hit * (ray->door_hit + 1)) / 2 + ray->map_y;
 	}
 }
 
