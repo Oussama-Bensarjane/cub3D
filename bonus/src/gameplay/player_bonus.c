@@ -91,15 +91,15 @@ int	key_release(int keycode, t_player *player)
 {
 	if (keycode == W)
 		player->key[KEY_UP] = false;
-	if (keycode == S)
+	else if (keycode == S)
 		player->key[KEY_DOWN] = false;
-	if (keycode == A)
+	else if (keycode == A)
 		player->key[KEY_LEFT] = false;
-	if (keycode == D)
+	else if (keycode == D)
 		player->key[KEY_RIGHT] = false;
-	if (keycode == LEFT)
+	else if (keycode == LEFT)
 		player->key[KEY_ROT_LEFT] = false;
-	if (keycode == RIGHT)
+	else if (keycode == RIGHT)
 		player->key[KEY_ROT_RIGHT] = false;
 	return (0);
 }
