@@ -62,8 +62,9 @@ static int	get_pixel_color(t_img *img, int x, int y)
 void	draw_weapon(t_game *game)
 {
 	t_frames	*f;
-	t_pointi	p;
 	t_weapon	*w;
+	t_pointi	p;
+	t_pointi	base;
 	int			color;
 
 	w = &game->sprite.weapons[game->sprite.current];
@@ -73,6 +74,7 @@ void	draw_weapon(t_game *game)
 		f = &w->idle;
 	if (f->count == 0)
 		return ;
+	base = (t_pointi){(WIDTH - f->width) / 2, HEIGHT - f->height};
 	p.y = -1;
 	while (++p.y < f->height)
 	{
@@ -82,8 +84,7 @@ void	draw_weapon(t_game *game)
 			color = get_pixel_color(&f->imgs[f->current], p.x, p.y);
 			if (color == 0x00FF00)
 				continue ;
-			put_pixel(((WIDTH - f->width) / 2) + p.x,
-				(HEIGHT - f->height) + p.y, color, &game->img);
+			put_pixel(base.x + p.x, base.y + p.y, color, &game->img);
 		}
 	}
 }

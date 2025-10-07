@@ -56,15 +56,15 @@ void	init_load_weapons(t_game *game)
 
 	w = &game->sprite.weapons[W_HAND];
 	init_weapon(w, W_HAND);
-	load_idle(game, &w->idle, "bonus/src/sprites/hand/1.xpm");
-	load_attack(game, &w->attack, "bonus/src/sprites/hand/", 3);
+	load_idle(game, &w->idle, SPRITES_PATH"/hand/1.xpm");
+	load_attack(game, &w->attack, SPRITES_PATH"/hand/", 3);
 	w = &game->sprite.weapons[W_PISTOL];
 	init_weapon(w, W_PISTOL);
-	load_idle(game, &w->idle, "bonus/src/sprites/pistol/1.xpm");
-	load_attack(game, &w->attack, "bonus/src/sprites/pistol/", 7);
+	load_idle(game, &w->idle, SPRITES_PATH"/pistol/1.xpm");
+	load_attack(game, &w->attack, SPRITES_PATH"/pistol/", 7);
 	w = &game->sprite.weapons[W_SHUTGUN];
 	init_weapon(w, W_SHUTGUN);
-	load_idle(game, &w->idle, "bonus/src/sprites/shutgun/1.xpm");
-	load_attack(game, &w->attack, "bonus/src/sprites/shutgun/", 17);
+	load_idle(game, &w->idle, SPRITES_PATH"/shutgun/1.xpm");
+	load_attack(game, &w->attack, SPRITES_PATH"/shutgun/", 17);
 	game->sprite.current = W_HAND;
 }
