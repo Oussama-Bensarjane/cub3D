@@ -3,6 +3,7 @@
 static void	add_door(t_game *game, int x, int y)
 {
 	t_door	*door;
+	int		s;
 
 	door = malloc(sizeof(t_door));
 	if (!door)
@@ -10,7 +11,8 @@ static void	add_door(t_game *game, int x, int y)
 	door->x = x;
 	door->y = y;
 	door->is_open = 0;
-	door->anim = 0;
+	s = x + y;
+	door->id = (s * (s + 1)) / 2 + y;
 	ft_lstadd_back(&game->doors, ft_lstnew(door));
 }
 
