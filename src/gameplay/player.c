@@ -19,7 +19,7 @@ void	init_player(t_player *player, t_assets *assets)
 	player->p.x = (assets->player_x + 0.5) * BLOCK;
 	player->p.y = (assets->player_y + 0.5) * BLOCK;
 	if (assets->player_dir == 'N')
-		player->angle = -PI / 2;
+		player->angle = (3 * PI) / 2;
 	else if (assets->player_dir == 'S')
 		player->angle = PI / 2;
 	else if (assets->player_dir == 'E')
