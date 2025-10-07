@@ -42,13 +42,13 @@ static int	get_pixel_clr(int x, int y, t_texture *tex)
 void	draw_ceiling(int x, int start_y, int end_y, t_game *game)
 {
 	while (start_y < end_y)
-		put_pixel(x, start_y++, game->config.ceiling, game);
+		put_pixel(x, start_y++, game->config.ceiling, &game->img);
 }
 
 void	draw_floor(int x, int start_y, int end_y, t_game *game)
 {
 	while (start_y < end_y)
-		put_pixel(x, start_y++, game->config.floor, game);
+		put_pixel(x, start_y++, game->config.floor, &game->img);
 }
 
 void	draw_wall(int x, t_game *game)
@@ -69,7 +69,7 @@ void	draw_wall(int x, t_game *game)
 		if (tex_y < 0)
 			tex_y += texture->height;
 		put_pixel(x, wall->start++, convert_color(\
-			get_pixel_clr(tex_x, tex_y, texture), game->img.endian), game);
+			get_pixel_clr(tex_x, tex_y, texture), game->img.endian), &game->img);
 		tex_pos += (1.0 * texture->height) / wall->height;
 	}
 }

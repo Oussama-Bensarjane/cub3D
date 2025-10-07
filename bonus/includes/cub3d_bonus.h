@@ -83,8 +83,8 @@ bool	can_move(t_point p, t_game *game);
  * @param color   The color value in 0xRRGGBB format (Little endian).
  * @param game    Pointer to the game structure containing image data.
  */
-void	put_pixel(int x, int y, int color, t_game *game);
-void	clear_image(t_game *game);
+void	put_pixel(int x, int y, int color, t_img *img);
+void	clear_image(t_img *img);
 
 
 void	init_dda(t_player *player, t_ray *ray);

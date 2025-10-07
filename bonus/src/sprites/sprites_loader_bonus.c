@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-static void	init_weapon(t_weapon *w)
+static void	init_weapon(t_weapon *w, t_weapon_type type)
 {
 	w->idle.count = 0;
 	w->idle.current = 0;
@@ -8,6 +8,8 @@ static void	init_weapon(t_weapon *w)
 	w->attack.current = 0;
 	w->frame_timer = 0;
 	w->frame_delay = 2;
+	if (type == W_SHUTGUN)
+		w->frame_delay = 1;
 	w->state = WS_IDLE;
 }
 
@@ -53,15 +55,15 @@ void	init_load_weapons(t_game *game)
 	t_weapon	*w;
 
 	w = &game->sprite.weapons[W_HAND];
-	init_weapon(w);
+	init_weapon(w, W_HAND);
 	load_idle(game, &w->idle, "bonus/src/sprites/hand/1.xpm");
 	load_attack(game, &w->attack, "bonus/src/sprites/hand/", 3);
 	w = &game->sprite.weapons[W_PISTOL];
-	init_weapon(w);
+	init_weapon(w, W_PISTOL);
 	load_idle(game, &w->idle, "bonus/src/sprites/pistol/1.xpm");
 	load_attack(game, &w->attack, "bonus/src/sprites/pistol/", 7);
 	w = &game->sprite.weapons[W_SHUTGUN];
-	init_weapon(w);
+	init_weapon(w, W_SHUTGUN);
 	load_idle(game, &w->idle, "bonus/src/sprites/shutgun/1.xpm");
 	load_attack(game, &w->attack, "bonus/src/sprites/shutgun/", 17);
 	game->sprite.current = W_HAND;

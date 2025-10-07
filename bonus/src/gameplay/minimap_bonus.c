@@ -15,7 +15,7 @@ static void	draw_square_circle_mask(int sx, int sy, int color, t_game *game)
 			circle->d.y = (sy + circle->p.y) - circle->center.y;
 			if (circle->d.x * circle->d.x + circle->d.y * circle->d.y \
 				<= circle->radius2)
-				put_pixel(sx + circle->p.x, sy + circle->p.y, color, game);
+				put_pixel(sx + circle->p.x, sy + circle->p.y, color, &game->img);
 			circle->p.x++;
 		}
 		circle->p.y++;
@@ -59,7 +59,7 @@ void	draw_circle_outline(t_game *game, int color)
 			dist2 = circle->d.x * circle->d.x + circle->d.y * circle->d.y;
 			if (dist2 <= circle->radius2 && dist2 >= circle->radius2_inner)
 				put_pixel(circle->center.x + circle->p.x,
-					circle->center.y + circle->p.y, color, game);
+					circle->center.y + circle->p.y, color, &game->img);
 			circle->p.x++;
 		}
 		circle->p.y++;

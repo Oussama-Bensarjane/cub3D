@@ -33,10 +33,10 @@ MINIMAP_OFFSET_Y + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
 		{
 			if ((d.x * d.x) + (d.y * d.y) <= r2)
 			{
-				put_pixel(center_px + d.x, center_py + d.y, CLR_PLAYER, game);
+				put_pixel(center_px + d.x, center_py + d.y, CLR_PLAYER, &game->img);
 				if (is_in_fov((t_pointi){d.x, d.y}, &game->player))
 					put_pixel(center_px + d.x, center_py + d.y,
-						game->config.minimap_floor, game);
+						game->config.minimap_floor, &game->img);
 			}
 			d.x++;
 		}
