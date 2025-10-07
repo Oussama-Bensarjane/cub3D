@@ -42,7 +42,7 @@ void	try_toggle_door(t_game *game)
 	while (node)
 	{
 		door = node->content;
-		if (game->ray.door_hit == (door->x + door->y))
+		if (game->ray.door_hit == door->id)
 		{
 			check_and_toggle(game, door);
 			break ;
