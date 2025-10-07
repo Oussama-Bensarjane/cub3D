@@ -28,7 +28,38 @@ void	clear_image(t_game *game)
 	}
 }
 
-bool	touch(t_point p, t_game *game)
+int	mouse_move(int x, int y, t_game *game)
+{
+	static int	last_x = -1;
+	double		dx;
+
+	(void)y;
+	if (last_x == -1)
+		last_x = x;
+	dx = x - last_x;
+	if (dx != 0)
+	{
+		game->player.angle += dx * MOUSE_SENSITIVITY;
+		if (game->player.angle < 0)
+			game->player.angle += 2 * PI;
+		else if (game->player.angle >= 2 * PI)
+			game->player.angle -= 2 * PI;
+	}
+	last_x = x;
+	return (0);
+}
+
+/**
+ * touch
+ * Checks if the given position (p.x, p.y) is inside a wall block.
+ *
+ * @param p    (X, Y) position in the world (double, not grid index).
+ * @param game  Pointer to game data (contains the map).
+ *
+ * @return true  If the position is within a wall block ('1').
+ * @return false Otherwise (free space).
+ */
+static bool	touch(t_point p, t_game *game)
 {
 	int		x;
 	int		y;
