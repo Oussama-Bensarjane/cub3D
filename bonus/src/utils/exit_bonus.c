@@ -15,6 +15,33 @@ static void	destroy_textures(t_game *game)
 	}
 }
 
+static void	destroy_sprites(t_game *game)
+{
+	t_weapon	*w;
+	int			i;
+	int			j;
+	static int	attack_frames[] = {HAND_ATTACK_FRAMES,
+		PISTOL_ATTACK_FRAMES, SHOTGUN_ATTACK_FRAMES};
+
+	if (!game || !game->mlx)
+		return ;
+	j = 0;
+	while (j < W_MAX)
+	{
+		w = &game->sprite.weapons[j];
+		if (w->idle.imgs[0].img)
+			mlx_destroy_image(game->mlx, w->idle.imgs[0].img);
+		i = 0;
+		while (i < attack_frames[j])
+		{
+			if (w->attack.imgs[i].img)
+				mlx_destroy_image(game->mlx, w->attack.imgs[i].img);
+			i++;
+		}
+		j++;
+	}
+}
+
 #if defined(__linux__)
 
 void	game_over(t_game *game, char *msg, int exit_status)
@@ -24,6 +51,7 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	if (!game)
 		exit(EXIT_FAILURE);
 	destroy_textures(game);
+	destroy_sprites(game);
 	ft_lstclear(&game->doors, free);
 	if (game->config.map)
 		free_2d_array(game->config.map);
@@ -50,6 +78,7 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	if (!game)
 		exit(EXIT_FAILURE);
 	destroy_textures(game);
+	destroy_sprites(game);
 	ft_lstclear(&game->doors, free);
 	if (game->config.map)
 		free_2d_array(game->config.map);
