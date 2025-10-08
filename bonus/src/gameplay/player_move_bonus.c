@@ -2,10 +2,20 @@
 
 static void	update_angle(t_player *player)
 {
+	static int	f = 0;
+
 	if (player->key[KEY_ROT_LEFT])
 		player->angle -= player->angle_speed;
 	else if (player->key[KEY_ROT_RIGHT])
 		player->angle += player->angle_speed;
+	else if ((!f && player->key[KEY_V]) || (f && !player->key[KEY_V]))
+	{
+		f = !f;
+		if (player->angle >= PI)
+			player->angle -= PI;
+		else
+			player->angle += PI;
+	}
 	if (player->angle > 2 * PI)
 		player->angle = 0;
 	else if (player->angle < 0)

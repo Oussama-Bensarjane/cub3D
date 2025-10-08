@@ -36,6 +36,7 @@ void	init_player(t_player *player, t_assets *assets)
 	player->key[KEY_RIGHT] = false;
 	player->key[KEY_ROT_LEFT] = false;
 	player->key[KEY_ROT_RIGHT] = false;
+	player->key[KEY_V] = false;
 }
 
 static void	handle_movement_keys(int keycode, t_player *p)
@@ -52,6 +53,8 @@ static void	handle_movement_keys(int keycode, t_player *p)
 		p->key[KEY_ROT_LEFT] = true;
 	else if (keycode == RIGHT)
 		p->key[KEY_ROT_RIGHT] = true;
+	else if (keycode == V)
+		p->key[KEY_V] = true;
 }
 
 static void	handle_action_keys(int keycode, t_game *game)
@@ -101,5 +104,7 @@ int	key_release(int keycode, t_player *player)
 		player->key[KEY_ROT_LEFT] = false;
 	else if (keycode == RIGHT)
 		player->key[KEY_ROT_RIGHT] = false;
+	else if (keycode == V)
+		player->key[KEY_V] = false;
 	return (0);
 }
