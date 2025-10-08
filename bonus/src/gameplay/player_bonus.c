@@ -41,6 +41,8 @@ void	init_player(t_player *player, t_assets *assets)
 
 static void	handle_movement_keys(int keycode, t_player *p)
 {
+	if (p->key[KEY_V])
+		return ;
 	if (keycode == W)
 		p->key[KEY_UP] = true;
 	else if (keycode == S)
