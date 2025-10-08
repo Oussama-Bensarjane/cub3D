@@ -22,6 +22,7 @@
 # define CLR_OUTBOUND 0x948979
 # define CLR_PLAYER 0xA27B5C
 # define CLR_DOOR 0x86B0BD
+# define CLR_DOOR_AREA 0xB6CEB4
 # define CLR_BLACK 0x000000
 
 # define TEX_DOOR_PATH "media/textures/door.xpm"
