@@ -46,9 +46,13 @@ static void	init_config(t_game *game, t_assets *assets)
 
 static void	init_ceiling_floor_colors(t_game *game, t_assets *assets)
 {
+	int	*floor;
+
 	game->config.ceiling = convert_color(assets->ceiling, game->img.endian);
-	game->config.floor = convert_color(assets->floor, game->img.endian);
-	if (game->config.floor == CLR_WALL)
+	floor = &game->config.floor;
+	*floor = convert_color(assets->floor, game->img.endian);
+	if (*floor == CLR_WALL || *floor == CLR_PLAYER
+		|| *floor == CLR_DOOR || *floor == CLR_DOOR_AREA)
 		game->config.minimap_floor = CLR_FREE_SPACE;
 	else
 		game->config.minimap_floor = game->config.floor;
