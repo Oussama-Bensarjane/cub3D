@@ -44,6 +44,7 @@
 #  define NUM_2 50
 #  define NUM_3 51
 #  define E 101
+#  define V 118
 # elif defined(__APPLE__)
 #  define ESC 53
 #  define W 13
@@ -59,6 +60,7 @@
 #  define NUM_2 19
 #  define NUM_3 20
 #  define E 14
+#  define V 9
 # endif
 
 typedef struct s_point
@@ -154,6 +156,7 @@ typedef enum e_key
 	KEY_RIGHT,
 	KEY_ROT_LEFT,
 	KEY_ROT_RIGHT,
+	KEY_V,
 	kEY_MAX
 }	t_key;
 
@@ -165,7 +168,7 @@ typedef struct s_player
 	double	sin_angle;
 	double	angle_speed;
 	int		speed;
-	bool	key[6];
+	bool	key[7];
 }	t_player;
 
 /* Sprites structures*/
