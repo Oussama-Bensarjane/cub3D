@@ -15,7 +15,8 @@ static void	draw_square_circle_mask(int sx, int sy, int color, t_game *game)
 			circle->d.y = (sy + circle->p.y) - circle->center.y;
 			if (circle->d.x * circle->d.x + circle->d.y * circle->d.y \
 				<= circle->radius2)
-				put_pixel(sx + circle->p.x, sy + circle->p.y, color, &game->img);
+				put_pixel(sx + circle->p.x, sy + circle->p.y, color,
+					&game->img);
 			circle->p.x++;
 		}
 		circle->p.y++;
@@ -35,10 +36,12 @@ static int	get_cell_color(int mx, int my, t_game *game)
 	tile = config->map[my][mx];
 	if (tile == '1')
 		return (CLR_WALL);
-	else if (tile == '0' || tile == 'O')
+	else if (tile == '0')
 		return (config->minimap_floor);
 	else if (tile == 'D')
 		return (CLR_DOOR);
+	else if (tile == 'O')
+		return (CLR_DOOR_AREA);
 	return (CLR_OUTBOUND);
 }
 

@@ -17,9 +17,9 @@ static int	is_in_fov(t_pointi d, t_player *player)
 
 void	draw_minimap_player(t_game *game)
 {
-	static const int	center_px = \
+	static const int	px = \
 MINIMAP_OFFSET_X + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
-	static const int	center_py = \
+	static const int	py = \
 MINIMAP_OFFSET_Y + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
 	static const int	r = MINIMAP_SCALE / 2;
 	static const int	r2 = r * r;
@@ -33,9 +33,9 @@ MINIMAP_OFFSET_Y + (MINIMAP_SCALE * MINIMAP_RADIUS) + (MINIMAP_SCALE / 2);
 		{
 			if ((d.x * d.x) + (d.y * d.y) <= r2)
 			{
-				put_pixel(center_px + d.x, center_py + d.y, CLR_PLAYER, &game->img);
+				put_pixel(px + d.x, py + d.y, CLR_PLAYER, &game->img);
 				if (is_in_fov((t_pointi){d.x, d.y}, &game->player))
-					put_pixel(center_px + d.x, center_py + d.y,
+					put_pixel(px + d.x, py + d.y,
 						game->config.minimap_floor, &game->img);
 			}
 			d.x++;
