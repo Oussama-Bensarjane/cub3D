@@ -41,8 +41,8 @@ void	init_player(t_player *player, t_assets *assets)
 
 static void	handle_movement_keys(int keycode, t_player *p)
 {
-	if (p->key[KEY_V])
-		return ;
+	int	i;
+
 	if (keycode == W)
 		p->key[KEY_UP] = true;
 	else if (keycode == S)
@@ -56,7 +56,12 @@ static void	handle_movement_keys(int keycode, t_player *p)
 	else if (keycode == RIGHT)
 		p->key[KEY_ROT_RIGHT] = true;
 	else if (keycode == V)
+	{
+		i = KEY_V;
 		p->key[KEY_V] = true;
+		while (i--)
+			p->key[i] = false;
+	}
 }
 
 static void	handle_action_keys(int keycode, t_game *game)
@@ -86,6 +91,8 @@ int	key_press(int keycode, t_game *game)
 		game_over(game, NULL, EXIT_SUCCESS);
 	else
 	{
+		if (game->player.key[KEY_V])
+			return (0);
 		handle_movement_keys(keycode, &game->player);
 		handle_action_keys(keycode, game);
 	}
