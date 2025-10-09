@@ -1,27 +1,5 @@
 #include "cub3d_bonus.h"
 
-void	init_weapon(t_weapon *w, t_weapon_type type)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAX_FRAMES)
-	{
-		w->idle.imgs[i].img = NULL;
-		w->attack.imgs[i].img = NULL;
-		i++;
-	}
-	w->idle.count = 0;
-	w->idle.current = 0;
-	w->attack.count = 0;
-	w->attack.current = 0;
-	w->frame_timer = 0;
-	w->frame_delay = 2;
-	if (type == W_SHUTGUN)
-		w->frame_delay = 1;
-	w->state = WS_IDLE;
-}
-
 static void	load_idle(t_game *game, t_frames *f, char *path)
 {
 	f->count = 1;

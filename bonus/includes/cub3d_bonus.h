@@ -35,6 +35,8 @@ void	game_over(t_game *game, char *msg, int exit_status);
  */
 void	init_game(t_game *game, t_assets *assets);
 
+void	init_load_textures_and_sprites(t_game *game, char *paths[TEX_MAX]);
+
 /**
  * init_player
  * Initializes the player at cpecific position of the screen with default values.

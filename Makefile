@@ -143,7 +143,8 @@ SRC_BONUS +=	$(SPRIT_DIR_BONUS)/sprites_bonus.c \
 SRC_BONUS +=	$(UTILS_DIR_BONUS)/exit_bonus.c \
 				$(UTILS_DIR_BONUS)/exit_free_bonus.c \
 				$(UTILS_DIR_BONUS)/ft_split_set_bonus.c \
-				$(UTILS_DIR_BONUS)/init_game_bonus.c
+				$(UTILS_DIR_BONUS)/init_game_bonus.c \
+				$(UTILS_DIR_BONUS)/init_tex_and_spri_bonus.c
 
 OBJDIR_BONUS :=	obj_bonus
 OBJ_BONUS :=	$(SRC_BONUS:$(SRCDIR_BONUS)/%.c=$(OBJDIR_BONUS)/%.o)

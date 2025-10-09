@@ -6,7 +6,6 @@
 # define SHOTGUN_ATTACK_FRAMES 17
 
 void	load_weapons(t_game *game);
-void	init_weapon(t_weapon *w, t_weapon_type type);
 void	draw_weapon(t_game *game);
 void	update_sprites(t_sprite *sprite);
 void	trigger_attack(t_sprite *sprite);

@@ -1,20 +1,6 @@
 #include "cub3d_bonus.h"
 
-static void	init_textures(t_texture *textures)
-{
-	int	i;
-
-	i = 0;
-	while (i < TEX_MAX)
-	{
-		textures[i].img = (t_img){NULL, NULL, 0, 0, 0};
-		textures[i].width = 0;
-		textures[i].height = 0;
-		i++;
-	}
-}
-
-static void	load_textures(t_game *game, char *paths[TEX_MAX])
+void	load_textures(t_game *game, char *paths[TEX_MAX])
 {
 	int			i;
 	t_texture	*textures;
@@ -41,21 +27,4 @@ static void	load_textures(t_game *game, char *paths[TEX_MAX])
 		i++;
 	}
 	free_textures_paths(paths);
-}
-
-void	init_load_texture_and_sprites(t_game *game, char *paths[TEX_MAX])
-{
-	t_weapon	*w;
-	int			j;
-
-	init_textures(game->config.textures);
-	j = 0;
-	while (j < W_MAX)
-	{
-		w = &game->sprite.weapons[j];
-		init_weapon(w, j);
-		j++;
-	}
-	load_textures(game, paths);
-	load_weapons(game);
 }
