@@ -1,6 +1,6 @@
 #include "cub3d_bonus.h"
 
-static void	init_weapon(t_weapon *w, t_weapon_type type)
+void	init_weapon(t_weapon *w, t_weapon_type type)
 {
 	int	i;
 
@@ -59,20 +59,17 @@ static void	load_attack(t_game *game, t_frames *f, const char *base, int count)
 	}
 }
 
-void	init_load_weapons(t_game *game)
+void	load_weapons(t_game *game)
 {
 	t_weapon	*w;
 
 	w = &game->sprite.weapons[W_HAND];
-	init_weapon(w, W_HAND);
 	load_idle(game, &w->idle, SPRITES_PATH"/hand/1.xpm");
 	load_attack(game, &w->attack, SPRITES_PATH"/hand/", HAND_ATTACK_FRAMES);
 	w = &game->sprite.weapons[W_PISTOL];
-	init_weapon(w, W_PISTOL);
 	load_idle(game, &w->idle, SPRITES_PATH"/pistol/1.xpm");
 	load_attack(game, &w->attack, SPRITES_PATH"/pistol/", PISTOL_ATTACK_FRAMES);
 	w = &game->sprite.weapons[W_SHUTGUN];
-	init_weapon(w, W_SHUTGUN);
 	load_idle(game, &w->idle, SPRITES_PATH"/shotgun/1.xpm");
 	load_attack(game, &w->attack, SPRITES_PATH"/shotgun/", SHOTGUN_ATTACK_FRAMES);
 	game->sprite.current = W_HAND;

@@ -54,7 +54,7 @@ int		key_press(int keycode, t_game *game);
  */
 int		key_release(int keycode, t_player *player);
 
-int     mouse_move(int x, int y, t_game *game);
+int		mouse_move(int x, int y, t_game *game);
 
 /**
  * move_player
@@ -85,7 +85,6 @@ bool	can_move(t_point p, t_game *game);
  */
 void	put_pixel(int x, int y, int color, t_img *img);
 void	clear_image(t_img *img);
-
 
 void	init_dda(t_player *player, t_ray *ray);
 void	raycaster(int x, t_game *game);

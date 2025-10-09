@@ -1,7 +1,7 @@
 #ifndef TEXTURES_BONUS_H
 # define TEXTURES_BONUS_H
 
-void	init_load_textures(t_game *game, char *textures_paths[TEX_MAX]);
+void	init_load_texture_and_sprites(t_game *game, char *paths[TEX_MAX]);
 int		convert_color(int color, int endian);
 int		calc_tex_x(int text_width, double wall_dist, t_game *game);
 double	calc_tex_step(int text_height, int line_h, int start);

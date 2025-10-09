@@ -43,8 +43,19 @@ static void	load_textures(t_game *game, char *paths[TEX_MAX])
 	free_textures_paths(paths);
 }
 
-void	init_load_textures(t_game *game, char *textures_paths[TEX_MAX])
+void	init_load_texture_and_sprites(t_game *game, char *paths[TEX_MAX])
 {
+	t_weapon	*w;
+	int			j;
+
 	init_textures(game->config.textures);
-	load_textures(game, textures_paths);
+	j = 0;
+	while (j < W_MAX)
+	{
+		w = &game->sprite.weapons[j];
+		init_weapon(w, j);
+		j++;
+	}
+	load_textures(game, paths);
+	load_weapons(game);
 }
