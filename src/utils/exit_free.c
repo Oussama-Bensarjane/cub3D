@@ -1,11 +1,16 @@
 #include "cub3d.h"
 
-void	exit_free(t_assets *cfg, char *msg)
+void	exit_free(t_assets *cfg, char *line, char *msg)
 {
 	free_assets(cfg);
-	ft_putendl_fd("Error", 2);
+	ft_putendl_fd(RED"Error"END, 2);
 	if (msg)
 		ft_putendl_fd(msg, 2);
+	if (line)
+	{
+		printf(YELLOW"%s"END, line);
+		free(line);
+	}
 	exit (EXIT_FAILURE);
 }
 

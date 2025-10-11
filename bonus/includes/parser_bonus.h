@@ -7,6 +7,10 @@ values must be integers in the range 0–255\nExample: F 220,100,0"
 # define ERR_D "Door 'D' must be placed between walls; \
 And NO consecutive doors are allowed in the same row or column."
 
+# define RED "\033[31m"
+# define YELLOW "\033[33m"
+# define END "\033[0m"
+
 /* ===========================================================
 **                     MAP PARSING
 ** ===========================================================
@@ -40,7 +44,7 @@ int		check_texture_path(t_assets *cfg, char *path);
 char	**ft_split_set(char const *s, char *seps);
 
 /* ---------- Cleanup ---------- */
-void	exit_free(t_assets *cfg, char *msg);
+void	exit_free(t_assets *cfg, char *line, char *msg);
 void	free_assets(t_assets *cfg);
 void	free_2d_array(char **arr);
 

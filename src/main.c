@@ -39,9 +39,9 @@ static void	init_config(t_game *game, t_assets *assets)
 static void	init_game(t_game *game, t_assets *assets)
 {
 	if (!game)
-		exit_free(assets, "Error: Cannot initialize Cub3D!");
+		exit_free(assets, NULL, "Error: Cannot initialize Cub3D!");
 	if (!assets->map)
-		exit_free(assets, "Error: Cannot load the map!");
+		exit_free(assets, NULL, "Error: Cannot load the map!");
 	init_config(game, assets);
 	init_player(&game->player, assets);
 	game->mlx = mlx_init();

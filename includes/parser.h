@@ -5,6 +5,10 @@
 values must be integers in the range 0–255\nExample: F 220,100,0"
 # define XPM "Should be <path/to/texture>.xpm"
 
+# define RED "\033[31m"
+# define YELLOW "\033[33m"
+# define END "\033[0m"
+
 /* ===========================================================
 **                     MAP PARSING
 ** ===========================================================
@@ -35,9 +39,10 @@ int		check_texture_path(t_assets *cfg, char *path);
 
 /* ---------- Utilities ---------- */
 char	**ft_split_set(char const *s, char *seps);
+int	has_adjacent_space(char **map, int y, int x);
 
 /* ---------- Cleanup ---------- */
-void	exit_free(t_assets *cfg, char *msg);
+void	exit_free(t_assets *cfg, char *line, char *msg);
 void	free_assets(t_assets *cfg);
 void	free_2d_array(char **arr);
 

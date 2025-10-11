@@ -51,17 +51,17 @@ void	check_map_path(t_assets *cfg, char *map_path)
 	if (tmp)
 	{
 		if (tmp[1] == '.')
-			exit_free(cfg, "Hidden files not allowed, Should be <map>.cub");
+			exit_free(cfg, NULL, "Hidden files not allowed, Should be <map>.cub");
 	}
 	else if (map_path[0] == '.')
-		exit_free(cfg, "Hidden files not allowed, Should be <map>.cub");
+		exit_free(cfg, NULL, "Hidden files not allowed, Should be <map>.cub");
 	file_nm_len = ft_strlen(map_path);
 	if (file_nm_len <= 4
 		|| ft_strncmp(map_path + file_nm_len - 4, ".cub", 3) != 0)
-		exit_free(cfg, "Invalid map extension, Should be <map>.cub");
+		exit_free(cfg, NULL, "Invalid map extension, Should be <map>.cub");
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
-		exit_free(cfg, "Could not open Map file");
+		exit_free(cfg, NULL, "Could not open Map file");
 	close(fd);
 }
 

@@ -73,9 +73,9 @@ static void	init_minimap_circle(t_game *game)
 void	init_game(t_game *game, t_assets *assets)
 {
 	if (!game)
-		exit_free(assets, "Error: Cannot initialize Cub3D!");
+		exit_free(assets, NULL, "Error: Cannot initialize Cub3D!");
 	if (!assets->map)
-		exit_free(assets, "Error: Cannot load the map!");
+		exit_free(assets, NULL, "Error: Cannot load the map!");
 	game->img.img = NULL;
 	game->win = NULL;
 	init_config(game, assets);

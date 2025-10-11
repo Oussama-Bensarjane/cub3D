@@ -14,10 +14,18 @@ static void	parse_config_section(t_assets *cfg, int *stage, char *line)
 
 static void	parse_map_section(t_assets *cfg, char *line)
 {
-	if (line[0] == '\n')
-		exit_free(cfg, "Error: Empty line INSIDE or AFTER the map");
-	if (!is_map_line(line))
-		exit_free(cfg, "Error: Invalid line after THE MAP");
+	int	i;
+	int	only_space;
+
+	only_space = 1;
+	i = 0;
+	while (line[i] && line[i] != '\n')
+	{
+		if (line[i++] != ' ')
+			only_space = 0;
+	}
+	if (line[0] == '\n' || only_space)
+		exit_free(cfg, NULL, "Error: Empty line INSIDE or AFTER the map");
 	add_map_line(cfg, line);
 }
 
@@ -32,7 +40,7 @@ int	parse_file(t_assets *cfg, char *filename)
 	check_map_path(cfg, filename);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		exit_free(cfg, "Could not open map_file");
+		exit_free(cfg, NULL, "Could not open map_file");
 	line = get_next_line(fd);
 	while (line)
 	{

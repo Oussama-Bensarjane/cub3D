@@ -17,7 +17,7 @@ void	add_map_line(t_assets *cfg, char *line)
 	}
 	new_map[cfg->map_height] = ft_strdup_trimnl(line);
 	if (!new_map[cfg->map_height])
-		(free(new_map), exit_free(cfg, "Malloc faileed"));
+		(free(new_map), exit_free(cfg, NULL, "Malloc failed (add_map_line)"));
 	new_map[cfg->map_height + 1] = NULL;
 	if (cfg->map)
 		free(cfg->map);
@@ -33,7 +33,7 @@ static void	free_prev(t_assets *cfg, char **new_map, int i)
 	while (--i >= 0)
 		free(new_map[i]);
 	free(new_map);
-	exit_free(cfg, "Malloc failed");
+	exit_free(cfg, NULL, "Malloc failed (normalize_map 1)");
 }
 
 void	normalize_map(t_assets *cfg)
@@ -45,7 +45,7 @@ void	normalize_map(t_assets *cfg)
 
 	new_map = malloc(sizeof(char *) * (cfg->map_height + 1));
 	if (!new_map)
-		exit_free(cfg, "Malloc failed");
+		exit_free(cfg, NULL, "Malloc failed (normalize_map 0)");
 	i = -1;
 	while (++i < cfg->map_height)
 	{
