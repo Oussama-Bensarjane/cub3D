@@ -1,7 +1,7 @@
 NAME := cub3D
 NAME_BONUS := cub3D_bonus
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address -Ilib/libft
+CFLAGS := -Wall -Wextra -Werror -Ilib/libft
 LDFLAGS := -L./lib/libft/ -lft
 
 OSFLAG := $(shell uname -s)
@@ -143,8 +143,8 @@ SRC_BONUS +=	$(SPRIT_DIR_BONUS)/sprites_bonus.c \
 SRC_BONUS +=	$(UTILS_DIR_BONUS)/exit_bonus.c \
 				$(UTILS_DIR_BONUS)/exit_free_bonus.c \
 				$(UTILS_DIR_BONUS)/ft_split_set_bonus.c \
-				$(UTILS_DIR_BONUS)/init_game_bonus.c \
-				$(UTILS_DIR_BONUS)/init_tex_and_spri_bonus.c
+				$(UTILS_DIR_BONUS)/init_load_ts_bonus.c \
+				$(UTILS_DIR_BONUS)/init_game_bonus.c
 
 OBJDIR_BONUS :=	obj_bonus
 OBJ_BONUS :=	$(SRC_BONUS:$(SRCDIR_BONUS)/%.c=$(OBJDIR_BONUS)/%.o)
