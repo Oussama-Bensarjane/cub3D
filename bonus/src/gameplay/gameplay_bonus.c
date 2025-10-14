@@ -7,7 +7,6 @@ int	draw_loop(t_game *game)
 	int						i;
 
 	move_player(game);
-	clear_image(&game->img);
 	game->ray.angle = game->player.angle - (fov / 2);
 	game->ray.door_hit = 0;
 	i = 0;

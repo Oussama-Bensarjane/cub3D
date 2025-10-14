@@ -10,24 +10,6 @@ void	put_pixel(int x, int y, int color, t_img *img)
 	*(int *)(img->data + index) = color;
 }
 
-void	clear_image(t_img *img)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			put_pixel(x, y, 0, img);
-			x++;
-		}
-		y++;
-	}
-}
-
 bool	touch(t_point p, t_game *game)
 {
 	int		x;

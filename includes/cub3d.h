@@ -64,7 +64,6 @@ void	update_position(t_point new_p, t_game *game);
  * @param game    Pointer to the game structure containing image data.
  */
 void	put_pixel(int x, int y, int color, t_img *img);
-void	clear_image(t_img *img);
 
 /**
  * touch
