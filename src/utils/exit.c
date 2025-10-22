@@ -43,6 +43,7 @@ static void	destroy_sprites(t_game *game)
 		j++;
 	}
 }
+#if defined (__linux__)
 
 void	game_over(t_game *game, char *msg, int exit_status)
 {
@@ -68,3 +69,29 @@ void	game_over(t_game *game, char *msg, int exit_status)
 	}
 	exit(exit_status);
 }
+
+#elif defined (__APPLE__)
+
+void	game_over(t_game *game, char *msg, int exit_status)
+{
+	if (msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
+	if (!game)
+		exit(EXIT_FAILURE);
+	destroy_textures(game);
+	destroy_sprites(game);
+	ft_lstclear(&game->doors, free);
+	if (game->config.map)
+		free_2d_array(game->config.map);
+	if (game->config.map_width)
+		free(game->config.map_width);
+	if (game->img.img)
+		mlx_destroy_image(game->mlx, game->img.img);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+		free(game->mlx);
+	exit(exit_status);
+}
+
+#endif

@@ -30,6 +30,8 @@
 # define SPRITES_PATH "media/sprites" 
 # define MAX_FRAMES 20
 
+# if defined (__linux__)
+
 # define ESC 65307
 # define W 119
 # define A 97
@@ -47,6 +49,28 @@
 # define V 118
 # define H 104
 # define R 114
+
+# elif defined (__APPLE__)
+
+# define ESC 53
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define LEFT 123
+# define RIGHT 124
+# define SPEEDUP 69
+# define SPEEDDOWN 78
+# define SPACE 49
+# define NUM_1 18
+# define NUM_2 19
+# define NUM_3 20
+# define E 14
+# define V 9
+# define H 4
+# define R 15
+
+# endif
 
 typedef struct s_point
 {
