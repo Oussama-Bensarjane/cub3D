@@ -11,8 +11,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="media/readme/cub3d.gif">
-    <source media="(prefers-color-scheme: light)" srcset="media/readme/cub3d.gif">
+    <source media="(prefers-color-scheme: dark)" srcset="./media/readme/cub3d.gif">
+    <source media="(prefers-color-scheme: light)" srcset="./media/readme/cub3d.gif">
   </picture>
 </p>
 
