@@ -13,6 +13,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./media/readme/cub3d.gif">
     <source media="(prefers-color-scheme: light)" srcset="./media/readme/cub3d.gif">
+    <img src="./media/readme/cub3d.gif" alt="Cub3D Gameplay" width="640">
   </picture>
 </p>
 
