@@ -5,7 +5,22 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE.md)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
----
+--
+
+## 👤 Authors
+
+**[med-el-hamidi](https://github.com/med-el-hamidi/)**
+**Roles in this project:**  
+- Gameplay & Engine Logic  
+- Player Movement & Camera  
+- Raycasting & DDA Implementation  
+- Minimap System && Door Mechanics
+
+**[Oussama-Bensarjane](https://github.com/Oussama-Bensarjane/)**
+**Roles in this project:**
+- Parsing of configuration file `.cub`  
+- Loading and rendering textures for walls  
+- Weapons rendering and animations
 
 ## 🎬 Gameplay Preview
 
@@ -17,7 +32,7 @@
   </picture>
 </p>
 
----
+--
 
 ## 🧩 About Cub3D
 
@@ -34,4 +49,4 @@ The goal is to build a **raycasting-based rendering engine** from scratch, using
 - Flip-view camera system
 - Weapon rendering
 
----
+--
