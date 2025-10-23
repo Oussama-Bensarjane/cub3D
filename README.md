@@ -2,7 +2,7 @@
 
 [![Language](https://img.shields.io/badge/language-C-blue.svg)]()
 [![Repo Size](https://img.shields.io/github/repo-size/Oussama-Bensarjane/cub3D)]()
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE.md)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
 ---
@@ -11,8 +11,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="">
-    <source media="(prefers-color-scheme: light)" srcset="">
+    <source media="(prefers-color-scheme: dark)" srcset="media/readme/cub3d.gif">
+    <source media="(prefers-color-scheme: light)" srcset="media/readme/cub3d.gif">
   </picture>
 </p>
 
