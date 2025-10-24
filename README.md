@@ -108,7 +108,7 @@ wall->height = dist_proj_plane / (wall->dist * cos(game->ray.angle - game->playe
 
 What’s happening here:
 
-`dist_proj_plane`
+`dist_proj_plane :`
 
 Represents the distance from the player to the projection plane (the virtual screen in 3D space).
 It depends only on the screen width and field of view and works like a focal length in a camera.
@@ -116,12 +116,12 @@ A larger value means a narrower, more zoomed-in view.
 
 `dist_proj_plane = (WIDTH / 2) / tan(PI / 3)`
 
-`wall->dist`
+`wall->dist :`
 
 The raw distance from the player to the wall along the ray’s direction.
 Using this directly would cause fish-eye distortion, especially at the edges of the FOV.
 
-`cos(game->ray.angle - game->player.angle)`
+`cos(game->ray.angle - game->player.angle) :`
 
 This is the cosine correction.
 
@@ -135,7 +135,7 @@ Why it matters ?
 Without the cosine correction, walls viewed at an angle appear too large because the ray travels a longer diagonal path.
 The correction ensures every wall slice is projected perpendicularly to the player’s view, preserving correct proportions.
 
-Final formula:
+Final formula : 
 `wallHeight = dist_proj_plane / perpWallDist`
 
 Close walls → taller slices
