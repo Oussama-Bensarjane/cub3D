@@ -113,6 +113,7 @@ What’s happening here:
 Represents the distance from the player to the projection plane (the virtual screen in 3D space).
 It depends only on the screen width and field of view and works like a focal length in a camera.
 A larger value means a narrower, more zoomed-in view.
+
 `dist_proj_plane = (WIDTH / 2) / tan(PI / 3)`
 
 `wall->dist`
