@@ -144,7 +144,7 @@ More references:
 
 ---
 
-### Player System
+### 🚶Player System
 
 **Controls**
 | Key | Action |
@@ -177,7 +177,7 @@ This prevents the player from clipping through solid tiles while still allowing 
 
 ---
 
-### Door Mechanics
+### 🚪 Door Mechanics
 
 Doors in our raycaster are implemented as **dynamic map tiles** that can change state between open and closed during gameplay.
 
@@ -243,7 +243,7 @@ This system allows smooth, interactive doors — visually consistent with the en
 
 ---
 
-### Minimap System
+### 🗺️ Minimap System
 
 The minimap provides a **real-time overview** of the surrounding map area, rendered as a **circular radar** centered on the player.
 
