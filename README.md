@@ -135,11 +135,11 @@ Far walls → shorter slices
 This simple yet powerful relation makes the 3D illusion accurate, producing a perspective-correct view similar to early FPS engines like DOOM or Wolfenstein 3D.
 
 ![Raycasting Math Diagram](https://lodev.org/cgtutor/images/raycastperpwalldist2.png)
+![Wall Height Diagram](https://www.scottsmitelli.com/articles/we-can-fix-your-raycaster/wall-height.png)
 
 More references:
 - [Lode’s Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
 - [Permadi Raycasting Figures](https://permadi.com/tutorial/raycast/)
-- [Wall Height Diagram](https://www.scottsmitelli.com/articles/we-can-fix-your-raycaster/wall-height.png)
 - [Ray Casting in Tiled Worlds using DDA](https://www.youtube.com/watch?v=NbSee-XM7WA)
 
 ---
@@ -225,8 +225,8 @@ Collision checks use player radius offsets in all four directions `(x ± radius,
 #### State Synchronization
 
 Door states are updated in both:
-  1. door->is_open boolean in the t_door structure.
-  2 .The map matrix game->config.map (from 'D' → 'O' or vice versa).
+  1. door->is_open (0/1) integer in the t_door structure.
+  2. The map matrix game->config.map (from 'D' → 'O' or vice versa).
 
 This ensures consistency across:
   - Rendering (3D view and minimap)
