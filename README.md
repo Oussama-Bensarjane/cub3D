@@ -49,6 +49,36 @@ The goal is to build a **raycasting-based rendering engine** from scratch, using
   
 ---
 
+## 🛠 Build & Run (Linux / macOS)
+
+### Install dependencies
+
+#### Linux (Debian/Ubuntu):
+
+```sh
+sudo apt update && sudo apt install build-essential libx11-dev libxext-dev libbsd-dev
+```
+
+#### macOS (with Homebrew):
+
+```sh
+brew install gcc xquartz
+```
+
+### Build and run in one line
+
+```sh
+git clone https://github.com/Oussama-Bensarjane/cub3D.git && cd cub3D && make && ./cub3D media/maps/map.cub 
+```
+
+### Cleanup
+
+```sh
+make clean      # removes object files
+make fclean     # removes object files + executable
+make re         # rebuilds everything from scratch```
+---
+
 ## med-el-hamidi Contribution (Gameplay & Engine Logic)
 
 This documentation covers my full part of the project — **gameplay systems, player movement, minimap, and door mechanics** — built entirely in C with trigonometry-based rendering.
