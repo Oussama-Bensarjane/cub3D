@@ -76,7 +76,8 @@ git clone https://github.com/Oussama-Bensarjane/cub3D.git && cd cub3D && make &&
 ```sh
 make clean      # removes object files
 make fclean     # removes object files + executable
-make re         # rebuilds everything from scratch```
+make re         # rebuilds everything from scratch
+```
 ---
 
 ## med-el-hamidi Contribution (Gameplay & Engine Logic)
