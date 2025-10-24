@@ -105,31 +105,40 @@ Each ray uses the **DDA algorithm** to find the nearest wall intersection, calcu
 dist_proj_plane = WIDTH / (2 * tan((FOV * PI) / 360.0)); // FOV = 60 
 wall->height = dist_proj_plane / (wall->dist * cos(game->ray.angle - game->player.angle));
 ```
+
 What’s happening here:
 
 `dist_proj_plane`
+
 Represents the distance from the player to the projection plane (the virtual screen in 3D space).
 It depends only on the screen width and field of view and works like a focal length in a camera.
 A larger value means a narrower, more zoomed-in view.
 `dist_proj_plane = (WIDTH / 2) / tan(PI / 3)`
 
 `wall->dist`
+
 The raw distance from the player to the wall along the ray’s direction.
 Using this directly would cause fish-eye distortion, especially at the edges of the FOV.
 
 `cos(game->ray.angle - game->player.angle)`
+
 This is the cosine correction.
+
 It removes distortion by converting the ray distance into the perpendicular distance to the wall —
 the distance that truly represents how far the wall is from the camera plane.
 
 `perpWallDist = wall->dist * cos(rayAngle - playerAngle)`
+
 Why it matters ?
+
 Without the cosine correction, walls viewed at an angle appear too large because the ray travels a longer diagonal path.
 The correction ensures every wall slice is projected perpendicularly to the player’s view, preserving correct proportions.
 
-Final formula
+Final formula:
 `wallHeight = dist_proj_plane / perpWallDist`
+
 Close walls → taller slices
+
 Far walls → shorter slices
 
 This simple yet powerful relation makes the 3D illusion accurate, producing a perspective-correct view similar to early FPS engines like DOOM or Wolfenstein 3D.
