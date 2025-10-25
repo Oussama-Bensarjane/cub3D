@@ -28,7 +28,8 @@
 **Roles in this project:**
 - Parsing of configuration file `.cub`  
 - Loading and rendering textures for walls  
-- Weapons rendering and animations
+- Loading and rendering sprites (Weapons)  
+- Weapons switching logic && drawing help screen menu
 
 ---
 
@@ -45,7 +46,8 @@ The goal is to build a **raycasting-based rendering engine** from scratch, using
 - open/close doors
 - Circular minimap with field of view
 - Flip-view camera system
-- Weapon rendering
+- Weapons switching (Firing / Reload)
+- Drawing help screen menu
   
 ---
 
