@@ -290,6 +290,17 @@ This system allows smooth, interactive doors — visually consistent with the en
 
 The minimap provides a **real-time overview** of the surrounding map area, rendered as a **circular radar** centered on the player.
 
+- The minimap doesn’t draw the entire map — it focuses on a **local area** around the player.  
+- Specifically, it displays an **8-tile radius** from the player’s current tile on the 2D map.  
+  This gives a total view of **17×17 tiles**, enough to visualize nearby structures without clutter.
+- The visible map region is computed dynamically.
+- Each map tile is scaled visually using:
+```c
+  minimap->scale = WIDTH / 64;
+```
+- For a default resolution of WIDTH = 1280, this gives a 20px scale per tile.
+- This ratio keeps the minimap proportional to the screen width, so the minimap automatically adjusts in size if the window width changes — ensuring scalability across resolutions.
+
 - **Circular shape:**  
   The minimap uses a simple radius check to draw only pixels within the circle boundary:
   ```c
@@ -303,7 +314,7 @@ The minimap provides a **real-time overview** of the surrounding map area, rende
   The map scrolls relative to player movement, keeping orientation stable and intuitive.
 
 - **Visual elements:**
-  Walls → rendered as solid blocks (e.g. white or dark colors).
+  Walls → rendered as solid blocks.
   Doors → rendered with a unique color (e.g. blue when closed, green when open).
   Player → drawn as a tile scale size dot at the center.
   Field of View (FOV) → shown as a “Pac-Man”-like cone extending from the player’s position.
