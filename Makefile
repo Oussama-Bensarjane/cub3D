@@ -113,17 +113,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): CFLAGS += -I$(INCLUDES_DIR)
-$(NAME): $(LIBFT) $(MLX) $(OBJ)
-	@echo "$(COLOR_BLUE)🔨 Linking $(NAME)...$(COLOR_RESET)"
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
-	@echo "$(COLOR_GREEN)✅ Successfully built $(NAME)!$(COLOR_RESET)"
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCLUDES)
-	@echo "$(COLOR_BLUE)📦 Compiling $<...$(COLOR_RESET)"
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
 $(MLX):
 	@echo "$(COLOR_BLUE)📚 Building MLX...$(COLOR_RESET)"
 	@make -C $(MLX_DIR)
