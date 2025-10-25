@@ -122,9 +122,9 @@ This means that with our window setup of **`WIDTH = 1280`** and **`HEIGHT = 720`
 Our **Field of View (FOV)** is set to **60°**, which equals **π/3 radians**.  
 To calculate the angle between each consecutive ray, we divide the total FOV by the number of vertical screen columns:
 
-\[
-\text{fraction} = \frac{\text{FOV}}{\text{WIDTH}} = \frac{π/3}{1280} ≈ 0.00042 \text{ radians per ray}
-\]
+```sh
+fraction = FOV / WIDTH = π/3 / 1280 ≈ 0.00042 radians per ray
+```
 
 So for each frame:
 - The first ray starts at `player.angle - (FOV / 2)` (left edge of the screen).  
