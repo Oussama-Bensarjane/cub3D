@@ -27,10 +27,10 @@
 **[Oussama-Bensarjane](https://github.com/Oussama-Bensarjane/)**
 **Roles in this project:**
 - Parsing of configuration file `.cub`  
-- Loading and rendering textures for walls  
-- Loading and rendering sprites (Weapons)  
+- Loading & rendering textures for walls  
+- Loading & rendering sprites (Weapons)  
 - Weapons switching logic.
-- Designed a visual keymap in Canva illustrating all game controls and their corresponding functions.
+- Designed a visual keymap in Canva illustrating all game controls and their functions.
 
 ---
 
