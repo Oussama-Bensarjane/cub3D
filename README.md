@@ -29,7 +29,8 @@
 - Parsing of configuration file `.cub`  
 - Loading and rendering textures for walls  
 - Loading and rendering sprites (Weapons)  
-- Weapons switching logic && drawing help screen menu
+- Weapons switching logic.
+- Designed a visual keymap in Canva illustrating all game controls and their corresponding functions.
 
 ---
 
@@ -47,7 +48,7 @@ The goal is to build a **raycasting-based rendering engine** from scratch, using
 - Circular minimap with field of view
 - Flip-view camera system
 - Weapons switching (Firing / Reload)
-- Drawing help screen menu
+- Keymap that shows all game controls (Hover H)
   
 ---
 
@@ -332,3 +333,39 @@ The minimap provides a **real-time overview** of the surrounding map area, rende
  - **Rendering method:**
   The minimap is drawn pixel-by-pixel using the same low-level rendering function put_pixel().
   This allows per-pixel control and avoids dependency on MLX shapes or primitives.
+
+
+
+
+
+
+
+
+
+---
+
+## Oussama-Bensarjane Contribution (Parsing, Validation & Texture/Sprite Systems)
+
+This documentation details my full contribution to the project — **the parsing subsystem, map/config validation, and texture/sprite management (including weapons, animations, and reload logic)** — all implemented in C with a focus on stability, clarity, and error handling.
+
+---
+### 📂 Core Directories & Files
+
+| Directory / File             | Description                                                               |
+| ---------------------------- | ------------------------------------------------------------------------- |
+| **`parser/`**                | Root directory for all `.cub` file parsing and validation logic           |
+| `parser/parse_file.c`        | Entry point for parsing `.cub` files — coordinates config and map parsing |
+| `parser/parse_config.c`      | Extracts textures, colors, and other config parameters                    |
+| `parser/parse_map.c`         | Add map lines to char **map                                               |
+| `parser/validate_map.c`      | Performs flood-fill and edge validation to ensure a closed map Parses     |
+|                              | map layout, checks map boundaries, and validates start positions.         |
+|                              | And player spawning position, check for invalid characters etc..          |
+| **`textures/`**              | Texture loading and management (walls) ensuring it fit the wall perfectly |
+| `textures/textures_loader.c` | Loads `.xpm` textures into memory (MLX images)                            |
+| **`sprites/`**               | Handles sprite animation and weapon frames                                |
+| `sprites/sprites.c`          | Core sprite management (position, frame selection, animation) and Drawing |
+| `sprites/sprites_loader.c`   | Loads multiple frames for animated sprites (weapons)                      |
+| `sprites/sprites_utils.c`    | Attack_loop, update_weapon_animation                                      |
+| **`utils/`**                 | Initialisation and cleanup                                                |
+| `utils/init_load_ts.c`       | Init frame delay, timer and texture/sprites struct                        |
+| `utils/exit_free.c`          | Freeing all asssets before exiting map texures path etc ..                |
