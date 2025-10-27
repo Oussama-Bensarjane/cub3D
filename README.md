@@ -447,6 +447,7 @@ Textures are stored as XPM images and converted to pixel arrays
 The raycaster samples these textures during rendering based on:
 
 **First:**
+
 > **`choose_texture()`** — I Determines which wall texture to use based on the ray’s direction and which side of the wall was hit.
 >
 > * If the ray hits a vertical wall:
@@ -458,9 +459,8 @@ The raycaster samples these textures during rendering based on:
 >   * Facing down`(Ray_dir.y = sin(angle) > 0)`→ use **south (TEX_SO)** texture
 >   * Facing up`(Ray_dir.y = sin(angle) < 0)`→ use **north (TEX_NO)** texture
 
----
-
 **Second:**
+
 Exact hit position (for texture X-coordinate mapping)
 
 > **`calc_tex_x()`** — Calculates which column of the wall texture should be rendered based on the ray’s hit position.
@@ -476,8 +476,9 @@ Exact hit position (for texture X-coordinate mapping)
 > * `wall_x` represents the decimal part of the hit coordinate (fractional position inside the tile value `0 < wall_x < 1`).
 > * Multiply `wall_x` by the **texture width** to get `tex_x`.
 > * Flip `tex_x` when the wall is facing **left** or **up** to ensure the texture isn’t mirrored incorrectly.
-```
+
 **Example:**
+```sh
 Suppose the ray hits exactly in the middle of the wall tile.
 
 > `wall_x = 0.5` → means the hit point is halfway across the wall surface.
@@ -485,22 +486,17 @@ Suppose the ray hits exactly in the middle of the wall tile.
 
 To find the texture’s X coordinate (`tex_x`):
 
-```
 tex_x = wall_x * tex_width
 tex_x = 0.5 * 64
 tex_x = 32
-```
 
 ✅ So, the pixel **column 32** (the middle column of the texture) will be sampled and drawn for that vertical stripe on the screen.
 
 If the wall is facing the opposite direction (e.g., ray facing left or up),
 
-```
 tex_x = tex_width - tex_x - 1
 tex_x = 64 - 32 - 1 = 31
-```
 
 This flips the texture horizontally, keeping the orientation correct.
-
----
+```
 
