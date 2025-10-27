@@ -17,8 +17,8 @@
 
 ## 📖 Table of Contents (Click to jump section)
 - [Authors](#authors)
-  - [`Parsing/texture/sprite`](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
-  - [`Gameplay/Engine Logic`](#med-el-hamidi-contribution-gameplay--engine-logic)
+- [Parsing/texture/sprite](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
+- [Gameplay/Engine Logic](#med-el-hamidi-contribution-gameplay--engine-logic)
 
 
 ## Authors
@@ -351,6 +351,7 @@ The minimap provides a **real-time overview** of the surrounding map area, rende
 ---
 
 ## `Oussama-Bensarjane` Contribution (Parsing, Validation & Texture/Sprite Systems)
+- [`Jump back to Authors`](#authors)
 
 This documentation details my full contribution to the project — **the parsing subsystem, map/config validation, and texture/sprite management (including weapons, animations, and reload logic)** — all implemented in C with a focus on stability, clarity, and error handling.
 
@@ -579,5 +580,5 @@ IDLE → (SPACE pressed) → ATTACK → (animation done) → IDLE
 
 ## 📖 Table of Contents (Click to jump section)
 - [Authors](#authors)
-  - [`Parsing/texture/sprite`](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
-  - [`Gameplay/Engine Logic`](#med-el-hamidi-contribution-gameplay--engine-logic)
+- [Parsing/texture/sprite](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
+- [Gameplay/Engine Logic](#med-el-hamidi-contribution-gameplay--engine-logic)
