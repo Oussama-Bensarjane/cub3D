@@ -15,23 +15,22 @@
 
 ---
 
-## 📖 Table of Contents
+## 📖 Table of Contents (Click to jump section)
 - [Authors](#authors)
-  - [Oussama-Bensarjane](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
-  - [med-el-hamidi](#med-el-hamidi)
+  - [`Parsing/texture/sprite`](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
+  - [`Gameplay/Engine Logic`](#med-el-hamidi-contribution-gameplay--engine-logic)
 
----
 
 ## Authors
 
-### [med-el-hamidi](https://github.com/med-el-hamidi/)
+**[med-el-hamidi](https://github.com/med-el-hamidi/)**
 **Roles in this project:**  
 - Gameplay & Engine Logic  
 - Player Movement & Camera  
 - Raycasting & DDA Implementation  
 - Minimap System && Door Mechanics
 
-### [Oussama-Bensarjane](https://github.com/Oussama-Bensarjane/)
+**[Oussama-Bensarjane](https://github.com/Oussama-Bensarjane/)**
 **Roles in this project:**
 - Parsing of configuration file `.cub`  
 - Loading & rendering textures for walls  
@@ -578,3 +577,7 @@ IDLE → (SPACE pressed) → ATTACK → (animation done) → IDLE
                         RELOAD → (animation done) → IDLE
 ```
 
+## 📖 Table of Contents (Click to jump section)
+- [Authors](#authors)
+  - [`Parsing/texture/sprite`](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
+  - [`Gameplay/Engine Logic`](#med-el-hamidi-contribution-gameplay--engine-logic)
