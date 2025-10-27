@@ -490,7 +490,8 @@ tex_x = wall_x * tex_width
 tex_x = 0.5 * 64
 tex_x = 32
 
-✅ So, the pixel **column 32** (the middle column of the texture) will be sampled and drawn for that vertical stripe on the screen.
+✅ So, the pixel **column 32** (the middle column of the texture),
+    will be sampled and drawn for that vertical stripe on the screen.
 
 If the wall is facing the opposite direction (e.g., ray facing left or up),
 
