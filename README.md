@@ -12,25 +12,26 @@
     <img src="./media/readme/cub3d.gif" alt="Cub3D Gameplay" width="640">
   </picture>
 </p>
+
 ---
 
 ## 📖 Table of Contents
 - [Authors](#authors)
+  - [Oussama-Bensarjane](#oussama-bensarjane-contribution-parsing-validation--texturesprite-systems)
   - [med-el-hamidi](#med-el-hamidi)
-  - [Oussama-Bensarjane](#oussama-bensarjane)
 
 ---
 
 ## Authors
 
-**[med-el-hamidi](https://github.com/med-el-hamidi/)**
+### [med-el-hamidi](https://github.com/med-el-hamidi/)
 **Roles in this project:**  
 - Gameplay & Engine Logic  
 - Player Movement & Camera  
 - Raycasting & DDA Implementation  
 - Minimap System && Door Mechanics
 
-**[Oussama-Bensarjane](https://github.com/Oussama-Bensarjane/)**
+### [Oussama-Bensarjane](https://github.com/Oussama-Bensarjane/)
 **Roles in this project:**
 - Parsing of configuration file `.cub`  
 - Loading & rendering textures for walls  
