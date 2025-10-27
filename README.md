@@ -12,10 +12,13 @@
     <img src="./media/readme/cub3d.gif" alt="Cub3D Gameplay" width="640">
   </picture>
 </p>
+---
+
 ## 📖 Table of Contents
 - [Authors](#authors)
   - [med-el-hamidi](#med-el-hamidi)
   - [Oussama-Bensarjane](#oussama-bensarjane)
+
 ---
 
 ## Authors
