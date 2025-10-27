@@ -499,4 +499,74 @@ tex_x = 64 - 32 - 1 = 31
 
 This flips the texture horizontally, keeping the orientation correct.
 ```
+---------------->**Sprite System**<----------------
+Sprites are used for:
+
+Weapon animations (idle, attack, reload frames)
+Interactive objects (not used here but extendable in the future)
+
+Loading Process:
+```sh
+sprites_loader.c
+    ↓
+Load each sprite frame (.xpm files)
+    ↓
+Store in sprite array with frame indices
+    ↓
+sprites.c handles rendering and frame updates
+```
+
+#### Sprite Rendering
+
+- Sprites are **always centered** on the screen (for first-person weapons)
+- **Frame switching** happens based on animation state (idle → attack → reload)
+- Each frame is displayed for a set duration to create smooth animation
+
+---
+
+## 🔫 Weapon System
+
+### Available Weapons
+
+| Key | Weapon | Behavior |
+|-----|--------|----------|
+| `1` | **Hand** | Melee attack (punch animation) |
+| `2` | **Pistol** | Ranged attack, requires reload |
+| `3` | **Shotgun** | High-damage ranged attack |
+
+### Controls
+
+| Key | Action |
+|-----|--------|
+| `1` / `2` / `3` | Switch weapons |
+| `SPACE` | Attack/Fire |
+| `R` | Reload *pistol only* |
+
+### Logic Implementation
+
+#### Weapon Switching
+- Switching instantly changes the active weapon
+- Each weapon has its own sprite frames (idle, attack, etc.)
+- Switching resets animation state to idle
+
+#### Attack System
+- Pressing `SPACE` triggers the attack animation
+- **Hand:** Immediate melee animation (no ammo)
+- **Pistol:** Fires if bullets < G_BULL , otherwise waiting for Reload (R)
+- **Shotgun:** Immediate Fires animation 
+
+#### Reload System
+- Only the **pistol** requires reloading
+- Pressing `R` plays reload animation
+- Ammo refills after animation completes
+- Cannot attack during reload
+
+#### State Machine
+```sh
+IDLE → (SPACE pressed) → ATTACK → (animation done) → IDLE
+                           ↓
+                  (R pressed, pistol only)
+                           ↓
+                        RELOAD → (animation done) → IDLE
+```
 
