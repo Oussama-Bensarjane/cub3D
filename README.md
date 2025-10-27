@@ -344,7 +344,7 @@ The minimap provides a **real-time overview** of the surrounding map area, rende
 
 ---
 
-## Oussama-Bensarjane Contribution (Parsing, Validation & Texture/Sprite Systems)
+## `Oussama-Bensarjane` Contribution (Parsing, Validation & Texture/Sprite Systems)
 
 This documentation details my full contribution to the project — **the parsing subsystem, map/config validation, and texture/sprite management (including weapons, animations, and reload logic)** — all implemented in C with a focus on stability, clarity, and error handling.
 
@@ -369,3 +369,138 @@ This documentation details my full contribution to the project — **the parsing
 | **`utils/`**                 | Initialisation and cleanup                                                |
 | `utils/init_load_ts.c`       | Init frame delay, timer and texture/sprites struct                        |
 | `utils/exit_free.c`          | Freeing all asssets before exiting map texures path etc ..                |
+
+---
+
+### 🧩 Overview
+My contribution ensures data integrity and asset management before gameplay begins:
+
+- Robust parsing of .cub configuration files with detailed error reporting
+- Map validation ensuring playability (closed walls, valid characters, single player spawn)
+- Texture and sprite loading for walls, weapons, and animations
+- Weapon system with switching, attacking, and reloading logic
+- UI/UX design including a visual keymap illustration in Canva
+
+The parser acts as a gatekeeper — only correct, validated data reaches the game engine.
+
+---
+
+🗂️ Parsing System
+File Structure (.cub format)
+The .cub file contains:
+
+Texture paths for walls (North, South, East, West)
+Floor and ceiling colors in RGB format
+2D map using characters (0 = floor, 1 = wall, D = door, N/S/E/W = player spawn)
+
+```sh
+Parse Flow
+parse_file.c
+    ↓
+parse_config.c  →  Extract textures + colors
+    ↓
+parse_map.c     →  Extract map grid
+    ↓
+validate_map.c  →  Validate walls, player, characters
+    ↓
+✓ Valid data passed to gameplay engine
+
+```
+
+### Error Handling
+
+The parser provides **precise error messages** specifying:
+- **What** went wrong (missing texture, invalid RGB, open walls, etc.)
+- **Where** it occurred (line number, specific element)
+
+Examples:
+```sh
+Error: The Door 'D' should be between Walls.
+Error: Invalid RGB value in Floor color: 256 (must be 0-255)
+Error: Map not closed at position (12, 5)
+Error: Multiple player spawns found
+Error: Invalid character in this line of the map: ---->(%c)<---- Located in :(x;y)
+Error: Invalid map extension, Should be <map>.cub
+Error: Hidden files not allowed, Should be <map>.cub
+Error: Invalid texture extension, Should be <path/to/texture>.xpm
+Error: Invalid or malformed configuration line.
+Error: Empty line Detected AFTER the map !!! line nbr : 21
+```
+**This allows instant debugging without guessing.**
+
+### Validation Rules
+
+| Rule | Description |
+|------|-------------|
+| `Texture` | All 4 wall textures (NO, SO, WE, EA) must exist and be valid .xpm files |
+| `RGB colors` | Floor (F) and Ceiling (C) must have values between 0-255 |
+| `Map enclosure` | Map must be surrounded by walls (1) with no gaps |
+| `Player spawn`| Exactly one player spawn (N, S, E, W) must exist |
+| `Valid characters` | Only 0, 1, D, N, S, E, W, and spaces allowed |
+| `Order in .cub file matter` | Must be the config first paths to textures or F/C colors then the map else Error |
+
+### 🎨 Texture & Sprite Loading
+Texture System
+
+Wall textures are loaded for each cardinal direction (North, South, East, West)
+Textures are stored as XPM images and converted to pixel arrays
+The raycaster samples these textures during rendering based on:
+
+**First:**
+> **`choose_texture()`** — I Determines which wall texture to use based on the ray’s direction and which side of the wall was hit.
+>
+> * If the ray hits a vertical wall:
+>
+>   * Facing right`(Ray_dir.x = cos(angle) > 0)` → use **east (TEX_EA)** texture
+>   * Facing left `(Ray_dir.x = cos(angle) < 0)`→ use **west (TEX_WE)** texture
+> * If the ray hits a horizontal wall:
+>
+>   * Facing down`(Ray_dir.y = sin(angle) > 0)`→ use **south (TEX_SO)** texture
+>   * Facing up`(Ray_dir.y = sin(angle) < 0)`→ use **north (TEX_NO)** texture
+
+---
+
+**Second:**
+Exact hit position (for texture X-coordinate mapping)
+
+> **`calc_tex_x()`** — Calculates which column of the wall texture should be rendered based on the ray’s hit position.
+>
+> * Determines the exact **X coordinate** on the wall where the ray collided.
+> * Converts that position into a **texture X index** (`tex_x`) relative to the texture’s width.
+> * Adjusts (flips) the texture horizontally when the wall faces the opposite direction, to keep the texture orientation consistent.
+>
+> **Logic overview:**
+>
+> * If the ray hits a **vertical wall** → use the player’s **Y position** and ray **Y direction** to find `wall_x`.
+> * If the ray hits a **horizontal wall** → use the player’s **X position** and ray **X direction** to find `wall_x`.
+> * `wall_x` represents the decimal part of the hit coordinate (fractional position inside the tile value `0 < wall_x < 1`).
+> * Multiply `wall_x` by the **texture width** to get `tex_x`.
+> * Flip `tex_x` when the wall is facing **left** or **up** to ensure the texture isn’t mirrored incorrectly.
+```
+**Example:**
+Suppose the ray hits exactly in the middle of the wall tile.
+
+> `wall_x = 0.5` → means the hit point is halfway across the wall surface.
+> `tex_width = 64` → the texture image is 64 pixels wide.
+
+To find the texture’s X coordinate (`tex_x`):
+
+```
+tex_x = wall_x * tex_width
+tex_x = 0.5 * 64
+tex_x = 32
+```
+
+✅ So, the pixel **column 32** (the middle column of the texture) will be sampled and drawn for that vertical stripe on the screen.
+
+If the wall is facing the opposite direction (e.g., ray facing left or up),
+
+```
+tex_x = tex_width - tex_x - 1
+tex_x = 64 - 32 - 1 = 31
+```
+
+This flips the texture horizontally, keeping the orientation correct.
+
+---
+
