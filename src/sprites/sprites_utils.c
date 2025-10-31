@@ -31,6 +31,10 @@ void	update_weapon_animation(t_weapon *w, t_weapon_type w_type)
 		return ;
 	if (w->state == WS_RELOAD && w_type == W_PISTOL)
 	{
+		w->reload_timer++;
+		if (w->reload_timer < w->reload_delay)
+			return ;
+		w->reload_timer = 0;
 		w->reload.current++;
 		if (w->reload.current >= w->reload.count)
 		{

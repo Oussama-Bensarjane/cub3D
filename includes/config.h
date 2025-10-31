@@ -217,6 +217,8 @@ typedef struct s_weapon
 	t_frames		reload;
 	int				frame_timer;
 	int				frame_delay;
+	int				reload_timer;
+	int				reload_delay;
 	int				bullets;
 	t_weapon_state	state;
 }	t_weapon;

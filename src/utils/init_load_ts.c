@@ -36,7 +36,9 @@ static void	init_weapon(t_weapon *w, t_weapon_type type)
 	w->reload.count = 0;
 	w->reload.current = 0;
 	w->frame_timer = 0;
+	w->reload_timer = 0;
 	w->frame_delay = 2;
+	w->reload_delay = 2;
 	w->bullets = 0;
 	if (type == W_HAND)
 		w->frame_delay = 3;
